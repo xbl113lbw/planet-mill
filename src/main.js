@@ -1,8 +1,23 @@
 import Vue from 'vue'
 import App from './App.vue'
+import router from './router'
+import store from './store'
+import ajax from "./utils/ajax"
+import 'lib-flexible'
 
-Vue.config.productionTip = false
+
+import {Button} from 'vant';
+
+Vue.use(Button);
+
+
+Vue.config.productionTip = false;
+
+// ajax 请求
+Vue.prototype.ajax = ajax;
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+    router,
+    store,
+    render: h => h(App)
+}).$mount('#app');
