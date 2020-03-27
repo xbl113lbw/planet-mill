@@ -10,6 +10,24 @@ const routes = [
         name: '/',
         component: () => import('../views/index.vue')
     },
+    //星球矿机
+    {
+        path: '/planet',
+        name: 'planet',
+        component: () => import('../views/planet/index.vue')
+    },
+    //资产property
+    {
+        path: '/property',
+        name: 'property',
+        component: () => import('../views/property/index.vue')
+    },
+    //直推详情directPushDetail
+    {
+        path: '/directPushDetail',
+        name: 'directPushDetail',
+        component: () => import('../views/directPushDetail/index.vue')
+    },
     // 资产记录
     {
         path: '/assetsRecord',
