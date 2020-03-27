@@ -6,10 +6,16 @@ import persistedState from "vuex-persistedstate"
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    plugins: [persistedState({storage: window.sessionStorage})],
-
-    state: {},
-    mutations: {},
+    plugins: [persistedState({ storage: window.sessionStorage })],
+    state: {
+        tabIndex: 0,//默认第一个
+    },
+    mutations: {
+        // 修改tabIndex
+        changeTabIndex(state, data) {
+            state.tabIndex = data
+        }
+    },
     actions: {},
     modules: {}
 })
