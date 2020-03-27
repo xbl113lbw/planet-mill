@@ -2,7 +2,7 @@
  * @Author: liyh
  * @Date: 2020-03-27 16:10:29
  * @LastEditors: liyh
- * @LastEditTime: 2020-03-27 17:41:49
+ * @LastEditTime: 2020-03-27 18:29:43
  * @描述:底部Tab组件，默认第一个,即tabIndex为0，存在Vuex里面，每次点击通过触发mutations改变vuex里面的tabIndex的值
  -->
 <template>
@@ -69,6 +69,7 @@ export default {
       changeTabIndexAction: "changeTabIndex" // 将 `this.changeTabIndexAction()` 映射为 `this.$store.commit('changeTabIndexAction')`
     }),
     changeTabIndex(index, item) {
+      if (window.location.hash == `#${item.router}`) return; //当前路由相等，不做其他操作
       this.changeTabIndexAction(index); //触发mutation修改tabIndex的值为当前点击的值
       this.$router.replace({
         path: item.router
