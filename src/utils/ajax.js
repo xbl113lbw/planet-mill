@@ -26,6 +26,11 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
+/**
+ * url 请求地址
+ * params/data 请求参数
+ * config 请求配置（没有则不传）
+ */
 const get = (url, params, config) => {
     return instance.get(url, {params: params, ...config})
 };

@@ -5,11 +5,9 @@ import store from './store'
 import ajax from "./utils/ajax"
 import 'lib-flexible'
 
-
 import {Button} from 'vant';
 
 Vue.use(Button);
-
 
 Vue.config.productionTip = false;
 
