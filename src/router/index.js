@@ -21,6 +21,24 @@ const routes = [
         path: '/releaseSellOrder',
         name: 'releaseSellOrder',
         component: () => import('../views/releaseOrder/releaseSellOrder')
+    },
+    // 发布购买订单
+    {
+        path: '/releaseBuyOrder',
+        name: 'releaseBuyOrder',
+        component: () => import('../views/releaseOrder/releaseBuyOrder')
+    },
+    // 订单列表
+    {
+        path: '/orderList',
+        name: 'orderList',
+        component: () => import('../views/releaseOrder/orderList')
+    },
+    // 交易记录
+    {
+        path: '/tradRecord',
+        name: 'tradRecord',
+        component: () => import('../views/releaseOrder/tradRecord')
     }
 ];
 

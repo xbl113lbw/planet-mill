@@ -9,6 +9,10 @@ import 'lib-flexible'
 import {Button} from 'vant';
 import { Tab, Tabs } from 'vant';
 import { Slider } from 'vant';
+import { Grid, GridItem } from 'vant';
+
+Vue.use(Grid);
+Vue.use(GridItem);
 
 Vue.use(Slider);
 Vue.use(Tab);

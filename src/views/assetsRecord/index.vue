@@ -109,8 +109,14 @@
                 background-color: transparent;
 
                 .van-tab {
-                    color: #AB91EF;
                     font-size: 14px;
+                    font-weight: 400;
+                    color: rgba(255, 255, 255, 0.6);
+                }
+
+                .van-tab--active {
+                    color: #AB91EF;
+                    font-weight: 600;
                 }
             }
 
@@ -124,7 +130,8 @@
                 background: rgba(171, 145, 239, 1);
                 border-radius: 3px;
             }
-            .van-hairline--top-bottom::after{
+
+            .van-hairline--top-bottom::after {
                 border: none;
             }
         }

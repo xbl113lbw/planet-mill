@@ -4,6 +4,9 @@
         <div class="box">111</div>
         <div class="" @click="NavTo('/assetsRecord')">跳转到资产记录</div>
         <div class="" @click="NavTo('/releaseSellOrder')">跳转到发布出售订单</div>
+        <div class="" @click="NavTo('/releaseBuyOrder')">跳转到发布购买订单</div>
+        <div class="" @click="NavTo('/orderList')">跳转到订单列表</div>
+        <div class="" @click="NavTo('/tradRecord')">跳转到交易记录</div>
     </div>
 </template>
 
