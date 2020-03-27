@@ -23,4 +23,9 @@
     ul, li {
         list-style: none;
     }
+
+    button {
+        outline: none;
+        border: none;
+    }
 </style>

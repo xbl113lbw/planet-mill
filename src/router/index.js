@@ -8,7 +8,19 @@ const routes = [
     {
         path: '/',
         name: '/',
-        component: () => import('../views/index.vue')
+        component: () => import('../views/home/home.vue')
+    },
+    // 交易页
+    {
+        path: '/deal',
+        name: '/deal',
+        component: () => import('../views/deal/deal.vue')
+    },
+    // 规则页
+    {
+        path: '/rule',
+        name: '/rule',
+        component: () => import('../views/rule/rule.vue')
     },
 ];
 
