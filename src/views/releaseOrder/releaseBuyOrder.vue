@@ -10,9 +10,14 @@
                 <span>{{form.price}}</span>
                 <span class="percentage">%{{form.sellPrice}}</span>
                 <div class="price_slider">
-                    <!-- <span>%{{form.sellPrice}}</span> -->
                     <van-slider v-model="form.sellPrice" bar-height="4px" active-color="#AB91EF"
-                        inactive-color="#000000" />
+                        inactive-color="#000000">
+                        <template #button>
+                            <div class="custom_button">
+                                <img src="../../assets/img/releaseOrder/slider.png" />
+                            </div>
+                        </template>
+                    </van-slider>
                 </div>
 
             </div>
