@@ -5,7 +5,14 @@ import store from './store'
 import ajax from "./utils/ajax"
 import 'lib-flexible'
 
+
 import {Button} from 'vant';
+import { Tab, Tabs } from 'vant';
+import { Slider } from 'vant';
+
+Vue.use(Slider);
+Vue.use(Tab);
+Vue.use(Tabs);
 
 Vue.use(Button);
 
