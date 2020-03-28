@@ -1,6 +1,7 @@
 <template>
     <!-- 资产记录页面 -->
     <div class="main_page">
+        <NavCom title="资产记录"/>
         <van-tabs v-model="active" class="vanTabs">
             <van-tab title="充值记录">
                 <div class="data_list">
@@ -60,8 +61,13 @@
     </div>
 </template>
 <script>
+    import NavCom from "@/components/nav.vue"
+
     export default {
         name: "assetsRecord",
+        components: {
+            NavCom
+        },
         data() {
             return {
                 active: 0,
@@ -101,7 +107,7 @@
     .main_page {
         height: 100vh;
         padding: 0 30px;
-        background: url("../../assets/img/bg.png")no-repeat center;
+        background: url("../../assets/img/bg.png") no-repeat center;
         background-size: cover;
 
         /deep/ .vanTabs {

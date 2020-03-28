@@ -22,7 +22,7 @@
                 <span>直推人数：</span>
                 <span>1000人</span>
             </div>
-            <button>查看详情</button>
+            <button @click="$router.push({path:'/directPushDetail'})">查看详情</button>
         </div>
         <!--间推人数-->
         <div class="indirectNum">
@@ -30,7 +30,7 @@
                 <span>间推人数：</span>
                 <span>1000人</span>
             </div>
-            <button>查看详情</button>
+            <button @click="$router.push({path:'/directPushDetail'})">查看详情</button>
         </div>
     </div>
 </template>

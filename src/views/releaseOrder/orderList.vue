@@ -1,26 +1,29 @@
 <template>
     <div class="main_page">
+        <NavCom title="订单列表"/>
         <van-tabs v-model="active" class="vanTabs">
-
             <van-tab title="已匹配">
                 <van-grid :column-num="3" class="table">
-                    <van-grid-item v-for="value in 12" :key="value" text="X" />
+                    <van-grid-item v-for="value in 12" :key="value" text="X"/>
                 </van-grid>
             </van-tab>
             <van-tab title="已完成">
                 <van-grid :column-num="3" class="table">
-                    <van-grid-item v-for="value in 12" :key="value" :text="value" />
+                    <van-grid-item v-for="value in 12" :key="value" :text="value"/>
                 </van-grid>
             </van-tab>
         </van-tabs>
     </div>
 </template>
 <script>
-    export default {
-        data() {
-            return {
+    import NavCom from "@/components/nav.vue"
 
-            }
+    export default {
+        components: {
+            NavCom
+        },
+        data() {
+            return {}
         }
     }
 </script>
@@ -28,7 +31,7 @@
     .main_page {
         height: 100vh;
         padding: 0 30px;
-        background: url("../../assets/img/bg.png")no-repeat center;
+        background: url("../../assets/img/bg.png") no-repeat center;
         background-size: cover;
 
         /deep/ .vanTabs {
@@ -71,7 +74,7 @@
 </style>
 <style lang="scss">
     .van-grid {
-        &:after{
+        &:after {
             border: 0;
         }
         .van-grid-item {
@@ -80,7 +83,6 @@
             &:nth-child(3n+3) {
                 flex-basis: 44% !important;
             }
-
 
         }
 

@@ -37,19 +37,19 @@
         <!--操作区域-->
         <div class="orderBox">
             <div class="orderBox_nav">
-                <div>
+                <div @click="$router.push({path:'/releaseSellOrder'})">
                     <img src="../../../assets/img/deal/sell.png" alt=""/>
                     <span>发布出售订单</span>
                 </div>
-                <div>
+                <div @click="$router.push({path:'/releaseBuyOrder'})">
                     <img src="../../../assets/img/deal/buy.png" alt=""/>
                     <span>发布购买订单</span>
                 </div>
-                <div>
+                <div @click="$router.push({path:'/orderList'})">
                     <img src="../../../assets/img/deal/order.png" alt=""/>
                     <span>订单</span>
                 </div>
-                <div>
+                <div @click="$router.push({path:'/tradRecord'})">
                     <img src="../../../assets/img/deal/record.png" alt=""/>
                     <span>交易记录</span>
                 </div>

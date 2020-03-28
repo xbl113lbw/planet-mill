@@ -1,5 +1,6 @@
 <template>
     <div class="main_page">
+        <NavCom title="发布出售订单"/>
         <div class="top_page">
             <span>可用CAC</span>
             <span class="number">{{CAC}}</span>
@@ -16,20 +17,18 @@
                 <div class="price_slider">
                     <!-- <span>%{{form.sellPrice}}</span> -->
                     <van-slider v-model="form.sellPrice" bar-height="4px" active-color="#AB91EF"
-                        inactive-color="#000000">
-                        <template #button>
+                                inactive-color="#000000">
+                        <template slot="button">
                             <div class="custom_button">
-                                <img src="../../assets/img/releaseOrder/slider.png" />
+                                <img src="../../assets/img/releaseOrder/slider.png"/>
                             </div>
                         </template>
                     </van-slider>
-
                 </div>
-
             </div>
             <div class="content_row">
                 <span class="row_left">出售数量:</span>
-                <input :value="form.num" placeholder="请输入数量" />
+                <input :value="form.num" placeholder="请输入数量"/>
             </div>
             <div class="content_row_last">
                 <span class="row_left">购买金额:</span>
@@ -38,10 +37,7 @@
                     <van-button class="button" round color="linear-gradient(to right,#A73FE2,#7E2AF2,#611DE8)">发布
                     </van-button>
                 </div>
-
-
             </div>
-
         </div>
         <div class="tips">
             <div>快速出售小技巧：</div>
@@ -50,8 +46,13 @@
     </div>
 </template>
 <script>
+    import NavCom from "@/components/nav.vue"
+
     export default {
         name: "releaseSellOrder",
+        components: {
+            NavCom
+        },
         data() {
             return {
                 CAC: '0',
@@ -67,11 +68,11 @@
 <style scoped lang="scss">
     .main_page {
         min-height: 100vh;
-        background: url("../../assets/img/bg.png")no-repeat center;
-        padding: 60px 30px;
+        background: url("../../assets/img/bg.png") no-repeat center;
+        padding: 0 30px 60px;
 
-        /deep/.van-slider {
-            width: 50%px;
+        /deep/ .van-slider {
+            width: 50%;
         }
 
         .top_page {

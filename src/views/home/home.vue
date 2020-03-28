@@ -4,7 +4,8 @@
         <div class="header">
             <div class="left"></div>
             <div class="logo">GALAXY</div>
-            <img src="../../assets/img/home/problemIcon.png" class="problemIcon" alt=""/>
+            <img src="../../assets/img/home/problemIcon.png" class="problemIcon" alt=""
+                 @click="$router.push({path:'/rule'})"/>
         </div>
         <!--顶部信息展示-->
         <div class="topInfo">
@@ -174,7 +175,17 @@
                     </label>
                     <label for="sellPrice" class="labelBox">
                         <span class="labelTitle">出售价格：</span>
-                        <input type="text" id="sellPrice" placeholder="请输入出售价格">
+                        <input type="text" id="sellPrice" placeholder=""
+                               style="max-width: 70px;" value="0.062">
+                        <div class="price_slider">
+                            <span class="price_slider_val">{{sellPrice}}%</span>
+                            <van-slider v-model="sellPrice" bar-height="4px" active-color="#AB91EF"
+                                        inactive-color="#AB91EF">
+                                <div slot="button" class="custom-button">
+                                    <img src="../../assets/img/releaseOrder/slider.png"/>
+                                </div>
+                            </van-slider>
+                        </div>
                     </label>
                     <label for="pushNum" class="labelBox">
                         <span class="labelTitle">出售数量：</span>
@@ -192,7 +203,6 @@
                 </p>
             </div>
         </van-popup>
-
     </div>
 </template>
 
@@ -203,7 +213,8 @@
             return {
                 time: 30 * 60 * 60 * 1000,
                 showBuy: false,
-                showPush: true,
+                showPush: false,
+                sellPrice: 50
             }
         },
         methods: {}
@@ -605,6 +616,28 @@
                 color: rgba(255, 255, 255, 1);
                 background: linear-gradient(90deg, rgba(167, 63, 226, 1) 0%, rgba(126, 42, 242, 1) 56%, rgba(97, 29, 232, 1) 100%);
                 border-radius: 32px;
+            }
+        }
+
+        .price_slider {
+            position: relative;
+            width: 250px;
+            .price_slider_val {
+                position: absolute;
+                left: 20px;
+                top: -35px;
+                display: block;
+                font-size: 20px;
+                color: rgba(0, 0, 0, .6);
+            }
+
+            .custom-button {
+                img {
+                    height: 32px;
+                    width: 32px;
+                    display: flex;
+                    justify-content: center;
+                }
             }
         }
     }
