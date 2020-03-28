@@ -5,7 +5,6 @@ import store from './store'
 import ajax from "./utils/ajax"
 import 'lib-flexible'
 
-
 import {Button} from 'vant';
 import {CountDown} from 'vant';
 import {Tab, Tabs} from 'vant';
@@ -16,7 +15,6 @@ import {Grid, GridItem} from 'vant';
 
 Vue.use(Grid);
 Vue.use(GridItem);
-
 Vue.use(Slider);
 Vue.use(Popup);
 Vue.use(Toast);
