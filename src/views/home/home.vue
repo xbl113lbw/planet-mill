@@ -11,7 +11,7 @@
         <div class="topInfo">
             <div class="topInfo_height">
                 区块高度：
-                <span>43200</span>
+                <span>{{homeData.block_num}}</span>
             </div>
             <div class="topInfo_time">
                 <van-count-down :time="time" format="mm:ss">
@@ -46,8 +46,8 @@
             </div>
             <div class="coinInfo_top_line">
                 <div class="coinInfo_top_line_textWrap">
-                    <div>当前排队人数：<span>100</span></div>
-                    <div>排队中：<span>62</span></div>
+                    <div>当前排队人数：<span>{{homeData.total_wait_num}}</span></div>
+                    <div>排队中：<span>{{homeData.waiting_num}}</span></div>
                 </div>
                 <button>碰撞预排</button>
             </div>
@@ -74,7 +74,7 @@
             </div>
         </div>
         <!--表格-->
-        <div class="table">
+        <div class="table" v-if="tableData.length">
             <div class="table_tr table_tr_title">
                 <span>矿机类型</span>
                 <span>矿机数量</span>
@@ -83,48 +83,15 @@
                 <span>矿机奖励</span>
                 <span>分红</span>
             </div>
-            <div class="table_tr">
+            <div class="table_tr" v-for="(item,index) in tableData" :key="index">
                 <span>
-                    <img src="../../assets/img/home/Mercury.png" alt=""/>
-                    水星
+                    <img src="../../assets/img/home/水星.png" alt=""/>
+                    {{item.name}}
                 </span>
-                <span>21</span>
+                <span>{{item.number}}</span>
+                <span>{{item.pool}}</span>
                 <span>0000.</span>
-                <span>0000.</span>
-                <span>0000.</span>
-                <span>0000.</span>
-            </div>
-            <div class="table_tr">
-                <span>
-                    <img src="../../assets/img/home/Mars.png" alt=""/>
-                    火星
-                </span>
-                <span>21</span>
-                <span>0000.</span>
-                <span>0000.</span>
-                <span>0000.</span>
-                <span>0000.</span>
-            </div>
-            <div class="table_tr">
-                <span>
-                    <img src="../../assets/img/home/Venus.png" alt=""/>
-                    金星
-                </span>
-                <span>21</span>
-                <span>0000.</span>
-                <span>0000.</span>
-                <span>0000.</span>
-                <span>0000.</span>
-            </div>
-            <div class="table_tr">
-                <span>
-                    <img src="../../assets/img/home/Saturn.png" alt=""/>
-                    木星
-                </span>
-                <span>21</span>
-                <span>0000.</span>
-                <span>0000.</span>
-                <span>0000.</span>
+                <span>{{item.reward}}</span>
                 <span>0000.</span>
             </div>
         </div>
@@ -214,10 +181,41 @@
                 time: 30 * 60 * 60 * 1000,
                 showBuy: false,
                 showPush: false,
-                sellPrice: 50
+                sellPrice: 50,
+                homeData: {},
+                tableData: []
             }
         },
-        methods: {}
+        async created() {
+            await this.getToken();
+            await this.getHomeData();
+        },
+        methods: {
+            // 获取 token
+            async getToken() {
+                let address = "0x46b3770d3efCC4e5aE30431f1074E9e3a8231053";
+                let obj = {
+                    address: address,
+                    invite_address: "",
+                };
+                await this.ajax.post("v1/users", obj).then(res => {
+                    if (res.data.code === 200) {
+                        let token = res.data.data.token;
+                        sessionStorage.setItem("token", token);
+                    }
+                })
+            },
+            // 获取首页数据
+            async getHomeData() {
+                await this.ajax.get("v1/index").then(res => {
+                    if (res.data.code === 200) {
+                        console.log(res.data);
+                        this.homeData = res.data.data;
+                        this.tableData = this.homeData.machines;
+                    }
+                })
+            }
+        }
     }
 </script>
 
