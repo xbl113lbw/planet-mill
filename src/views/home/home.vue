@@ -200,6 +200,10 @@
         methods: {
             // 获取 token
             async getToken() {
+                let token = sessionStorage.getItem("token");
+                if (token) {
+                    return
+                }
                 let address = "0x46b3770d3efCC4e5aE30431f1074E9e3a8231053";
                 let obj = {
                     address: address,

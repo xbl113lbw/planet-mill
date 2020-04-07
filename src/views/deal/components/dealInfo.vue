@@ -39,12 +39,12 @@
             <div class="orderBox_nav">
                 <div @click="$router.push({path:'/releaseSellOrder'})">
                     <img src="../../../assets/img/deal/sell.png" alt=""/>
-                    <span>发布出售订单</span>
+                    <span>发布订单</span>
                 </div>
-                <div @click="$router.push({path:'/releaseBuyOrder'})">
+                <!--<div @click="$router.push({path:'/releaseBuyOrder'})">
                     <img src="../../../assets/img/deal/buy.png" alt=""/>
                     <span>发布购买订单</span>
-                </div>
+                </div>-->
                 <div @click="$router.push({path:'/orderList'})">
                     <img src="../../../assets/img/deal/order.png" alt=""/>
                     <span>订单</span>
@@ -54,10 +54,10 @@
                     <span>交易记录</span>
                 </div>
             </div>
-            <div class="orderBox_btn">
+            <!--<div class="orderBox_btn">
                 <button :class="orderIndex ? '' : 'active'" @click="orderIndex = 0">我要购买</button>
                 <button :class="orderIndex ? 'active' : ''" @click="orderIndex = 1">我要出售</button>
-            </div>
+            </div>-->
             <ul class="orderBox_list">
                 <li v-for="item in [1,2,3]" :key="item">
                     <div class="left">
@@ -299,6 +299,8 @@
             }
 
             .orderBox_list {
+                margin-top: 20px;
+
                 li {
                     display: flex;
                     align-items: center;
