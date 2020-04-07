@@ -53,6 +53,12 @@
                 listData: [],
             };
         },
+        watch: {
+            active() {
+                this.page = 0;
+                this.getListsData();
+            }
+        },
         methods: {
             getListsData() {
                 this.page++;
