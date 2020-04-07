@@ -3,59 +3,30 @@
     <div class="main_page">
         <NavCom title="资产记录"/>
         <van-tabs v-model="active" class="vanTabs">
-            <van-tab title="充值记录">
+            <van-tab v-for="(val,i) in tabData" :title="val.name" :key='i'>
                 <div class="data_list">
-                    <div class="data_list_row">CAC总量：<span>{{record_data.data1}}</span></div>
-                    <div class="data_list_row">产出总量：<span>{{record_data.data2}}</span></div>
-                    <div class="data_list_row">黑洞销毁：<span>{{record_data.data3}}</span></div>
-                    <div class="data_list_row">流通数量：<span>{{record_data.data4}}</span></div>
+                    <div class="data_list_row">CAC总量：<span>10000</span></div>
+                    <div class="data_list_row">产出总量：<span>10000</span></div>
+                    <div class="data_list_row">黑洞销毁：<span>10000</span></div>
+                    <div class="data_list_row">流通数量：<span>10000</span></div>
                 </div>
-                <div v-for="(item,index) in record_data2" :key="index" class="data_detail">
-                    <div class="data_detail_row">
-                        <span class="rate" :class="item.rate>0?'red':'green'">{{ item.number }}</span>
-                        <span>静态释放</span>
+                <van-list
+                        v-model="loading"
+                        :finished="finished"
+                        :offset="10"
+                        finished-text="没有更多了"
+                        @load="onLoad">
+                    <div v-for="(item,index) in listData" :key="index" class="data_detail">
+                        <div class="data_detail_row">
+                            <span class="rate" :class="item.amount>0?'red':'green'">{{ item.amount }}</span>
+                            <span>{{item.title}}</span>
+                        </div>
+                        <div class="data_detail_row">
+                            <span>余额：{{ item.balance }}</span>
+                            <span>{{ item.created_at }}</span>
+                        </div>
                     </div>
-                    <div class="data_detail_row">
-                        <span>余额：{{ item.balance }}</span>
-                        <span>{{ item.date }}</span>
-                    </div>
-                </div>
-            </van-tab>
-            <van-tab title="碰撞记录">
-                <div class="data_list">
-                    <div class="data_list_row">CAC总量：<span>{{record_data.data1}}</span></div>
-                    <div class="data_list_row">产出总量：<span>{{record_data.data2}}</span></div>
-                    <div class="data_list_row">黑洞销毁：<span>{{record_data.data3}}</span></div>
-                    <div class="data_list_row">流通数量：<span>{{record_data.data4}}</span></div>
-                </div>
-                <div v-for="(item,index) in record_data2" :key="index" class="data_detail">
-                    <div class="data_detail_row">
-                        <span class="rate" :class="item.rate>0?'red':'green'">{{ item.number }}</span>
-                        <span>静态释放</span>
-                    </div>
-                    <div class="data_detail_row">
-                        <span>余额：{{ item.balance }}</span>
-                        <span>{{ item.date }}</span>
-                    </div>
-                </div>
-            </van-tab>
-            <van-tab title="挖矿记录">
-                <div class="data_list">
-                    <div class="data_list_row">CAC总量：<span>{{record_data.data1}}</span></div>
-                    <div class="data_list_row">产出总量：<span>{{record_data.data2}}</span></div>
-                    <div class="data_list_row">黑洞销毁：<span>{{record_data.data3}}</span></div>
-                    <div class="data_list_row">流通数量：<span>{{record_data.data4}}</span></div>
-                </div>
-                <div v-for="(item,index) in record_data2" :key="index" class="data_detail">
-                    <div class="data_detail_row">
-                        <span class="rate" :class="item.rate>0?'red':'green'">{{ item.number }}</span>
-                        <span>静态释放</span>
-                    </div>
-                    <div class="data_detail_row">
-                        <span>余额：{{ item.balance }}</span>
-                        <span>{{ item.date }}</span>
-                    </div>
-                </div>
+                </van-list>
             </van-tab>
         </van-tabs>
     </div>
@@ -71,34 +42,47 @@
         data() {
             return {
                 active: 0,
-                record_data: {
-                    data1: 10000000000001,
-                    data2: 10000000000001,
-                    data3: 10000000000001,
-                    data4: 10000000000001,
-                },
-                record_data2: [{
-                    rate: 2,
-                    number: '+2425454',
-                    balance: 36.68746,
-                    date: "2020/03/22 15:02"
-                }, {
-                    rate: 2,
-                    number: '+2425454',
-                    balance: 36.68746,
-                    date: "2020/03/22 15:02"
-                }, {
-                    rate: 0,
-                    number: '-2425454',
-                    balance: 36.68746,
-                    date: "2020/03/22 15:02"
-                }, {
-                    rate: 0,
-                    number: '-2425454',
-                    balance: 36.68746,
-                    date: "2020/03/22 15:02"
-                }]
+                tabData: [
+                    {name: "充值记录"},
+                    {name: "碰撞记录"},
+                    {name: "挖矿记录"},
+                ],
+                page: 0,
+                loading: false,
+                finished: false,
+                listData: [],
             };
+        },
+        methods: {
+            getListsData() {
+                this.page++;
+                let parmes = {
+                    type: this.active,
+                    size: 10,
+                    page: this.page,
+                };
+                this.ajax.get(`v1/user/asset_log/type/${this.active}/page/${this.page}/size/10`, parmes).then(res => {
+                    if (res.data.code === 200) {
+                        console.log(res.data);
+                        let arrData = res.data.data;
+                        if (arrData) {
+                            this.finished = true;
+                        }
+                        this.listData.push(...arrData);
+                        // 加载状态结束
+                        this.loading = false;
+                        // 数据全部加载完成
+                        if (arrData.length || arrData.length < 10) {
+                            this.finished = true;
+                        }
+                    }
+                })
+            },
+            onLoad() {
+                setTimeout(() => {
+                    this.getListsData();
+                }, 500);
+            },
         }
     };
 </script>

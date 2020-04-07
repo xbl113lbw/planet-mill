@@ -6,7 +6,7 @@
  -->
 <template>
     <div class="box">
-        <NavCom title="直推详情"/>
+        <NavCom :title="title"/>
         <div class="bgimg"></div>
         <div class="content">
             <div class="verticalLine left_194"></div>
@@ -17,14 +17,21 @@
                 <div class="right">参与业绩</div>
             </div>
             <div class="line"></div>
-            <div v-for="(item,index) in data" :key="index">
-                <div class="tItem">
-                    <div class="left">KFHFHKHD</div>
-                    <div class="center">2020/03/22 10:49:56</div>
-                    <div class="right">24794387</div>
+            <van-list
+                    v-model="loading"
+                    :finished="finished"
+                    :offset="10"
+                    finished-text="没有更多了"
+                    @load="onLoad">
+                <div v-for="(item,index) in listData" :key="index">
+                    <div class="tItem">
+                        <div class="left">{{item.address}}</div>
+                        <div class="center">{{item.created_at}}</div>
+                        <div class="right">{{item.performance}}</div>
+                    </div>
+                    <div v-if="index!==listData.length-1" class="line"></div>
                 </div>
-                <div v-if="index!==data.length-1" class="line"></div>
-            </div>
+            </van-list>
         </div>
     </div>
 </template>
@@ -39,8 +46,55 @@
         },
         data() {
             return {
-                data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+                data: [1, 2, 3, 4, 5, 6],
+                title: "",
+                // 列表
+                page: 0,
+                loading: false,
+                finished: false,
+                listData: [],
             };
+        },
+        methods: {
+            getListsData() {
+                this.page++;
+                let parmes = {
+                    size: 10,
+                    page: this.page,
+                };
+                const type = this.$route.query.type; // 0：直推 1：间推
+                let url;
+                switch (type) {
+                    case 0:
+                        url = `v1/user/direct_list/page/${this.page}/size/10`;
+                        this.title = "直推详情";
+                        break;
+                    case 1:
+                        url = `v1/user/indirect_list/page/${this.page}/size/10`;
+                        this.title = "间推详情";
+                        break;
+                }
+                this.ajax.get(url, parmes).then(res => {
+                    if (res.data.code === 200) {
+                        let arrData = res.data.data;
+                        if (arrData) {
+                            this.finished = true;
+                        }
+                        this.listData.push(...arrData);
+                        // 加载状态结束
+                        this.loading = false;
+                        // 数据全部加载完成
+                        if (arrData.length || arrData.length < 10) {
+                            this.finished = true;
+                        }
+                    }
+                })
+            },
+            onLoad() {
+                setTimeout(() => {
+                    this.getListsData();
+                }, 500);
+            },
         }
     };
 </script>

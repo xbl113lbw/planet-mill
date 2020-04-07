@@ -12,7 +12,9 @@ import {Toast} from 'vant';
 import {Popup} from 'vant';
 import {Slider} from 'vant';
 import {Grid, GridItem} from 'vant';
+import {List} from 'vant';
 
+Vue.use(List);
 Vue.use(Grid);
 Vue.use(GridItem);
 Vue.use(Slider);

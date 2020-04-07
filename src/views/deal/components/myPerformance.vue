@@ -2,7 +2,7 @@
     <div class="myPerformance">
         <div class="teamNum">
             <span>团队总人数：</span>
-            <span>0.789</span>
+            <span>{{myPerformanceData.team_num}}</span>
         </div>
         <!--邀请链接-->
         <div class="invite">
@@ -20,17 +20,17 @@
         <div class="directNum">
             <div class="left">
                 <span>直推人数：</span>
-                <span>1000人</span>
+                <span>{{myPerformanceData.direct_num}}人</span>
             </div>
-            <button @click="$router.push({path:'/directPushDetail'})">查看详情</button>
+            <button @click="$router.push({path:'/directPushDetail',query:{type:0}})">查看详情</button>
         </div>
         <!--间推人数-->
         <div class="indirectNum">
             <div class="left">
                 <span>间推人数：</span>
-                <span>1000人</span>
+                <span>{{myPerformanceData.indirect_num}}人</span>
             </div>
-            <button @click="$router.push({path:'/directPushDetail'})">查看详情</button>
+            <button @click="$router.push({path:'/directPushDetail',query:{type:1}})">查看详情</button>
         </div>
     </div>
 </template>
@@ -40,6 +40,14 @@
 
     export default {
         name: "myPerformance",
+        data() {
+            return {
+                myPerformanceData: {}
+            }
+        },
+        created() {
+            this.getData()
+        },
         methods: {
             /*复制功能*/
             copyEvent() {
@@ -54,6 +62,14 @@
                     e.clearSelection();
                 });
             },
+            getData() {
+                this.ajax.get("v1/user/team").then(res => {
+                    if (res.data.code === 200) {
+                        console.log(res.data);
+                        this.myPerformanceData = res.data.data;
+                    }
+                })
+            }
         }
     }
 </script>

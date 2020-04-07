@@ -10,10 +10,10 @@
                   line-height="3px"
                   line-width="12px">
             <van-tab title="市值/交易" name="dealInfo">
-                <DealInfo/>
+                <DealInfo v-if="activeName === 'dealInfo'"/>
             </van-tab>
             <van-tab title="我的业绩" name="myPerformance">
-                <MyPerformance/>
+                <MyPerformance v-if="activeName === 'myPerformance'"/>
             </van-tab>
         </van-tabs>
         <Tab tabIndex="交易"/>
@@ -34,7 +34,7 @@
             return {
                 activeName: ""
             }
-        }
+        },
     }
 </script>
 

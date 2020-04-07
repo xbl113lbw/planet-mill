@@ -1,15 +1,24 @@
 import axios from 'axios'
 import Qs from 'qs'
+import {Toast} from "vant"
+
+let token = sessionStorage.getItem("token") || "";
 
 // 创建axios实例
 let instance = axios.create({
     timeout: 0,
-    baseURL: "",
-    headers: {}
+    baseURL: "http://test.baas.yingbei365.com/api/",
+    headers: {
+        Authorization: token
+    }
 });
 
 // 添加请求拦截器
-axios.interceptors.request.use(function (config) {
+instance.interceptors.request.use(function (config) {
+    Toast.loading({
+        duration: 0,
+        message: '请稍后...',
+    });
     // 在发送请求之前做些什么
     return config;
 }, function (error) {
@@ -18,7 +27,8 @@ axios.interceptors.request.use(function (config) {
 });
 
 // 添加响应拦截器
-axios.interceptors.response.use(function (response) {
+instance.interceptors.response.use(function (response) {
+    Toast.clear();
     // 对响应数据做点什么
     return response;
 }, function (error) {
