@@ -12,11 +12,11 @@
             <div v-for="(item,index) in tabData"
                  :key="index"
                  class="itemBox"
-                 @click="changeTabIndex(index,item)">
+                 @click="changeTabIndex(item)">
                 <div class="tabIcon">
-                    <img :src="tabIndex===index?item.selectIcon:item.defaultIcon" alt/>
+                    <img :src="tabIndex===item.name ? item.selectIcon:item.defaultIcon" alt/>
                 </div>
-                <div :class="[tabIndex!==index ? 'opacityName' : '', 'tabName']">{{item.name}}</div>
+                <div :class="[tabIndex!==item.name ? 'opacityName' : '', 'tabName']">{{item.name}}</div>
             </div>
         </div>
     </div>
@@ -26,17 +26,43 @@
         name: "tab",
         props: {
             tabIndex: {
-                type: Number,
-                required: true
+                default: "",
+                type: String,
             },
-            tabData: {
-                ype: Array,
-                required: true
+        },
+        data() {
+            return {
+                tabData: [
+                    {
+                        name: "首页", //tab名称
+                        defaultIcon: require("@/assets/img/tab/home.png"), //默认图片
+                        selectIcon: require("@/assets/img/tab/home_A.png"), //选择图片
+                        router: "/" //跳转的路由
+                    },
+                    {
+                        name: "星球矿机", //tab名称
+                        defaultIcon: require("@/assets/img/tab/deal.png"), //默认图片
+                        selectIcon: require("@/assets/img/tab/deal_A.png"), //选择图片
+                        router: "/planet" //跳转的路由
+                    },
+                    {
+                        name: "交易", //tab名称
+                        defaultIcon: require("@/assets/img/tab/mill.png"), //默认图片
+                        selectIcon: require("@/assets/img/tab/mill_A.png"), //选择图片
+                        router: "/deal" //跳转的路由
+                    },
+                    {
+                        name: "资产", //tab名称
+                        defaultIcon: require("@/assets/img/tab/property.png"), //默认图片
+                        selectIcon: require("@/assets/img/tab/home_A.png"), //选择图片
+                        router: "/property" //跳转的路由
+                    }
+                ]
             }
         },
         methods: {
-            changeTabIndex(index, item) {
-                this.$emit("changeTabIndex", index, item);
+            changeTabIndex(item) {
+                this.$router.push({path: item.router});
             }
         }
     };
@@ -79,20 +105,24 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
         .tabIcon {
             width: 48px;
             height: 48px;
             margin-bottom: 5px;
+
             img {
                 width: 100%;
                 height: 100%;
                 display: block;
             }
         }
+
         .tabName {
             font-size: 18px;
             color: #ffffff;
         }
+
         .opacityName {
             opacity: 0.6;
         }

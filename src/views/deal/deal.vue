@@ -16,17 +16,19 @@
                 <MyPerformance/>
             </van-tab>
         </van-tabs>
+        <Tab tabIndex="交易"/>
     </div>
 </template>
 
 <script>
     import DealInfo from "./components/dealInfo.vue"
     import MyPerformance from "./components/myPerformance.vue"
+    import Tab from "../../components/tab";
 
     export default {
         name: "deal",
         components: {
-            DealInfo, MyPerformance
+            DealInfo, MyPerformance, Tab
         },
         data() {
             return {

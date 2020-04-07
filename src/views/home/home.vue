@@ -203,12 +203,19 @@
                 </p>
             </div>
         </van-popup>
+        <!--底部-->
+        <Tab tabIndex="首页"/>
     </div>
 </template>
 
 <script>
+    import Tab from "../../components/tab";
+
     export default {
         name: "home",
+        components: {
+            Tab
+        },
         data() {
             return {
                 time: 30 * 60 * 60 * 1000,
@@ -622,6 +629,7 @@
         .price_slider {
             position: relative;
             width: 250px;
+
             .price_slider_val {
                 position: absolute;
                 left: 20px;

@@ -69,16 +69,20 @@
                 </div>
             </div>
         </div>
+        <!--底部-->
+        <Tab tabIndex="星球矿机"/>
     </div>
 </template>
 
 <script>
     import NavCom from "@/components/nav.vue"
+    import Tab from "../../components/tab";
 
     export default {
         name: "planet",
         components: {
-            NavCom
+            NavCom,
+            Tab
         },
         data() {
             return {};
