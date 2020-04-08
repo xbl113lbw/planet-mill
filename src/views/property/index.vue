@@ -67,7 +67,7 @@
         <div class="operationBox">
             <div class="leftBox">
                 <div class="itemImg">
-                    <img src="./../../assets/img/property/Mercury.png" alt/>
+                    <img src="../../assets/img/property/水星.png" alt/>
                 </div>
                 <div class="itemName">水星</div>
             </div>
@@ -140,11 +140,11 @@
         data() {
             return {
                 imgItem: [
-                    require("./../../assets/img/property/Mercury.png"),
-                    require("./../../assets/img/property/Mars.png"),
-                    require("./../../assets/img/property/Venus.png"),
-                    require("./../../assets/img/property/Saturn.png"),
-                    require("./../../assets/img/property/Jupiter.png")
+                    require("../../assets/img/property/水星.png"),
+                    require("../../assets/img/property/火星.png"),
+                    require("../../assets/img/property/金星.png"),
+                    require("../../assets/img/property/土星.png"),
+                    require("../../assets/img/property/木星.png")
                 ]
             };
         }

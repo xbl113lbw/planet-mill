@@ -85,7 +85,7 @@
             </div>
             <div class="table_tr" v-for="(item,index) in tableData" :key="index">
                 <span>
-                    <img src="../../assets/img/home/水星.png" alt=""/>
+                    <img :src="require(`../../assets/img/property/${item.name}.png`)" alt=""/>
                     {{item.name}}
                 </span>
                 <span>{{item.number}}</span>
@@ -200,10 +200,6 @@
         methods: {
             // 获取 token
             async getToken() {
-                let token = sessionStorage.getItem("token");
-                if (token) {
-                    return
-                }
                 let address = "0x46b3770d3efCC4e5aE30431f1074E9e3a8231053";
                 let obj = {
                     address: address,

@@ -2,15 +2,12 @@ import axios from 'axios'
 import Qs from 'qs'
 import {Toast} from "vant"
 
-let token = sessionStorage.getItem("token") || "";
 
 // 创建axios实例
 let instance = axios.create({
     timeout: 0,
     baseURL: "http://test.baas.yingbei365.com/api/",
-    headers: {
-        Authorization: token
-    }
+    headers: {}
 });
 
 // 添加请求拦截器
@@ -19,6 +16,9 @@ instance.interceptors.request.use(function (config) {
         duration: 0,
         message: '请稍后...',
     });
+    // 设置 token
+    let token = sessionStorage.getItem("token") || "";
+    config.headers.Authorization = token;
     // 在发送请求之前做些什么
     return config;
 }, function (error) {

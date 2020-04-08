@@ -20,13 +20,13 @@
             </div>
             <div class="chargeBtn">充币</div>
         </div>
-        <div v-for="(item,index) in [1,2,3,4,5]" :key="index" class="itemBox">
+        <div v-for="(item,index) in listData" :key="index" class="itemBox">
             <div class="leftBox">
                 <div class="itemImg">
-                    <img src="./../../assets/img/property/Mercury.png" alt/>
+                    <img :src="require(`../../assets/img/property/${item.name}.png`)" alt/>
                 </div>
-                <div class="itemName">水星</div>
-                <div class="itemGold">1200 CAC</div>
+                <div class="itemName">{{item.name}}</div>
+                <div class="itemGold">{{parseInt(item.price)}} CAC</div>
             </div>
             <div class="line"></div>
             <div class="rightBox">
@@ -34,35 +34,34 @@
                     <div class="rowBox">
                         <div>
                             <span class="opacityText">产出总量：</span>
-                            <span class="whiteText">1000 USDT</span>
+                            <span class="whiteText">{{item.all_num}} USDT</span>
                         </div>
                         <div>
                             <span class="opacityText">矿机总量：</span>
-                            <span class="whiteText rightNumber">21台</span>
+                            <span class="whiteText rightNumber">{{item.machine_num}}台</span>
                         </div>
                     </div>
                     <div class="rowBox">
                         <div>
                             <span class="opacityText">日产出：</span>
-                            <span class="whiteText">100 USDT</span>
+                            <span class="whiteText">{{item.day_num}} USDT</span>
                         </div>
                         <div>
                             <span class="opacityText">已运行：</span>
-                            <span class="whiteText rightNumber">21台</span>
+                            <span class="whiteText rightNumber">{{item.running_num}}台</span>
                         </div>
                     </div>
                     <div class="rowBox">
                         <div>
                             <span class="opacityText">分红比例：</span>
-                            <span class="whiteText">1%</span>
+                            <span class="whiteText">{{item.proportion * 100}}%</span>
                         </div>
                         <div>
                             <span class="opacityText">排队人数：</span>
-                            <span class="whiteText rightNumber">36人</span>
+                            <span class="whiteText rightNumber">{{item.waiting_num}}人</span>
                         </div>
                     </div>
                 </div>
-
                 <div class="btnBox">
                     <div class="btnItem">购买</div>
                     <div class="btnItem">参与排队</div>
@@ -85,7 +84,22 @@
             Tab
         },
         data() {
-            return {};
+            return {
+                listData: []
+            };
+        },
+        created() {
+            this.getListData();
+        },
+        methods: {
+            getListData() {
+                this.ajax.get("v1/goods").then(res => {
+                    if (res.data.code === 200) {
+                        console.log(res.data.data);
+                        this.listData = res.data.data;
+                    }
+                })
+            }
         }
     }
 </script>
@@ -115,6 +129,7 @@
         position: relative;
         padding: 40px 30px 55px 30px;
         margin: 0 auto;
+
         .bgimg {
             width: 100%;
             background-image: url("./../../assets/img/bg.png");
@@ -127,6 +142,7 @@
             right: 0;
             z-index: -1;
         }
+
         .top {
             width: 690px;
             height: 116px;
@@ -138,16 +154,20 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             .textBox {
                 display: flex;
+
                 & div:first-child {
                     margin-right: 46px;
                 }
+
                 & div span {
                     color: #ffffff;
                     opacity: 0.6;
                 }
             }
+
             .chargeBtn {
                 width: 100px;
                 height: 44px;
@@ -159,6 +179,7 @@
                 line-height: 44px;
             }
         }
+
         .itemBox {
             width: 690px;
             background: #2c244a;
@@ -167,19 +188,23 @@
             display: flex;
             align-items: center;
             padding: 40px 29px 40px 34px;
+
             .leftBox {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+
                 .itemImg {
                     width: 118px;
                     height: 120px;
+
                     img {
                         width: 100%;
                         height: 100%;
                         display: block;
                     }
                 }
+
                 .itemName {
                     width: 90px;
                     height: 34px;
@@ -193,6 +218,7 @@
                     color: #ffffff;
                     font-size: 24px;
                 }
+
                 .itemGold {
                     width: 150px;
                     height: 42px;
@@ -202,6 +228,7 @@
                     line-height: 42px;
                 }
             }
+
             .line {
                 width: 1px;
                 height: 180px;
@@ -209,10 +236,12 @@
                 opacity: 0.2;
                 margin-left: 20px;
             }
+
             .rightBox {
                 flex: 1;
                 margin-left: 19px;
                 align-self: flex-start;
+
                 .textBox {
                     font-size: 24px;
                     color: #ffffff;
@@ -222,17 +251,21 @@
                         justify-content: space-between;
                         margin-bottom: 12px;
                     }
+
                     & .rowBox:nth-child(2) {
                         margin-bottom: 10px;
                     }
+
                     & .rowBox:last-child {
                         margin-bottom: 0;
                     }
                 }
+
                 .btnBox {
                     display: flex;
                     justify-content: space-between;
                     padding: 23px 18px 0 14px;
+
                     .btnItem {
                         width: 160px;
                         height: 56px;
