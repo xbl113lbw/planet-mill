@@ -57,7 +57,7 @@
                     let flag;
                     switch (this.active) {
                         case "push":
-                            flag = res.status === 1 && this.myAccount === res.adAddress;
+                            flag = res.status === "1" && this.myAccount === res.adAddress;
                             break;
                         case "ready":
                             flag = res.status >= 2 && this.myAccount === res.adAddress;

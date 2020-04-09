@@ -427,6 +427,10 @@ let abi = [
         "name": "exchangeList",
         "outputs": [
             {
+                "name": "id",
+                "type": "uint256"
+            },
+            {
                 "name": "adAddress",
                 "type": "address"
             },

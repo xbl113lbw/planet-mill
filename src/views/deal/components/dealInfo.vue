@@ -22,7 +22,7 @@
             </div>
         </div>
         <!--图表区域-->
-        <div class="charts">
+        <!--<div class="charts">
             <div class="titleAndBtn">
                 <span class="titleAndBtn_title">行情</span>
                 <div class="titleAndBtn_btn">
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div ref="chartWrap" class="chartsBox"></div>
-        </div>
+        </div>-->
         <!--操作区域-->
         <div class="orderBox">
             <div class="orderBox_nav">
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="center">{{item.price}}</div>
-                    <button class="right">立即交易</button>
+                    <button class="right" @click="buy(item.id)">立即交易</button>
                 </li>
             </ul>
         </div>
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-    import {createChart} from 'lightweight-charts';
+    // import {createChart} from 'lightweight-charts';
     import {mapState} from "vuex";
 
     export default {
@@ -98,7 +98,7 @@
         },
         mounted() {
             // 初始化图表
-            const chart = createChart(this.$refs.chartWrap, {
+            /*const chart = createChart(this.$refs.chartWrap, {
                 layout: {
                     backgroundColor: 'transparent',
                     textColor: 'rgba(255, 255, 255, 0.9)',
@@ -125,7 +125,7 @@
                 {time: "2018-12-30", open: 106.33, high: 110.20, low: 90.39, close: 98.10},
                 {time: "2018-12-31", open: 109.87, high: 114.69, low: 85.66, close: 111.26},
             ];
-            this.candlestickSeries.setData(this.chartData);
+            this.candlestickSeries.setData(this.chartData);*/
             this.exchangeList();
         },
         methods: {
@@ -141,11 +141,19 @@
                         item.num = this.web3.utils.fromWei(res.num);
                         item.allNum = res.allNum;
                         item.status = res.status;
+                        item.id = res.id;
                         this.listId++;
                         this.listData.push(item);
                         this.exchangeList();
                     }
                 }).catch(error => console.log(error));
+            },
+            buy(id) {
+                this.MyContract.methods.buy(id).send({
+                    from: this.myAccount
+                }).then(res => {
+                    console.log(res);
+                })
             }
         }
     }

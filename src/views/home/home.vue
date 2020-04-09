@@ -237,7 +237,9 @@
                         this.homeData = res.data.data;
                         this.time = res.data.data.time - new Date().getTime();
                         this.tableData = this.homeData.machines;
-                        this.finishFlag = true;
+                        setTimeout(() => {
+                            this.finishFlag = true;
+                        }, 500)
                     }
                 }).catch(() => {
                     this.reload();
