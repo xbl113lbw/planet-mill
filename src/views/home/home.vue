@@ -197,6 +197,7 @@
             }
         },
         async mounted() {
+            await this.getToken();
             await this.getHomeData();
             // 获取货币余额
             await this.usdtBalanceOf();
@@ -210,6 +211,24 @@
         },
         methods: {
             ...mapActions(["start", "usdtBalanceOf", "usdtFreezeBalanceOf", "coinBalanceOf", "coinFreezeBalanceOf"]),
+            // 获取 token
+            async getToken() {
+                let token = sessionStorage.getItem("token");
+                if (token) {
+                    return
+                }
+                let address = this.myAccount;
+                let obj = {
+                    address: address,
+                    invite_address: "",
+                };
+                await this.ajax.post("v1/users", obj).then(res => {
+                    if (res.data.code === 200) {
+                        let token = res.data.data.token;
+                        sessionStorage.setItem("token", token);
+                    }
+                })
+            },
             // 获取首页数据
             async getHomeData() {
                 await this.ajax.get("v1/index").then(res => {
@@ -217,12 +236,13 @@
                         this.homeData = res.data.data;
                         this.time = res.data.data.time - new Date().getTime();
                         this.tableData = this.homeData.machines;
-                        // 开起开关
-                        this.finishFlag = true;
+                    } else {
+                        this.reload();
                     }
                 })
             },
             timeFinish() {
+                this.time = 60 * 1000;
                 this.reload();
             }
         }

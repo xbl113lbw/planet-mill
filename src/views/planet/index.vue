@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="btnBox">
-                    <div class="btnItem">购买</div>
+                    <div class="btnItem" @click="buy(index+1)">购买</div>
                     <div class="btnItem">参与排队</div>
                 </div>
             </div>
@@ -103,6 +103,9 @@
                         this.listData = res.data.data;
                     }
                 })
+            },
+            buy(index) {
+                console.log(index)
             }
         }
     }

@@ -39,7 +39,6 @@ instance.interceptors.response.use(function (response) {
     let code = error.response.data.code;
     if (code === 422) {
         sessionStorage.removeItem("token");
-        window.location.reload();
     }
     // 对响应错误做点什么
     return Promise.reject(error);
