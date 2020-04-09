@@ -8,7 +8,7 @@
         <div class="invite">
             <div class="invite_url">
                 <span>邀请链接：</span>
-                <span id="target">http://www.belewtech.com/?bd_vid=8151767933530422775</span>
+                <span id="target">{{url}}</span>
             </div>
             <button class="tagRead"
                     @click="copyEvent"
@@ -37,16 +37,23 @@
 
 <script>
     import Clipboard from "clipboard"
+    import {mapState} from "vuex";
 
     export default {
         name: "myPerformance",
         data() {
             return {
-                myPerformanceData: {}
+                myPerformanceData: {},
+                url: ""
             }
         },
         created() {
-            this.getData()
+            this.getData();
+            this.url = `${window.location.host}/?aid=${this.myAccount}`;
+        },
+        computed: {
+            // vuex state
+            ...mapState(["myAccount"])
         },
         methods: {
             /*复制功能*/
