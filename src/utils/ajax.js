@@ -19,7 +19,7 @@ instance.interceptors.request.use(function (config) {
         message: '请稍后...',
     });
     // 设置 token
-    let token = sessionStorage.getItem("token") || "";
+    let token = sessionStorage.getItem("Token") || "";
     config.headers.Authorization = token;
     // 在发送请求之前做些什么
     return config;
@@ -38,7 +38,7 @@ instance.interceptors.response.use(function (response) {
     // 422 token 过期
     let code = error.response.data.code;
     if (code === 422) {
-        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("Token");
         window.location.reload();
     }
     // 对响应错误做点什么

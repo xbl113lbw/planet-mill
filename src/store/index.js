@@ -7,13 +7,13 @@ import {Toast} from "vant";
 import ajax from "../utils/ajax"
 
 // vuex 持久化插件（原理：将数据保存在session中一份）
-import persistedState from "vuex-persistedstate"
+import createPersistedState from "vuex-persistedstate"
 
 Vue.use(Vuex);
 Vue.use(Toast);
 
 const store = new Vuex.Store({
-    plugins: [persistedState({storage: window.sessionStorage})],
+    plugins: [createPersistedState({storage: window.sessionStorage})],
     state: {
         userInfo: {},
         web3: null,
@@ -26,7 +26,7 @@ const store = new Vuex.Store({
         abi: abi,
         usdtAbi: usdtAbi,
         // 合约地址
-        address: "0x046c266ad321abaee3c9b0c5bfd866a6557150d7",
+        address: "0xc37ac066f8f2644d2ec68bb8c3e3c0c89b049f83",
         usdtAddress: "0xdac17f958d2ee523a2206206994597c13d831ec7",
         // usdt 余额
         myUsdt: null,
@@ -128,7 +128,6 @@ const store = new Vuex.Store({
             })
         }
     },
-    modules: {}
 });
 
 export default store;

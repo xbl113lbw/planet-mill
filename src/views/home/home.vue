@@ -226,7 +226,7 @@
                 await this.ajax.post("v1/users", obj).then(res => {
                     if (res.data.code === 200) {
                         let token = res.data.data.token;
-                        sessionStorage.setItem("token", token);
+                        sessionStorage.setItem("Token", token);
                     }
                 })
             },
