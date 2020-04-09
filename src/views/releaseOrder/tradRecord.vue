@@ -2,25 +2,15 @@
     <div class="main_page">
         <NavCom title="交易记录"/>
         <van-tabs v-model="active" class="vanTabs">
-            <van-tab title="业务类型">
-                <van-grid :column-num="3" class="table">
-                    <van-grid-item v-for="value in 12" :key="value" text="X"/>
-                </van-grid>
-            </van-tab>
-            <van-tab title="数额">
-                <van-grid :column-num="3" class="table">
-                    <van-grid-item v-for="value in 12" :key="value" text="1"/>
-                </van-grid>
-            </van-tab>
-            <van-tab title="当前ACA">
-                <van-grid :column-num="3" class="table">
-                    <van-grid-item v-for="value in 12" :key="value" text="0"/>
-                </van-grid>
-            </van-tab>
-            <van-tab title="时间">
-                <van-grid :column-num="3" class="table">
-                    <van-grid-item v-for="value in 12" :key="value" text="Q"/>
-                </van-grid>
+            <van-tab v-for="(item,index) in tabNav" :key="index"
+                     :title="item.title" :name="item.name">
+                <ul class="listWrap">
+                    <li v-for="(v,i) in [1,2,3]" :key="i">
+                        <span>1</span>
+                        <span>1</span>
+                        <span>1</span>
+                    </li>
+                </ul>
             </van-tab>
         </van-tabs>
     </div>
@@ -34,7 +24,13 @@
         },
         data() {
             return {
-                active: ""
+                active: "",
+                tabNav: [
+                    {title: "业务类型", name: "a"},
+                    {title: "数额", name: "b"},
+                    {title: "当前ACA", name: "c"},
+                    {title: "时间", name: "d"},
+                ]
             }
         }
     }
@@ -79,40 +75,45 @@
         }
     }
 
-    .table {
+    .listWrap {
         margin-top: 40px;
+        padding: 20px;
         border-radius: 8px;
-    }
-</style>
-<style lang="scss">
-    .van-grid {
-        &:after {
-            border: 0;
-        }
+        background: #2C244A;
 
-        .van-grid-item {
-            flex-basis: 28% !important;
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
 
-            &:nth-child(3n+3) {
-                flex-basis: 44% !important;
+            &:last-child {
+                border: none;
             }
 
-        }
+            span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 70px;
+                font-size: 26px;
+                font-weight: 600;
+                color: #fff;
+                border-right: 1px solid rgba(255, 255, 255, .1);
 
-        .van-grid-item__content {
-            background-color: #2C244A !important;
+                &:nth-child(1) {
+                    flex: 1;
+                }
 
-            &:after {
-                border-color: rgba(255, 255, 255, .1);
+                &:nth-child(2) {
+                    flex: 1.5;
+                }
+
+                &:nth-child(3) {
+                    flex: 2;
+                    border: none;
+                }
             }
-
-        }
-
-        .van-grid-item__text {
-
-            font-size: 13px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 1);
         }
     }
 </style>

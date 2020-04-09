@@ -14,7 +14,7 @@
                 <span>{{homeData.block_num}}</span>
             </div>
             <div class="topInfo_time">
-                <van-count-down :time="homeData.time">
+                <van-count-down :time="time">
                     <template v-slot="timeData">
                         <span class="item">
                             {{ timeData.minutes }}
@@ -190,43 +190,33 @@
                 showBuy: false,
                 showPush: false,
                 sellPrice: 50,
+                time: null,
                 homeData: {},
                 tableData: []
             }
         },
         async mounted() {
-            await this.getToken();
+            console.log(new Date().getTime());
             await this.getHomeData();
+            // 获取货币余额
+            await this.usdtBalanceOf();
+            await this.usdtFreezeBalanceOf();
+            await this.coinBalanceOf();
+            await this.coinFreezeBalanceOf();
         },
         computed: {
             // vuex state
-            ...mapState(["myAccount", "myUsdt", "myFreezeUsdt", "cac", "myFreezeCac"])
+            ...mapState(["myUsdt", "myFreezeUsdt", "cac", "myFreezeCac"])
         },
         methods: {
-            ...mapActions(["start"]),
-            // 获取 token
-            async getToken() {
-                let token = sessionStorage.getItem("token");
-                if (token) {
-                    return
-                }
-                let address = this.myAccount;
-                let obj = {
-                    address: address,
-                    invite_address: "",
-                };
-                await this.ajax.post("v1/users", obj).then(res => {
-                    if (res.data.code === 200) {
-                        let token = res.data.data.token;
-                        sessionStorage.setItem("token", token);
-                    }
-                })
-            },
+            ...mapActions(["start", "usdtBalanceOf", "usdtFreezeBalanceOf", "coinBalanceOf", "coinFreezeBalanceOf"]),
             // 获取首页数据
             async getHomeData() {
                 await this.ajax.get("v1/index").then(res => {
                     if (res.data.code === 200) {
                         this.homeData = res.data.data;
+                        this.time = res.data.data.time - new Date().getTime();
+                        console.log(this.time);
                         this.tableData = this.homeData.machines;
                     }
                 }).catch(() => {
@@ -412,9 +402,12 @@
                     flex-wrap: wrap;
 
                     div {
-                        min-width: 50%;
+                        width: 50%;
                         margin-bottom: 12px;
                         font-size: 26px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
                         color: rgba(255, 255, 255, .6);
 
                         &:nth-child(3), &:nth-child(4) {

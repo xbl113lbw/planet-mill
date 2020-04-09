@@ -59,15 +59,15 @@
                 <button :class="orderIndex ? 'active' : ''" @click="orderIndex = 1">我要出售</button>
             </div>-->
             <ul class="orderBox_list">
-                <li v-for="item in [1,2,3]" :key="item">
+                <li v-for="(item,index) in listData" :key="index">
                     <div class="left">
                         <img src="../../../assets/img/deal/coin.png" alt=""/>
                         <div>
-                            <span>随便起个名字</span>
-                            <span>出售：9284.00</span>
+                            <span>{{item.adAddress}}</span>
+                            <span>出售：{{item.num}}</span>
                         </div>
                     </div>
-                    <div class="center">0.9358</div>
+                    <div class="center">{{item.price}}</div>
                     <button class="right">立即交易</button>
                 </li>
             </ul>
@@ -77,6 +77,7 @@
 
 <script>
     import {createChart} from 'lightweight-charts';
+    import {mapState} from "vuex";
 
     export default {
         name: "dealInfo",
@@ -86,7 +87,14 @@
                 orderIndex: 0,
                 chartData: [],
                 candlestickSeries: null,
+                // 交易列表
+                listData: [],
+                listId: 1
             }
+        },
+        computed: {
+            // vuex state
+            ...mapState(["cac", "cacPrice", "MyContract", "web3", "myAccount"])
         },
         mounted() {
             // 初始化图表
@@ -118,9 +126,27 @@
                 {time: "2018-12-31", open: 109.87, high: 114.69, low: 85.66, close: 111.26},
             ];
             this.candlestickSeries.setData(this.chartData);
+            this.exchangeList();
         },
-        methods:{
-            
+        methods: {
+            // 用户的所有的挂的单的价格（数组，从1开始到结束）
+            exchangeList() {
+                this.MyContract.methods.exchangeList(this.listId).call().then(res => {
+                    if (res.status > 0) {
+                        console.log(res);
+                        let item = {};
+                        item.adAddress = res.adAddress;
+                        item.exAddress = res.exAddress;
+                        item.price = res.price;
+                        item.num = res.num;
+                        item.allNum = res.allNum;
+                        item.status = res.status;
+                        this.listId++;
+                        this.listData.push(item);
+                        this.exchangeList();
+                    }
+                });
+            }
         }
     }
 </script>
@@ -328,6 +354,10 @@
                         div {
                             span {
                                 display: block;
+                                max-width: 160px;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
 
                                 &:first-child {
                                     margin-bottom: 4px;
@@ -344,6 +374,10 @@
                     }
 
                     .center {
+                        max-width: 100px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
                         font-size: 30px;
                         font-weight: 600;
                         color: #AB91EF;

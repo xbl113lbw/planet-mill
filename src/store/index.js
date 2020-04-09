@@ -65,12 +65,6 @@ const store = new Vuex.Store({
             /*异步获取账户地址*/
             state.web3.eth.getAccounts().then((res) => {
                 state.myAccount = res[0];
-                // 获取余额
-                store.dispatch('usdtBalanceOf');
-                store.dispatch('usdtFreezeBalanceOf');
-                store.dispatch('coinBalanceOf');
-                store.dispatch('coinFreezeBalanceOf');
-                store.dispatch('exchangeList');
                 /*promise 回调*/
                 if (resolve) {
                     resolve();
@@ -105,12 +99,6 @@ const store = new Vuex.Store({
                 state.myFreezeCac = state.web3.utils.fromWei(res);
             });
         },
-        // 用户的所有的挂的单的价格(数组，从1开始到结束)
-        exchangeList({state}) {
-            state.MyContract.methods.exchangeList(1).call().then(res => {
-                console.log("所有的挂的单", res);
-            });
-        },
         //获取发布订单当前价格（当前的CAC价格）
         coinPrice({state}) {
             state.MyContract.methods.coinPrice().call().then(res => {
@@ -130,8 +118,6 @@ const store = new Vuex.Store({
                 console.log("用户参与100USDT排队", res);
             });
         },
-        // 用户的所有的挂的单的价格（数组，从1开始到结束）
-
     },
     modules: {}
 });

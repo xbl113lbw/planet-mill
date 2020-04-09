@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
+    import {mapActions, mapState} from "vuex";
 
     export default {
         name: "App",
@@ -24,12 +24,30 @@
             new Promise(res => {
                 this.web3Init(res);
             }).then(() => {
-                this.showView = true;
+                this.getToken();
             })
+        },
+        computed: {
+            ...mapState(["myAccount"])
         },
         methods: {
             // vuex action
             ...mapActions(["web3Init"]),
+            // 获取 token
+            getToken() {
+                let address = this.myAccount;
+                let obj = {
+                    address: address,
+                    invite_address: "",
+                };
+                this.ajax.post("v1/users", obj).then(res => {
+                    if (res.data.code === 200) {
+                        let token = res.data.data.token;
+                        sessionStorage.setItem("token", token);
+                        this.showView = true;
+                    }
+                })
+            },
             reload() {
                 this.showView = false;
                 this.$nextTick().then(() => {

@@ -4,12 +4,6 @@
  * @LastEditors: liyh
  * @LastEditTime: 2020-03-27 15:03:22
  -->
-<!--
- * @Author: liyh
- * @Date: 2020-03-27 09:41:00
- * @LastEditors: liyh
- * @LastEditTime: 2020-03-27 12:55:58
- -->
 <template>
     <div class="box">
         <div class="bgimg"></div>

@@ -2,19 +2,20 @@
     <div class="main_page">
         <NavCom title="订单列表"/>
         <van-tabs v-model="active" class="vanTabs">
-            <van-tab title="已匹配">
-                <van-grid :column-num="3" class="table">
-                    <van-grid-item v-for="value in 12" :key="value" text="X"/>
-                </van-grid>
-            </van-tab>
-            <van-tab title="已完成">
-                <van-grid :column-num="3" class="table">
-                    <van-grid-item v-for="value in 12" :key="value" text="*"/>
-                </van-grid>
+            <van-tab v-for="(item,index) in tabNav" :key="index"
+                     :title="item.title" :name="item.name">
+                <ul class="listWrap">
+                    <li v-for="(v,i) in [1,2,3]" :key="i">
+                        <span>1</span>
+                        <span>1</span>
+                        <span>1</span>
+                    </li>
+                </ul>
             </van-tab>
         </van-tabs>
     </div>
 </template>
+
 <script>
     import NavCom from "@/components/nav.vue"
 
@@ -24,11 +25,16 @@
         },
         data() {
             return {
-                active: ""
+                active: "push",
+                tabNav: [
+                    {title: "已发布", name: "push"},
+                    {title: "已完成", name: "ready"},
+                ]
             }
         }
     }
 </script>
+
 <style scoped lang="scss">
     .main_page {
         height: 100vh;
@@ -67,42 +73,48 @@
                 border: none;
             }
         }
-    }
 
-    .table {
-        margin-top: 40px;
-        border-radius: 8px;
+        .listWrap {
+            margin-top: 40px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #2C244A;
+
+            li {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 1px solid rgba(255, 255, 255, .1);
+
+                &:last-child {
+                    border: none;
+                }
+
+                span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 70px;
+                    font-size: 26px;
+                    font-weight: 600;
+                    color: #fff;
+                    border-right: 1px solid rgba(255, 255, 255, .1);
+
+                    &:nth-child(1) {
+                        flex: 1;
+                    }
+
+                    &:nth-child(2) {
+                        flex: 1.5;
+                    }
+
+                    &:nth-child(3) {
+                        flex: 2;
+                        border: none;
+                    }
+                }
+            }
+        }
     }
 </style>
-<style lang="scss">
-    .van-grid {
-        &:after {
-            border: 0;
-        }
 
-        .van-grid-item {
-            flex-basis: 28% !important;
-
-            &:nth-child(3n+3) {
-                flex-basis: 44% !important;
-            }
-
-        }
-
-        .van-grid-item__content {
-            background-color: #2C244A !important;
-
-            &:after {
-                border-color: rgba(255, 255, 255, .1);
-            }
-
-        }
-
-        .van-grid-item__text {
-
-            font-size: 13px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 1);
-        }
-    }
-</style>
