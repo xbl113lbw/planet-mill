@@ -5,12 +5,12 @@
             <van-tab v-for="(item,index) in tabNav" :key="index" :title="item.title" :name="item.name">
                 <div v-for="(v,i) in listData" :key="i" class="data_detail">
                     <div class="data_detail_row">
-                        <span class="rate red">数量：{{i.num}}</span>
+                        <span class="rate red">数量：{{v.num}}</span>
                         <button v-if="active !== 'ready'">取消</button>
                     </div>
                     <div class="data_detail_row">
-                        <span>价格：{{i.price}}</span>
-                        <span>{{statusText(i.status)}}</span>
+                        <span>价格：{{v.price}}</span>
+                        <span>{{statusText(v.status)}}</span>
                     </div>
                 </div>
             </van-tab>
@@ -64,6 +64,7 @@
                             break;
                     }
                     console.log(flag);
+                    console.log(this.active);
                     if (flag) {
                         console.log(res);
                         let item = {};
