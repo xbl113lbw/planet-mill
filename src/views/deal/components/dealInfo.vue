@@ -131,6 +131,7 @@
         methods: {
             // 用户的所有的挂的单的价格（数组，从1开始到结束）
             exchangeList() {
+                console.log(1);
                 this.MyContract.methods.exchangeList(this.listId).call().then(res => {
                     if (res.status > 0) {
                         console.log(res);
@@ -138,14 +139,14 @@
                         item.adAddress = res.adAddress;
                         item.exAddress = res.exAddress;
                         item.price = res.price;
-                        item.num = res.num;
+                        item.num = this.web3.utils.fromWei(res.num);
                         item.allNum = res.allNum;
                         item.status = res.status;
                         this.listId++;
                         this.listData.push(item);
                         this.exchangeList();
                     }
-                });
+                }).catch(error => console.log(error));
             }
         }
     }

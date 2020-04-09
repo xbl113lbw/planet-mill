@@ -204,13 +204,14 @@
             await this.usdtFreezeBalanceOf();
             await this.coinBalanceOf();
             await this.coinFreezeBalanceOf();
+            await this.getUserInfo();
         },
         computed: {
             // vuex state
             ...mapState(["myUsdt", "myFreezeUsdt", "cac", "myFreezeCac", "myAccount"]),
         },
         methods: {
-            ...mapActions(["start", "usdtBalanceOf", "usdtFreezeBalanceOf", "coinBalanceOf", "coinFreezeBalanceOf"]),
+            ...mapActions(["start", "usdtBalanceOf", "usdtFreezeBalanceOf", "coinBalanceOf", "coinFreezeBalanceOf", "getUserInfo"]),
             // 获取 token
             async getToken() {
                 let token = sessionStorage.getItem("token");
@@ -237,9 +238,9 @@
                         this.time = res.data.data.time - new Date().getTime();
                         this.tableData = this.homeData.machines;
                         this.finishFlag = true;
-                    } else {
-                        this.reload();
                     }
+                }).catch(() => {
+                    this.reload();
                 })
             },
             timeFinish() {

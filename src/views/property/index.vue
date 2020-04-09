@@ -39,7 +39,7 @@
                     <div class="gName">碰撞游戏</div>
                     <div class="gRank">
                         <span>排队中：</span>
-                        <span>62</span>
+                        <span>{{AssetObj.collide_waiting_num}}</span>
                     </div>
                 </div>
                 <div class="gRight">取消</div>
@@ -50,7 +50,7 @@
                     <div class="gName">矿机</div>
                     <div class="gRank">
                         <span>排队中：</span>
-                        <span>62</span>
+                        <span>{{AssetObj.mining_waiting_num}}</span>
                     </div>
                 </div>
                 <div class="gRight">取消</div>
@@ -115,9 +115,9 @@
         </div>
 
         <!-- 未参与游戏 -->
-        <div class="imgItem">
+        <!--<div class="imgItem">
             <img v-for="(item,index) in imgItem" :src="item" :key="index" alt/>
-        </div>
+        </div>-->
 
         <Tab tabIndex="资产"/>
     </div>
@@ -139,8 +139,22 @@
                     require("../../assets/img/property/金星.png"),
                     require("../../assets/img/property/土星.png"),
                     require("../../assets/img/property/木星.png")
-                ]
+                ],
+                AssetObj: {}
             };
+        },
+        created() {
+            this.getAsset();
+        },
+        methods: {
+            getAsset() {
+                this.ajax.get("v1/user/asset").then(res => {
+                    if (res.data.code === 200) {
+                        console.log(res);
+                        this.AssetObj = res.data.data;
+                    }
+                })
+            }
         }
     };
 </script>

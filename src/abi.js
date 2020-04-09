@@ -1,6 +1,34 @@
 let abi = [
     {
         "constant": true,
+        "inputs": [],
+        "name": "woodPrice",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "firePrice",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
         "inputs": [
             {
                 "name": "",
@@ -38,6 +66,34 @@ let abi = [
     },
     {
         "constant": true,
+        "inputs": [],
+        "name": "goldPrice",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "coinTokenAddress",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
         "inputs": [
             {
                 "name": "",
@@ -70,6 +126,20 @@ let abi = [
         "type": "function"
     },
     {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "_minerno",
+                "type": "uint256"
+            }
+        ],
+        "name": "buyMiner",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
         "constant": true,
         "inputs": [
             {
@@ -78,6 +148,20 @@ let abi = [
             }
         ],
         "name": "coinFreezeBalanceOf",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "exchangeDataId",
         "outputs": [
             {
                 "name": "",
@@ -100,6 +184,20 @@ let abi = [
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "usdtTokenAddress",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -200,6 +298,20 @@ let abi = [
         "type": "function"
     },
     {
+        "constant": true,
+        "inputs": [],
+        "name": "earthPrice",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "constant": false,
         "inputs": [
             {
@@ -292,6 +404,20 @@ let abi = [
     },
     {
         "constant": true,
+        "inputs": [],
+        "name": "waterPrice",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
         "inputs": [
             {
                 "name": "",
@@ -323,6 +449,20 @@ let abi = [
             {
                 "name": "status",
                 "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "adminAddress",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
             }
         ],
         "payable": false,
@@ -399,6 +539,28 @@ let abi = [
             }
         ],
         "name": "AdminTransfer",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "_minerno",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "name": "_adddress",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "name": "_coinPrice",
+                "type": "uint256"
+            }
+        ],
+        "name": "BuyMiner",
         "type": "event"
     }
 ];

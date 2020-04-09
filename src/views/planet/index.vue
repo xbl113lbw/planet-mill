@@ -64,7 +64,7 @@
                 </div>
                 <div class="btnBox">
                     <div class="btnItem" @click="buy(index+1)">购买</div>
-                    <div class="btnItem">参与排队</div>
+                    <div class="btnItem" @click="buy(index+1)">参与排队</div>
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
         },
         computed: {
             // vuex state
-            ...mapState(["myUsdt", "myFreezeUsdt"])
+            ...mapState(["myUsdt", "myFreezeUsdt", "MyContract", "myAccount"])
         },
         methods: {
             getListData() {
@@ -105,7 +105,11 @@
                 })
             },
             buy(index) {
-                console.log(index)
+                this.MyContract.methods.buyMiner(index).send({
+                    from: this.myAccount
+                }).then(res => {
+                    console.log("当前的CAC价格", res);
+                });
             }
         }
     }

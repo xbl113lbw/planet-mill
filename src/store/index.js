@@ -4,6 +4,7 @@ import Web3 from "web3"
 import abi from "../abi"
 import usdtAbi from "../usdtAbi.js"
 import {Toast} from "vant";
+import ajax from "../utils/ajax"
 
 // vuex 持久化插件（原理：将数据保存在session中一份）
 import persistedState from "vuex-persistedstate"
@@ -15,6 +16,7 @@ const store = new Vuex.Store({
     plugins: [persistedState({storage: window.sessionStorage})],
 
     state: {
+        userInfo: {},
         web3: null,
         // 账户地址
         myAccount: null,
@@ -25,7 +27,7 @@ const store = new Vuex.Store({
         abi: abi,
         usdtAbi: usdtAbi,
         // 合约地址
-        address: "0x1213171185385b75584cbc4cf5df6b953e979672",
+        address: "0x963f63a70c4dff4044f61366f0325c93fe6ea48b",
         usdtAddress: "0xdac17f958d2ee523a2206206994597c13d831ec7",
         // usdt 余额
         myUsdt: null,
@@ -118,6 +120,15 @@ const store = new Vuex.Store({
                 console.log("用户参与100USDT排队", res);
             });
         },
+        // 获取用户信息
+        getUserInfo({state}) {
+            ajax.get("v1/user/info", {}).then(res => {
+                console.log(res);
+                if (res.data.code === 200) {
+                    state.userInfo = res.data.data;
+                }
+            })
+        }
     },
     modules: {}
 });

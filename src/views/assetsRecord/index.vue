@@ -56,6 +56,7 @@
         watch: {
             active() {
                 this.page = 0;
+                this.listData = [];
                 this.getListsData();
             }
         },
