@@ -9,7 +9,7 @@
             </van-tab>
             <van-tab title="已完成">
                 <van-grid :column-num="3" class="table">
-                    <van-grid-item v-for="value in 12" :key="value" :text="value"/>
+                    <van-grid-item v-for="value in 12" :key="value" text="*"/>
                 </van-grid>
             </van-tab>
         </van-tabs>
@@ -23,7 +23,9 @@
             NavCom
         },
         data() {
-            return {}
+            return {
+                active: ""
+            }
         }
     }
 </script>
@@ -77,6 +79,7 @@
         &:after {
             border: 0;
         }
+
         .van-grid-item {
             flex-basis: 28% !important;
 

@@ -1,19 +1,41 @@
 <template>
     <div id="app">
-        <router-view/>
+        <router-view v-if="showView"/>
     </div>
 </template>
 
 <script>
-    import {mapActions} from "vuex"
+    import {mapActions} from "vuex";
 
     export default {
         name: "App",
-        mounted() {
-            this.web3Init();
+        data() {
+            return {
+                showView: false
+            }
+        },
+        provide() {
+            return {
+                reload: this.reload
+            }
+        },
+        created() {
+            // 初始化 web3
+            new Promise(res => {
+                this.web3Init(res);
+            }).then(() => {
+                this.showView = true;
+            })
         },
         methods: {
-            ...mapActions(["web3Init"])
+            // vuex action
+            ...mapActions(["web3Init"]),
+            reload() {
+                this.showView = false;
+                this.$nextTick().then(() => {
+                    this.showView = true;
+                })
+            }
         }
     };
 </script>

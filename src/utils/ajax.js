@@ -7,7 +7,9 @@ import {Toast} from "vant"
 let instance = axios.create({
     timeout: 0,
     baseURL: "http://test.baas.yingbei365.com/api/",
-    headers: {}
+    headers: {
+        "X-Requested-With": "XMLHttpRequest"
+    }
 });
 
 // 添加请求拦截器
@@ -32,6 +34,12 @@ instance.interceptors.response.use(function (response) {
     // 对响应数据做点什么
     return response;
 }, function (error) {
+    Toast.clear();
+    // 422 token 过期
+    let code = error.response.data.code;
+    if (code === 422) {
+        sessionStorage.removeItem("token");
+    }
     // 对响应错误做点什么
     return Promise.reject(error);
 });

@@ -3,38 +3,39 @@
         <NavCom title="发布出售订单"/>
         <div class="top_page">
             <span>可用CAC</span>
-            <span class="number">{{CAC}}</span>
+            <span class="number">{{cac}}</span>
         </div>
         <div class="content">
             <div class="content_row">
                 <span class="row_left">当前价格:</span>
-                <span class="price_now">{{form.price}}</span>
+                <span class="price_now">{{cacPrice}}</span>
             </div>
             <div class="content_row">
                 <span class="row_left">出售价格:</span>
-                <span>{{form.price}}</span>
-                <span class="percentage">%{{form.sellPrice}}</span>
+                <input v-model="price" placeholder="请输入出售价格"/>
+                <!--<span class="percentage">{{form.sellPrice}}%</span>
                 <div class="price_slider">
-                    <!-- <span>%{{form.sellPrice}}</span> -->
                     <van-slider v-model="form.sellPrice" bar-height="4px" active-color="#AB91EF"
                                 inactive-color="#000000">
                         <template slot="button">
                             <div class="custom_button">
-                                <img src="../../assets/img/releaseOrder/slider.png"/>
+                                <img src="../../assets/img/releaseOrder/slider.png" alt=""/>
                             </div>
                         </template>
                     </van-slider>
-                </div>
+                </div>-->
             </div>
             <div class="content_row">
                 <span class="row_left">出售数量:</span>
-                <input :value="form.num" placeholder="请输入数量"/>
+                <input v-model="num" placeholder="请输入数量"/>
             </div>
             <div class="content_row_last">
                 <span class="row_left">购买金额:</span>
-                <span>{{form.price}}</span>
+                <span>{{price * num}}</span>
                 <div class="button_class">
-                    <van-button class="button" round color="linear-gradient(to right,#A73FE2,#7E2AF2,#611DE8)">发布
+                    <van-button class="button" round color="linear-gradient(to right,#A73FE2,#7E2AF2,#611DE8)"
+                                @click="sell">
+                        发布
                     </van-button>
                 </div>
             </div>
@@ -47,6 +48,8 @@
 </template>
 <script>
     import NavCom from "@/components/nav.vue"
+    import {Dialog} from 'vant';
+    import {mapState, mapActions} from "vuex";
 
     export default {
         name: "releaseSellOrder",
@@ -55,12 +58,35 @@
         },
         data() {
             return {
-                CAC: '0',
+                num: null,
+                price: null,
                 form: {
-                    price: "0.236",
                     sellPrice: 50,
-                    sellPricePer: 0
                 }
+            }
+        },
+        created() {
+            this.coinPrice();
+        },
+        computed: {
+            // vuex state
+            ...mapState(["cac", "cacPrice", "MyContract", "web3", "myAccount"])
+        },
+        methods: {
+            ...mapActions(["coinPrice"]),
+            // 卖出CAC（发布订单）
+            sell() {
+                Dialog.confirm({
+                    message: '确认发布订单么'
+                }).then(() => {
+                    this.MyContract.methods.sell(this.num, this.price).send({
+                        from: this.myAccount
+                    }).then(res => {
+                        console.log("卖出CAC", res);
+                        this.$toast("成功");
+                    });
+                }).catch(() => {
+                });
             }
         }
     }
@@ -124,7 +150,6 @@
 
                 .percentage {
                     position: absolute;
-                    /* top: 0; */
                     bottom: 100px;
                     right: 324px;
                     color: rgba(255, 255, 255, 0.6);
@@ -167,7 +192,6 @@
                     margin-top: 24px;
                 }
 
-                /* line-height: 166px; */
                 .button_class {
                     margin-top: 45px;
 

@@ -118,6 +118,9 @@
                 {time: "2018-12-31", open: 109.87, high: 114.69, low: 85.66, close: 111.26},
             ];
             this.candlestickSeries.setData(this.chartData);
+        },
+        methods:{
+            
         }
     }
 </script>

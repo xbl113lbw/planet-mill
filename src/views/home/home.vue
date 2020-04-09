@@ -14,7 +14,7 @@
                 <span>{{homeData.block_num}}</span>
             </div>
             <div class="topInfo_time">
-                <van-count-down :time="time" format="mm:ss">
+                <van-count-down :time="homeData.time">
                     <template v-slot="timeData">
                         <span class="item">
                             {{ timeData.minutes }}
@@ -29,9 +29,9 @@
                 </van-count-down>
             </div>
             <div class="topInfo_plan">
-                <span>目前进度 80%</span>
+                <span>目前进度 {{homeData.progress}}</span>
                 <div class="topInfo_plan_line">
-                    <img src="../../assets/img/home/plan_A.png" alt=""/>
+                    <img src="../../assets/img/home/plan_A.png" alt="" :style="{width:homeData.progress}"/>
                 </div>
             </div>
         </div>
@@ -40,34 +40,34 @@
             <div class="coinInfo_top_line">
                 <div class="coinInfo_top_line_imgWrap">
                     <img src="../../assets/img/home/usdt.png" alt=""/>
-                    <span>100.00 USDT</span>
+                    <span>{{myUsdt}} USDT</span>
                 </div>
-                <button>参与碰撞</button>
+                <button @click="start">参与碰撞</button>
             </div>
             <div class="coinInfo_top_line">
                 <div class="coinInfo_top_line_textWrap">
                     <div>当前排队人数：<span>{{homeData.total_wait_num}}</span></div>
                     <div>排队中：<span>{{homeData.waiting_num}}</span></div>
                 </div>
-                <button>碰撞预排</button>
+                <button @click="start">碰撞预排</button>
             </div>
             <div class="coinInfo_bottom">
                 <div class="coinInfo_bottom_left">
                     <div>
                         可用：
-                        <span>100 USDT</span>
+                        <span>{{myUsdt}} USDT</span>
                     </div>
                     <div>
                         冻结：
-                        <span>100 USDT</span>
+                        <span>{{myFreezeUsdt}} USDT</span>
                     </div>
                     <div>
                         可用：
-                        <span>100 CAC</span>
+                        <span>{{cac}} CAC</span>
                     </div>
                     <div>
                         冻结：
-                        <span>100 CAC</span>
+                        <span>{{myFreezeCac}} CAC</span>
                     </div>
                 </div>
                 <button>充币</button>
@@ -177,15 +177,16 @@
 
 <script>
     import Tab from "../../components/tab";
+    import {mapState, mapActions} from "vuex";
 
     export default {
         name: "home",
         components: {
             Tab
         },
+        inject: ["reload"],
         data() {
             return {
-                time: 30 * 60 * 60 * 1000,
                 showBuy: false,
                 showPush: false,
                 sellPrice: 50,
@@ -193,14 +194,23 @@
                 tableData: []
             }
         },
-        async created() {
+        async mounted() {
             await this.getToken();
             await this.getHomeData();
         },
+        computed: {
+            // vuex state
+            ...mapState(["myAccount", "myUsdt", "myFreezeUsdt", "cac", "myFreezeCac"])
+        },
         methods: {
+            ...mapActions(["start"]),
             // 获取 token
             async getToken() {
-                let address = "0x46b3770d3efCC4e5aE30431f1074E9e3a8231053";
+                let token = sessionStorage.getItem("token");
+                if (token) {
+                    return
+                }
+                let address = this.myAccount;
                 let obj = {
                     address: address,
                     invite_address: "",
@@ -216,10 +226,11 @@
             async getHomeData() {
                 await this.ajax.get("v1/index").then(res => {
                     if (res.data.code === 200) {
-                        console.log(res.data);
                         this.homeData = res.data.data;
                         this.tableData = this.homeData.machines;
                     }
+                }).catch(() => {
+                    this.reload();
                 })
             }
         }
@@ -328,7 +339,6 @@
                     img {
                         position: absolute;
                         left: 0;
-                        width: 80%;
                         height: 100%;
                     }
                 }

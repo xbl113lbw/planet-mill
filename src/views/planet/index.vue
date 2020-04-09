@@ -12,10 +12,10 @@
         <div class="top">
             <div class="textBox">
                 <div>
-                    <span>可用:</span> 100 USDT
+                    <span>可用:</span> {{myUsdt}} USDT
                 </div>
                 <div>
-                    <span>冻结:</span> 100 USDT
+                    <span>冻结:</span> {{myFreezeUsdt}} USDT
                 </div>
             </div>
             <div class="chargeBtn">充币</div>
@@ -76,6 +76,7 @@
 <script>
     import NavCom from "@/components/nav.vue"
     import Tab from "../../components/tab";
+    import {mapState} from "vuex";
 
     export default {
         name: "planet",
@@ -91,11 +92,14 @@
         created() {
             this.getListData();
         },
+        computed: {
+            // vuex state
+            ...mapState(["myUsdt", "myFreezeUsdt"])
+        },
         methods: {
             getListData() {
                 this.ajax.get("v1/goods").then(res => {
                     if (res.data.code === 200) {
-                        console.log(res.data.data);
                         this.listData = res.data.data;
                     }
                 })
