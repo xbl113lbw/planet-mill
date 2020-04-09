@@ -243,7 +243,9 @@
             },
             timeFinish() {
                 this.time = 60 * 1000;
-                this.reload();
+                setTimeout(() => {
+                    this.reload();
+                }, 500)
             }
         }
     }
