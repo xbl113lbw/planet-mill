@@ -207,7 +207,7 @@
         },
         computed: {
             // vuex state
-            ...mapState(["myUsdt", "myFreezeUsdt", "cac", "myFreezeCac"]),
+            ...mapState(["myUsdt", "myFreezeUsdt", "cac", "myFreezeCac", "myAccount"]),
         },
         methods: {
             ...mapActions(["start", "usdtBalanceOf", "usdtFreezeBalanceOf", "coinBalanceOf", "coinFreezeBalanceOf"]),
@@ -236,16 +236,18 @@
                         this.homeData = res.data.data;
                         this.time = res.data.data.time - new Date().getTime();
                         this.tableData = this.homeData.machines;
+                        this.finishFlag = true;
                     } else {
                         this.reload();
                     }
                 })
             },
             timeFinish() {
-                this.time = 60 * 1000;
-                setTimeout(() => {
+                let timeout = null;
+                if (timeout !== null) clearTimeout(timeout);
+                timeout = setTimeout(() => {
                     this.reload();
-                }, 500)
+                }, 2000);
             }
         }
     }
