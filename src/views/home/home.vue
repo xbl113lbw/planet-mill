@@ -14,7 +14,7 @@
                 <span>{{homeData.block_num}}</span>
             </div>
             <div class="topInfo_time">
-                <van-count-down :time="time">
+                <van-count-down :time="time" @finish="timeFinish">
                     <template v-slot="timeData">
                         <span class="item">
                             {{ timeData.minutes }}
@@ -190,13 +190,13 @@
                 showBuy: false,
                 showPush: false,
                 sellPrice: 50,
-                time: null,
+                time: 60 * 1000,
                 homeData: {},
-                tableData: []
+                tableData: [],
+                finishFlag: true
             }
         },
         async mounted() {
-            console.log(new Date().getTime());
             await this.getHomeData();
             // 获取货币余额
             await this.usdtBalanceOf();
@@ -206,7 +206,7 @@
         },
         computed: {
             // vuex state
-            ...mapState(["myUsdt", "myFreezeUsdt", "cac", "myFreezeCac"])
+            ...mapState(["myUsdt", "myFreezeUsdt", "cac", "myFreezeCac"]),
         },
         methods: {
             ...mapActions(["start", "usdtBalanceOf", "usdtFreezeBalanceOf", "coinBalanceOf", "coinFreezeBalanceOf"]),
@@ -216,12 +216,14 @@
                     if (res.data.code === 200) {
                         this.homeData = res.data.data;
                         this.time = res.data.data.time - new Date().getTime();
-                        console.log(this.time);
                         this.tableData = this.homeData.machines;
+                        // 开起开关
+                        this.finishFlag = true;
                     }
-                }).catch(() => {
-                    this.reload();
                 })
+            },
+            timeFinish() {
+                this.reload();
             }
         }
     }
