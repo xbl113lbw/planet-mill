@@ -14,7 +14,6 @@ Vue.use(Toast);
 
 const store = new Vuex.Store({
     plugins: [persistedState({storage: window.sessionStorage})],
-
     state: {
         userInfo: {},
         web3: null,
@@ -27,7 +26,7 @@ const store = new Vuex.Store({
         abi: abi,
         usdtAbi: usdtAbi,
         // 合约地址
-        address: "0x963f63a70c4dff4044f61366f0325c93fe6ea48b",
+        address: "0x046c266ad321abaee3c9b0c5bfd866a6557150d7",
         usdtAddress: "0xdac17f958d2ee523a2206206994597c13d831ec7",
         // usdt 余额
         myUsdt: null,
@@ -123,7 +122,6 @@ const store = new Vuex.Store({
         // 获取用户信息
         getUserInfo({state}) {
             ajax.get("v1/user/info", {}).then(res => {
-                console.log(res);
                 if (res.data.code === 200) {
                     state.userInfo = res.data.data;
                 }

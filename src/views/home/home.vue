@@ -244,11 +244,13 @@
                 })
             },
             timeFinish() {
-                let timeout = null;
-                if (timeout !== null) clearTimeout(timeout);
-                timeout = setTimeout(() => {
-                    this.reload();
-                }, 2000);
+                if (!this.finishFlag) {
+                    return
+                }
+                this.finishFlag = false;
+                setTimeout(() => {
+                    this.getHomeData();
+                }, 1000);
             }
         }
     }

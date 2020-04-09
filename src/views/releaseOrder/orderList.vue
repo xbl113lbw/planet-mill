@@ -2,15 +2,17 @@
     <div class="main_page">
         <NavCom title="订单列表"/>
         <van-tabs v-model="active" class="vanTabs">
-            <van-tab v-for="(item,index) in tabNav" :key="index"
-                     :title="item.title" :name="item.name">
-                <ul class="listWrap">
-                    <li v-for="(v,i) in [1,2,3]" :key="i">
-                        <span>1</span>
-                        <span>1</span>
-                        <span>1</span>
-                    </li>
-                </ul>
+            <van-tab v-for="(item,index) in tabNav" :key="index" :title="item.title" :name="item.name">
+                <div v-for="(v,i) in listData" :key="i" class="data_detail">
+                    <div class="data_detail_row">
+                        <span class="rate red">数量：{{i.num}}</span>
+                        <button v-if="active !== 'ready'">取消</button>
+                    </div>
+                    <div class="data_detail_row">
+                        <span>价格：{{i.price}}</span>
+                        <span>{{statusText(i.status)}}</span>
+                    </div>
+                </div>
             </van-tab>
         </van-tabs>
     </div>
@@ -18,6 +20,7 @@
 
 <script>
     import NavCom from "@/components/nav.vue"
+    import {mapState} from "vuex";
 
     export default {
         components: {
@@ -27,9 +30,64 @@
             return {
                 active: "push",
                 tabNav: [
-                    {title: "已发布", name: "push"},
+                    {title: "未完成", name: "push"},
                     {title: "已完成", name: "ready"},
-                ]
+                ],
+                listId: 1,
+                listData: []
+            }
+        },
+        computed: {
+            // vuex state
+            ...mapState(["MyContract", "web3", "myAccount"]),
+        },
+        watch: {
+            active() {
+                this.listData = [];
+                this.exchangeList();
+            }
+        },
+        created() {
+            this.exchangeList()
+        },
+        methods: {
+            // 用户的所有的挂的单的价格（数组，从1开始到结束）
+            exchangeList() {
+                this.MyContract.methods.exchangeList(this.listId).call().then(res => {
+                    let flag;
+                    switch (this.active) {
+                        case "push":
+                            flag = res.status === 1 && this.myAccount === res.adAddress;
+                            break;
+                        case "ready":
+                            flag = res.status >= 2 && this.myAccount === res.adAddress;
+                            break;
+                    }
+                    console.log(flag);
+                    if (flag) {
+                        console.log(res);
+                        let item = {};
+                        item.adAddress = res.adAddress;
+                        item.exAddress = res.exAddress;
+                        item.price = res.price;
+                        item.num = this.web3.utils.fromWei(res.num);
+                        item.allNum = res.allNum;
+                        item.status = res.status;
+                        this.listId++;
+                        this.listData.push(item);
+                        this.exchangeList();
+                    }
+                }).catch(error => console.log(error));
+            },
+            statusText(status) {
+                switch (status) {
+                    case 1:
+                        return "发布中";
+                    case 2:
+                        return "已完成";
+                    case 3:
+                        return "已取消";
+                }
             }
         }
     }
@@ -74,44 +132,58 @@
             }
         }
 
-        .listWrap {
-            margin-top: 40px;
-            padding: 20px;
+        .data_detail {
+            width: 690px;
+            padding: 36px 40px;
+            background: rgba(44, 36, 74, 1);
             border-radius: 8px;
-            background: #2C244A;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, .6);
+            font-size: 22px;
 
-            li {
+            .data_detail_row {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                border-bottom: 1px solid rgba(255, 255, 255, .1);
+                margin-bottom: 20px;
 
                 &:last-child {
-                    border: none;
+                    margin-bottom: 0;
                 }
 
                 span {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 70px;
+                    font-size: 24px;
+                }
+
+                button {
+                    width: 120px;
+                    height: 56px;
+                    background: linear-gradient(
+                                    90deg,
+                                    rgba(167, 63, 226, 1) 0%,
+                                    rgba(126, 42, 242, 1) 56%,
+                                    rgba(97, 29, 232, 1) 100%
+                    );
+                    border-radius: 28px;
+                    text-align: center;
                     font-size: 26px;
+                    color: #ffffff;
+                }
+
+                .rate {
+                    height: 50px;
+                    font-size: 36px;
                     font-weight: 600;
-                    color: #fff;
-                    border-right: 1px solid rgba(255, 255, 255, .1);
+                    line-height: 50px;
+                }
 
-                    &:nth-child(1) {
-                        flex: 1;
-                    }
+                .red {
+                    color: rgba(251, 77, 110, 1);
 
-                    &:nth-child(2) {
-                        flex: 1.5;
-                    }
+                }
 
-                    &:nth-child(3) {
-                        flex: 2;
-                        border: none;
-                    }
+                .green {
+                    color: #0DD393;
                 }
             }
         }

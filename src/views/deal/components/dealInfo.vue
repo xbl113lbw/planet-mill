@@ -49,10 +49,10 @@
                     <img src="../../../assets/img/deal/order.png" alt=""/>
                     <span>订单</span>
                 </div>
-                <div @click="$router.push({path:'/tradRecord'})">
+                <!--<div @click="$router.push({path:'/tradRecord'})">
                     <img src="../../../assets/img/deal/record.png" alt=""/>
                     <span>交易记录</span>
-                </div>
+                </div>-->
             </div>
             <!--<div class="orderBox_btn">
                 <button :class="orderIndex ? '' : 'active'" @click="orderIndex = 0">我要购买</button>
@@ -131,7 +131,6 @@
         methods: {
             // 用户的所有的挂的单的价格（数组，从1开始到结束）
             exchangeList() {
-                console.log(1);
                 this.MyContract.methods.exchangeList(this.listId).call().then(res => {
                     if (res.status > 0) {
                         console.log(res);
