@@ -1,8 +1,7 @@
 <template>
     <div class="rule">
         <div class="header">
-            <span>宇宙星球</span>
-            <span>Cosmic Planet</span>
+            <img src="../../assets/img/详情LOGo.png" height="87" width="384" alt=""/>
         </div>
         <div class="wrap">
             <div class="title">探索宇宙</div>
@@ -367,6 +366,12 @@
 
         .header {
             text-align: center;
+
+            img {
+                width: 384px;
+                height: 87px;
+                margin-bottom: 20px;
+            }
 
             span {
                 display: block;

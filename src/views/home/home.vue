@@ -2,8 +2,7 @@
     <div id="home">
         <!--头部-->
         <div class="header">
-            <div class="left"></div>
-            <div class="logo">GALAXY</div>
+            <div class="logo"><img src="../../assets/img/首页LOGO.png"/></div>
             <img src="../../assets/img/home/problemIcon.png" class="problemIcon" alt=""
                  @click="$router.push({path:'/rule'})"/>
         </div>
@@ -191,10 +190,11 @@
                 showBuy: false,
                 showPush: false,
                 sellPrice: 50,
-                time: 60 * 1000,
+                time: null,
                 homeData: {},
                 tableData: [],
-                finishFlag: true
+                finishFlag: true,
+                t: null
             }
         },
         async mounted() {
@@ -236,16 +236,21 @@
                 await this.ajax.get("v1/index").then(res => {
                     if (res.data.code === 200) {
                         this.homeData = res.data.data;
-                        this.time = res.data.data.time - new Date().getTime();
-                        console.log(this.time);
-                        let t = setInterval(() => {
-                            this.time -= 1000;
-                            if (this.time <= 0) {
-                                clearInterval(t);
-                                this.getHomeData();
-                            }
-                        }, 1000);
                         this.tableData = this.homeData.machines;
+                        console.log(res.data.data.time);
+                        setTimeout(() => {
+                            this.time = res.data.data.time * 1000;
+                            console.log(this.time);
+                            this.t = setInterval(() => {
+                                this.time -= 1000;
+                                if (this.time <= 0) {
+                                    this.time = 0;
+                                    clearInterval(this.t);
+                                    this.getHomeData();
+                                }
+                            }, 1000);
+                        }, 500);
+
                     }
                 })
             },
@@ -262,6 +267,9 @@
                 }).catch(() => {
                 });
             }
+        },
+        beforeDestroy() {
+            clearInterval(this.t);
         }
     }
 </script>
@@ -275,7 +283,7 @@
         .header {
             display: flex;
             align-items: center;
-            padding: 8px 0;
+            padding: 40px 0 20px;
             margin-bottom: 56px;
 
             .left {
@@ -287,10 +295,10 @@
             }
 
             .logo {
-                font-size: 32px;
-                font-weight: 600;
-                line-height: 45px;
-                color: #fff;
+                img {
+                    width: 340px;
+                    height: 85px;
+                }
             }
 
             .problemIcon {
