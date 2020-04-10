@@ -33,7 +33,6 @@
         methods: {
             // vuex action
             ...mapActions(["web3Init"]),
-
             reload() {
                 this.showView = false;
                 this.$nextTick().then(() => {

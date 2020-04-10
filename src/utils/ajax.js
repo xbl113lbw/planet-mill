@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Qs from 'qs'
+import router from "../router";
 import {Toast} from "vant"
-
 
 // 创建axios实例
 let instance = axios.create({
@@ -38,8 +38,13 @@ instance.interceptors.response.use(function (response) {
     // 422 token 过期
     let code = error.response.data.code;
     if (code === 422) {
+        Toast("登陆过期");
         sessionStorage.removeItem("Token");
-        window.location.reload();
+        if (router.currentRoute.path !== "/") {
+            router.push({path: "/"});
+        } else {
+            window.location.reload();
+        }
     }
     // 对响应错误做点什么
     return Promise.reject(error);

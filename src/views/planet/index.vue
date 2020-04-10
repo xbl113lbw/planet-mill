@@ -18,7 +18,7 @@
                     <span>冻结:</span> {{myFreezeUsdt}} USDT
                 </div>
             </div>
-            <div class="chargeBtn">充币</div>
+            <div class="chargeBtn" @click="recharge">充币</div>
         </div>
         <div v-for="(item,index) in listData" :key="index" class="itemBox">
             <div class="leftBox">
@@ -76,7 +76,8 @@
 <script>
     import NavCom from "@/components/nav.vue"
     import Tab from "../../components/tab";
-    import {mapState} from "vuex";
+    import {mapActions, mapState} from "vuex";
+    import {Dialog} from "vant";
 
     export default {
         name: "planet",
@@ -91,12 +92,19 @@
         },
         created() {
             this.getListData();
+            this.usdtBalanceOf();
+            this.usdtFreezeBalanceOf();
         },
         computed: {
             // vuex state
-            ...mapState(["myUsdt", "myFreezeUsdt", "MyContract", "myAccount"])
+            ...mapState(["myUsdt", "myFreezeUsdt", "MyContract", "myAccount", "userInfo", "usdtContract"])
         },
         methods: {
+            // vuex action
+            ...mapActions({
+                usdtBalanceOf: "usdtBalanceOf",
+                usdtFreezeBalanceOf: "usdtFreezeBalanceOf",
+            }),
             getListData() {
                 this.ajax.get("v1/goods").then(res => {
                     if (res.data.code === 200) {
@@ -109,6 +117,19 @@
                     from: this.myAccount
                 }).then(res => {
                     console.log("当前的CAC价格", res);
+                });
+            },
+            recharge() {
+                Dialog.confirm({
+                    message: '确认充值么？'
+                }).then(() => {
+                    this.usdtContract.methods.transfer(this.userInfo.recharge_address, 100000000).send({
+                        from: this.myAccount
+                    }).then(res => {
+                        console.log(res);
+                        this.reload();
+                    });
+                }).catch(() => {
                 });
             }
         }

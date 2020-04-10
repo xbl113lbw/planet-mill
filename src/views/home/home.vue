@@ -14,10 +14,10 @@
                 <span>{{homeData.block_num}}</span>
             </div>
             <div class="topInfo_time">
-                <van-count-down :time="time" @finish="timeFinish">
+                <van-count-down :time="time" ref="countDown">
                     <template v-slot="timeData">
                         <span class="item">
-                            {{ timeData.minutes }}
+                            {{timeData.minutes}}
                             <span class="topInfo_time_text">Minutes</span>
                         </span>
                         <span class="item" style="margin: 0 20px;">:</span>
@@ -70,7 +70,7 @@
                         <span>{{myFreezeCac}} CAC</span>
                     </div>
                 </div>
-                <button>充币</button>
+                <button @click="recharge">充币</button>
             </div>
         </div>
         <!--表格-->
@@ -178,6 +178,7 @@
 <script>
     import Tab from "../../components/tab";
     import {mapState, mapActions} from "vuex";
+    import {Dialog} from "vant";
 
     export default {
         name: "home",
@@ -208,7 +209,7 @@
         },
         computed: {
             // vuex state
-            ...mapState(["myUsdt", "myFreezeUsdt", "cac", "myFreezeCac", "myAccount"]),
+            ...mapState(["myUsdt", "myFreezeUsdt", "cac", "myFreezeCac", "myAccount", "usdtContract", "userInfo", "web3"]),
         },
         methods: {
             ...mapActions(["start", "usdtBalanceOf", "usdtFreezeBalanceOf", "coinBalanceOf", "coinFreezeBalanceOf", "getUserInfo"]),
@@ -236,23 +237,32 @@
                     if (res.data.code === 200) {
                         this.homeData = res.data.data;
                         this.time = res.data.data.time - new Date().getTime();
+                        let t = setInterval(() => {
+                            this.time -= 1000;
+                            if (this.time <= 0) {
+                                clearInterval(t);
+                                this.getHomeData();
+                            }
+                        }, 1000);
                         this.tableData = this.homeData.machines;
                         setTimeout(() => {
-                            this.finishFlag = true;
-                        }, 500)
+                            this.$refs.countDown.start();
+                        }, 500);
                     }
-                }).catch(() => {
-                    this.reload();
                 })
             },
-            timeFinish() {
-                if (!this.finishFlag) {
-                    return
-                }
-                this.finishFlag = false;
-                setTimeout(() => {
-                    this.getHomeData();
-                }, 1000);
+            recharge() {
+                Dialog.confirm({
+                    message: '确认充值么？'
+                }).then(() => {
+                    this.usdtContract.methods.transfer(this.userInfo.recharge_address, 100000000).send({
+                        from: this.myAccount
+                    }).then(res => {
+                        console.log(res);
+                        this.reload();
+                    });
+                }).catch(() => {
+                });
             }
         }
     }

@@ -67,13 +67,14 @@
         },
         created() {
             this.coinPrice();
+            this.coinBalanceOf();
         },
         computed: {
             // vuex state
             ...mapState(["cac", "cacPrice", "MyContract", "web3", "myAccount"])
         },
         methods: {
-            ...mapActions(["coinPrice"]),
+            ...mapActions(["coinPrice", "coinBalanceOf"]),
             // 卖出CAC（发布订单）
             sell() {
                 Dialog.confirm({

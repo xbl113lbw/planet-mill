@@ -7,13 +7,26 @@ import {Toast} from "vant";
 import ajax from "../utils/ajax"
 
 // vuex 持久化插件（原理：将数据保存在session中一份）
-import createPersistedState from "vuex-persistedstate"
+import persistedState from "vuex-persistedstate"
 
 Vue.use(Vuex);
 Vue.use(Toast);
 
 const store = new Vuex.Store({
-    plugins: [createPersistedState({storage: window.sessionStorage})],
+    plugins: [persistedState({
+        storage: window.sessionStorage,
+        reducer(val) {
+            return {
+                userInfo: val.userInfo,
+                myAccount: val.myAccount,
+                myUsdt: val.myUsdt,
+                myFreezeUsdt: val.myFreezeUsdt,
+                cac: val.cac,
+                myFreezeCac: val.myFreezeCac,
+                cacPrice: val.cacPrice,
+            }
+        }
+    })],
     state: {
         userInfo: {},
         web3: null,
@@ -38,7 +51,11 @@ const store = new Vuex.Store({
         // cac 价格
         cacPrice: null
     },
-    mutations: {},
+    mutations: {
+        changeUserInfo(state, data) {
+            state.userInfo = data;
+        }
+    },
     actions: {
         /*初始化 web3.js */
         async web3Init({state}, resolve) {
@@ -120,13 +137,13 @@ const store = new Vuex.Store({
             });
         },
         // 获取用户信息
-        getUserInfo({state}) {
+        getUserInfo({commit}) {
             ajax.get("v1/user/info", {}).then(res => {
                 if (res.data.code === 200) {
-                    state.userInfo = res.data.data;
+                    commit("changeUserInfo", res.data.data);
                 }
             })
-        }
+        },
     },
 });
 

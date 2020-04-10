@@ -26,9 +26,9 @@
                 </div>
             </div>
             <div class="btnBox">
-                <div class="btnItem">充值</div>
-                <div class="btnItem">提币</div>
-                <div class="btnItem">交易</div>
+                <div class="btnItem" @click="recharge">充值</div>
+                <div class="btnItem" @click="userWithdrawal">提币</div>
+                <div class="btnItem" @click="$router.push({path:'/deal'})">交易</div>
             </div>
         </div>
 
@@ -42,7 +42,7 @@
                         <span>{{AssetObj.collide_waiting_num}}</span>
                     </div>
                 </div>
-                <div class="gRight">取消</div>
+                <!--<div class="gRight">取消</div>-->
             </div>
             <div class="line"></div>
             <div class="gamesItemBox">
@@ -53,7 +53,7 @@
                         <span>{{AssetObj.mining_waiting_num}}</span>
                     </div>
                 </div>
-                <div class="gRight">取消</div>
+                <!--<div class="gRight">取消</div>-->
             </div>
         </div>
 
@@ -87,7 +87,7 @@
         </div>
 
         <!-- 参与游戏 -->
-        <div v-if="1==2">
+        <div v-if="false">
             <div class="itemBox" v-for="(item,index) in [1,2]" :key="index">
                 <div class="topArea">
                     <div class="topAreaLeft">
@@ -125,12 +125,15 @@
 
 <script>
     import Tab from "../../components/tab";
+    import {mapActions, mapState} from "vuex";
+    import {Dialog} from 'vant';
 
     export default {
         name: "planet",
         components: {
             Tab
         },
+        inject: ["reload"],
         data() {
             return {
                 imgItem: [
@@ -145,15 +148,47 @@
         },
         created() {
             this.getAsset();
+            this.getUserInfo();
+            this.usdtBalanceOf();
+        },
+        computed: {
+            // vuex state
+            ...mapState(["userInfo", "usdtContract", "MyContract", "myAccount", "web3", "myUsdt"]),
         },
         methods: {
+            ...mapActions(["getUserInfo", "usdtBalanceOf"]),
             getAsset() {
                 this.ajax.get("v1/user/asset").then(res => {
                     if (res.data.code === 200) {
-                        console.log(res);
                         this.AssetObj = res.data.data;
                     }
                 })
+            },
+            recharge() {
+                Dialog.confirm({
+                    message: '确认充值么？'
+                }).then(() => {
+                    this.usdtContract.methods.transfer(this.userInfo.recharge_address, 100000000).send({
+                        from: this.myAccount
+                    }).then(res => {
+                        console.log(res);
+                        this.reload();
+                    });
+                }).catch(() => {
+                });
+            },
+            userWithdrawal() {
+                Dialog.confirm({
+                    message: '确认提现么？'
+                }).then(() => {
+                    this.MyContract.methods.userWithdrawal(this.userInfo.recharge_address, this.web3.utils.toWei(this.myUsdt)).send({
+                        from: this.myAccount
+                    }).then(res => {
+                        console.log(res);
+                        this.reload();
+                    });
+                }).catch(() => {
+                });
             }
         }
     };
