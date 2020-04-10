@@ -237,6 +237,7 @@
                     if (res.data.code === 200) {
                         this.homeData = res.data.data;
                         this.time = res.data.data.time - new Date().getTime();
+                        console.log(this.time);
                         let t = setInterval(() => {
                             this.time -= 1000;
                             if (this.time <= 0) {
@@ -245,9 +246,6 @@
                             }
                         }, 1000);
                         this.tableData = this.homeData.machines;
-                        setTimeout(() => {
-                            this.$refs.countDown.start();
-                        }, 500);
                     }
                 })
             },
