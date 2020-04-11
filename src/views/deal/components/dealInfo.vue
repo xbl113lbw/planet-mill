@@ -362,7 +362,7 @@
                         div {
                             span {
                                 display: block;
-                                max-width: 160px;
+                                max-width: 140px;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                                 white-space: nowrap;
@@ -382,10 +382,10 @@
                     }
 
                     .center {
-                        max-width: 100px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
+                        /*max-width: 100px;*/
+                        /*overflow: hidden;*/
+                        /*text-overflow: ellipsis;*/
+                        /*white-space: nowrap;*/
                         font-size: 30px;
                         font-weight: 600;
                         color: #AB91EF;

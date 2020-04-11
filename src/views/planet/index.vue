@@ -254,7 +254,7 @@
                 .itemGold {
                     width: 150px;
                     height: 42px;
-                    font-size: 30px;
+                    font-size: 25px;
                     font-weight: 600;
                     color: rgba(255, 255, 255, 1);
                     line-height: 42px;

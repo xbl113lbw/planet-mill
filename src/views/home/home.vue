@@ -39,16 +39,19 @@
             <div class="coinInfo_top_line">
                 <div class="coinInfo_top_line_imgWrap">
                     <img src="../../assets/img/home/usdt.png" alt=""/>
-                    <span>{{myUsdt}} USDT</span>
+                    <div>
+                        <span>{{myUsdt}} USDT</span>
+                        <span>{{cac}} CAC</span>
+                    </div>
                 </div>
-                <button @click="start">参与碰撞</button>
+                <button @click="start" :class="btnFlag ? 'disabledBtn' : ''" :disabled="btnFlag">参与碰撞</button>
             </div>
             <div class="coinInfo_top_line">
                 <div class="coinInfo_top_line_textWrap">
                     <div>当前排队人数：<span>{{homeData.total_wait_num}}</span></div>
                     <div>排队中：<span>{{homeData.waiting_num}}</span></div>
                 </div>
-                <button @click="start">碰撞预排</button>
+                <button @click="start" :class="btnFlag ? 'disabledBtn' : ''" :disabled="btnFlag">碰撞预排</button>
             </div>
             <div class="coinInfo_bottom">
                 <div class="coinInfo_bottom_left">
@@ -88,10 +91,10 @@
                     {{item.name}}
                 </span>
                 <span>{{item.number}}</span>
-                <span>{{item.pool}}</span>
-                <span>0000.</span>
-                <span>{{item.reward}}</span>
-                <span>0000.</span>
+                <span>{{item.bonus_pool}}</span>
+                <span>{{item.miner_pool}}</span>
+                <span>{{item.miner_reward}}</span>
+                <span>{{item.bonus_reward}}</span>
             </div>
         </div>
         <!--购买弹框-->
@@ -210,6 +213,9 @@
         computed: {
             // vuex state
             ...mapState(["myUsdt", "myFreezeUsdt", "cac", "myFreezeCac", "myAccount", "usdtContract", "userInfo", "web3"]),
+            btnFlag() {
+                return this.homeData.waiting_num < 4;
+            }
         },
         methods: {
             ...mapActions(["start", "usdtBalanceOf", "usdtFreezeBalanceOf", "coinBalanceOf", "coinFreezeBalanceOf", "getUserInfo"]),
@@ -408,11 +414,13 @@
                         height: 56px;
                         margin-right: 20px;
                     }
-
-                    span {
-                        font-size: 36px;
-                        font-weight: 600;
-                        color: rgba(255, 255, 255, 1);
+                    div {
+                        span {
+                            display: block;
+                            font-size: 36px;
+                            font-weight: 600;
+                            color: rgba(255, 255, 255, 1);
+                        }
                     }
                 }
 
@@ -435,6 +443,10 @@
                     border-radius: 32px;
                     color: #fff;
                     background: linear-gradient(90deg, rgba(167, 63, 226, 1) 0%, rgba(126, 42, 242, 1) 56%, rgba(97, 29, 232, 1) 100%);
+                }
+
+                .disabledBtn {
+                    background: gray;
                 }
             }
 
@@ -517,6 +529,7 @@
                     img {
                         width: 44px;
                         height: 44px;
+                        margin-right: 10px;
                     }
 
                     &:nth-child(2) {
