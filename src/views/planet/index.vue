@@ -44,7 +44,7 @@
                     <div class="rowBox">
                         <div>
                             <span class="opacityText">日产出：</span>
-                            <span class="whiteText">{{item.day_num}} %</span>
+                            <span class="whiteText">{{item.miner_proportion}} %</span>
                         </div>
                         <div>
                             <span class="opacityText">已运行：</span>
