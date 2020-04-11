@@ -5,7 +5,7 @@
             <span>{{myPerformanceData.team_num}}</span>
         </div>
         <!--邀请链接-->
-        <div class="invite">
+        <!--<div class="invite">
             <div class="invite_url">
                 <span>邀请链接：</span>
                 <span id="target">{{url}}</span>
@@ -15,7 +15,7 @@
                     data-clipboard-action="copy"
                     data-clipboard-target="#target">复制邀请链接
             </button>
-        </div>
+        </div>-->
         <!--直推人数-->
         <div class="directNum">
             <div class="left">
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-    import Clipboard from "clipboard"
     import {mapState} from "vuex";
 
     export default {
@@ -44,31 +43,18 @@
         data() {
             return {
                 myPerformanceData: {},
-                url: ""
             }
         },
         created() {
             this.getData();
-            this.url = `${window.location.host}/?aid=${this.myAccount}`;
+
         },
         computed: {
             // vuex state
             ...mapState(["myAccount"])
         },
         methods: {
-            /*复制功能*/
-            copyEvent() {
-                let clipboard = new Clipboard(".tagRead");
-                clipboard.on("success", (e) => {
-                    this.$toast('复制成功');
-                    e.clearSelection();
-                });
-                clipboard.on("error", (e) => {
-                    // 不支持复制
-                    this.$toast("暂不支持复制功能");
-                    e.clearSelection();
-                });
-            },
+
             getData() {
                 this.ajax.get("v1/user/team").then(res => {
                     if (res.data.code === 200) {
@@ -109,44 +95,6 @@
             }
         }
 
-        .invite {
-            padding: 40px;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            text-align: center;
-            background: #2C244A;
-
-            .invite_url {
-                display: flex;
-                align-items: flex-start;
-                margin-bottom: 30px;
-                text-align: left;
-
-                span {
-                    &:first-child {
-                        word-break: keep-all;
-                        margin-right: 10px;
-                        font-size: 26px;
-                        color: rgba(255, 255, 255, .6);
-                    }
-
-                    &:last-child {
-                        font-size: 26px;
-                        word-break: break-all;
-                        color: #fff;
-                    }
-                }
-            }
-
-            button {
-                width: 280px;
-                height: 60px;
-                font-size: 30px;
-                color: rgba(255, 255, 255, 1);
-                border-radius: 32px;
-                background: linear-gradient(90deg, rgba(167, 63, 226, 1) 0%, rgba(126, 42, 242, 1) 56%, rgba(97, 29, 232, 1) 100%);
-            }
-        }
 
         .directNum, .indirectNum {
             display: flex;

@@ -39,10 +39,8 @@
             <div class="coinInfo_top_line">
                 <div class="coinInfo_top_line_imgWrap">
                     <img src="../../assets/img/home/usdt.png" alt=""/>
-                    <div>
-                        <span>100 USDT</span>
-                        <span>10 CAC</span>
-                    </div>
+                    <span>100 USDT</span>
+                    <span>10 CAC</span>
                 </div>
                 <button @click="start" :class="btnFlag ? 'disabledBtn' : ''" :disabled="btnFlag">参与碰撞</button>
             </div>
@@ -74,6 +72,18 @@
                 </div>
                 <button @click="recharge">充币</button>
             </div>
+        </div>
+        <!--邀请链接-->
+        <div class="invite">
+            <div class="invite_url">
+                <span>邀请链接：</span>
+                <span id="target">{{url}}</span>
+            </div>
+            <button class="tagRead"
+                    @click="copyEvent"
+                    data-clipboard-action="copy"
+                    data-clipboard-target="#target">复制邀请链接
+            </button>
         </div>
         <!--表格-->
         <div class="table" v-if="tableData.length">
@@ -191,6 +201,7 @@
 <script>
     import Tab from "../../components/tab";
     import {mapState, mapActions} from "vuex";
+    import Clipboard from "clipboard";
 
     export default {
         name: "home",
@@ -209,7 +220,8 @@
                 tableData: [],
                 finishFlag: true,
                 t: null,
-                rechargeValue: null
+                rechargeValue: null,
+                url: ""
             }
         },
         async mounted() {
@@ -221,6 +233,7 @@
             await this.coinBalanceOf();
             await this.coinFreezeBalanceOf();
             await this.getUserInfo();
+            this.url = `${window.location.host}/?aid=${this.myAccount}`;
         },
         computed: {
             // vuex state
@@ -281,8 +294,20 @@
                     console.log(res);
                     this.reload();
                 });
-            }
-
+            },
+            /*复制功能*/
+            copyEvent() {
+                let clipboard = new Clipboard(".tagRead");
+                clipboard.on("success", (e) => {
+                    this.$toast('复制成功');
+                    e.clearSelection();
+                });
+                clipboard.on("error", (e) => {
+                    // 不支持复制
+                    this.$toast("暂不支持复制功能");
+                    e.clearSelection();
+                });
+            },
         },
         beforeDestroy() {
             clearInterval(this.t);
@@ -408,7 +433,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                margin-bottom: 28px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #fff;
+                margin-bottom: 20px;
 
                 &:last-child {
                     padding-bottom: 18px;
@@ -424,13 +451,13 @@
                         height: 56px;
                         margin-right: 20px;
                     }
-                    div {
-                        span {
-                            display: block;
-                            font-size: 36px;
-                            font-weight: 600;
-                            color: rgba(255, 255, 255, 1);
-                        }
+
+                    span {
+                        display: block;
+                        margin-right: 20px;
+                        font-size: 36px;
+                        font-weight: 600;
+                        color: rgba(255, 255, 255, 1);
                     }
                 }
 
@@ -725,8 +752,48 @@
                 margin: 30px;
                 text-align: center;
             }
+
             /deep/ button::before {
                 background: rgba(255, 255, 255, .8);
+            }
+        }
+
+        .invite {
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            text-align: center;
+            background: #2C244A;
+
+            .invite_url {
+                display: flex;
+                align-items: flex-start;
+                margin-bottom: 30px;
+                text-align: left;
+
+                span {
+                    &:first-child {
+                        word-break: keep-all;
+                        margin-right: 10px;
+                        font-size: 26px;
+                        color: rgba(255, 255, 255, .6);
+                    }
+
+                    &:last-child {
+                        font-size: 26px;
+                        word-break: break-all;
+                        color: #fff;
+                    }
+                }
+            }
+
+            button {
+                width: 280px;
+                height: 60px;
+                font-size: 30px;
+                color: rgba(255, 255, 255, 1);
+                border-radius: 32px;
+                background: linear-gradient(90deg, rgba(167, 63, 226, 1) 0%, rgba(126, 42, 242, 1) 56%, rgba(97, 29, 232, 1) 100%);
             }
         }
     }

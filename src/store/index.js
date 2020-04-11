@@ -39,7 +39,7 @@ const store = new Vuex.Store({
         abi: abi,
         usdtAbi: usdtAbi,
         // 合约地址
-        address: "0xc37ac066f8f2644d2ec68bb8c3e3c0c89b049f83",
+        address: "0xc59b1f52709da0dc5a4299ae9a064f698292d7ec",
         usdtAddress: "0xdac17f958d2ee523a2206206994597c13d831ec7",
         // usdt 余额
         myUsdt: null,
@@ -144,35 +144,6 @@ const store = new Vuex.Store({
                 }
             })
         },
-        getExchangeData({state}) {
-            /*判断MetaMask是否登录*/
-            if (!state.web3) {
-                store.dispatch('web3Init');
-                return
-            }
-            /*监听事件*/
-            state.MyContract.events.allEvents({
-                fromBlock: 0,
-            }, (error, event) => {
-                console.log("error", error, event);
-            }).on('data', function (event) {
-                console.log("event", event); // same results as the optional callback above
-            });
-            /*获取交易数据*/
-            state.web3.eth.getPastLogs({
-                fromBlock: 0,
-                toBlock: 'latest',
-                address: state.address
-            }).then(async (err, result) => {
-                console.log("getExchangeData", err, result);
-                /*await setTimeout(() => {
-                    ajax.post("index/set/set_info", arr).then(res => {
-                        flag = true;
-                        console.log(res);
-                    });
-                }, 1000);*/
-            })
-        }
     },
 });
 

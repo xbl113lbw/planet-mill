@@ -2,14 +2,14 @@
     <!-- 资产记录页面 -->
     <div class="main_page">
         <NavCom title="资产记录"/>
+        <div class="data_list">
+            <div class="data_list_row">CAC总量：<span>10000</span></div>
+            <div class="data_list_row">产出总量：<span>10000</span></div>
+            <div class="data_list_row">黑洞销毁：<span>10000</span></div>
+            <div class="data_list_row">流通数量：<span>10000</span></div>
+        </div>
         <van-tabs v-model="active" class="vanTabs">
             <van-tab v-for="(val,i) in tabData" :title="val.name" :key='i'>
-                <div class="data_list">
-                    <div class="data_list_row">CAC总量：<span>10000</span></div>
-                    <div class="data_list_row">产出总量：<span>10000</span></div>
-                    <div class="data_list_row">黑洞销毁：<span>10000</span></div>
-                    <div class="data_list_row">流通数量：<span>10000</span></div>
-                </div>
                 <van-list
                         v-model="loading"
                         :finished="finished"
