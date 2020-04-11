@@ -226,7 +226,7 @@
             // vuex state
             ...mapState(["myUsdt", "myFreezeUsdt", "cac", "myFreezeCac", "myAccount", "usdtContract", "userInfo", "web3"]),
             btnFlag() {
-                return this.homeData.waiting_num < 4;
+                return this.homeData.waiting_num > 4;
             }
         },
         methods: {
