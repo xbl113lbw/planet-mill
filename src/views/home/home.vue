@@ -44,7 +44,7 @@
                         <span>10 CAC</span>
                     </div>
                 </div>
-                <button @click="start" :class="btnFlag ? '' : 'disabledBtn'" :disabled="btnFlag">参与碰撞</button>
+                <button @click="start" :class="btnFlag ? '' : 'disabledBtn'" :disabled="!btnFlag">参与碰撞</button>
             </div>
             <div class="coinInfo_top_line">
                 <div class="coinInfo_top_line_textWrap">
