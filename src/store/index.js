@@ -150,7 +150,15 @@ const store = new Vuex.Store({
                 store.dispatch('web3Init');
                 return
             }
-            /*filter获取交易数据*/
+            /*监听事件*/
+            state.MyContract.events.allEvents({
+                fromBlock: 0,
+            }, (error, event) => {
+                console.log("error", error, event);
+            }).on('data', function (event) {
+                console.log("event", event); // same results as the optional callback above
+            });
+            /*获取交易数据*/
             state.web3.eth.getPastLogs({
                 fromBlock: 0,
                 toBlock: 'latest',
