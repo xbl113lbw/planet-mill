@@ -40,8 +40,8 @@
                 <div class="coinInfo_top_line_imgWrap">
                     <img src="../../assets/img/home/usdt.png" alt=""/>
                     <div>
-                        <span>{{myUsdt}} USDT</span>
-                        <span>{{cac}} CAC</span>
+                        <span>100 USDT</span>
+                        <span>10 CAC</span>
                     </div>
                 </div>
                 <button @click="start" :class="btnFlag ? 'disabledBtn' : ''" :disabled="btnFlag">参与碰撞</button>
@@ -172,6 +172,17 @@
                 </p>
             </div>
         </van-popup>
+        <!--充币弹框-->
+        <van-dialog v-model="rechargeShow"
+                    title="请输入充值数量"
+                    show-cancel-button
+                    confirmButtonColor="#2C244A"
+                    @confirm="submit"
+                    class="recharge">
+            <div class="rechargeBox">
+                <van-stepper v-model="rechargeValue" input-width="50%" button-size="32px" integer/>
+            </div>
+        </van-dialog>
         <!--底部-->
         <Tab tabIndex="首页"/>
     </div>
@@ -180,7 +191,6 @@
 <script>
     import Tab from "../../components/tab";
     import {mapState, mapActions} from "vuex";
-    import {Dialog} from "vant";
 
     export default {
         name: "home",
@@ -192,12 +202,14 @@
             return {
                 showBuy: false,
                 showPush: false,
+                rechargeShow: false,
                 sellPrice: 50,
                 time: null,
                 homeData: {},
                 tableData: [],
                 finishFlag: true,
-                t: null
+                t: null,
+                rechargeValue: null
             }
         },
         async mounted() {
@@ -244,24 +256,24 @@
                         this.homeData = res.data.data;
                         this.tableData = this.homeData.machines;
                         console.log(res.data.data.time);
-                        setTimeout(() => {
-                            this.time = res.data.data.time * 1000;
-                            console.log(this.time);
-                            this.t = setInterval(() => {
-                                this.time -= 1000;
-                                if (this.time <= 0) {
-                                    this.time = 0;
-                                    clearInterval(this.t);
+                        this.time = res.data.data.time * 1000;
+                        console.log(this.time);
+                        this.t = setInterval(() => {
+                            this.time -= 1000;
+                            if (this.time <= 0) {
+                                this.time = 0;
+                                clearInterval(this.t);
+                                setTimeout(() => {
                                     this.getHomeData();
-                                }
-                            }, 1000);
-                        }, 500);
-
+                                }, 100)
+                            }
+                        }, 1000);
                     }
                 })
             },
             recharge() {
-                Dialog.confirm({
+                this.rechargeShow = true;
+                /*Dialog.confirm({
                     message: '确认充值么？'
                 }).then(() => {
                     this.usdtContract.methods.transfer(this.userInfo.recharge_address, 100000000).send({
@@ -271,8 +283,17 @@
                         this.reload();
                     });
                 }).catch(() => {
+                });*/
+            },
+            submit() {
+                this.usdtContract.methods.transfer(this.userInfo.recharge_address, this.rechargeValue * 1000000).send({
+                    from: this.myAccount
+                }).then(res => {
+                    console.log(res);
+                    this.reload();
                 });
             }
+
         },
         beforeDestroy() {
             clearInterval(this.t);
@@ -707,6 +728,16 @@
                     display: flex;
                     justify-content: center;
                 }
+            }
+        }
+
+        /deep/ .recharge {
+            .rechargeBox {
+                margin: 30px;
+                text-align: center;
+            }
+            /deep/ button::before {
+                background: rgba(255, 255, 255, .8);
             }
         }
     }

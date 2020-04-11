@@ -44,7 +44,7 @@
                     <div class="rowBox">
                         <div>
                             <span class="opacityText">日产出：</span>
-                            <span class="whiteText">{{item.day_num}} USDT</span>
+                            <span class="whiteText">{{item.day_num}} %</span>
                         </div>
                         <div>
                             <span class="opacityText">已运行：</span>

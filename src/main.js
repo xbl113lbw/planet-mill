@@ -13,7 +13,11 @@ import {Popup} from 'vant';
 import {Slider} from 'vant';
 import {Grid, GridItem} from 'vant';
 import {List} from 'vant';
+import {Dialog} from 'vant';
+import {Stepper} from 'vant';
 
+Vue.use(Stepper);
+Vue.use(Dialog);
 Vue.use(List);
 Vue.use(Grid);
 Vue.use(GridItem);

@@ -67,7 +67,10 @@
                             <span>出售：{{item.num}}</span>
                         </div>
                     </div>
-                    <div class="center">{{item.price}} USDT</div>
+                    <div class="center">
+                        <span>{{item.price}} USDT</span>
+                        <span>总价：{{item.num * item.price}}</span>
+                    </div>
                     <button class="right" @click="buy(item.id)">立即交易</button>
                 </li>
             </ul>
@@ -351,6 +354,7 @@
                     .left {
                         display: flex;
                         align-items: center;
+                        margin-right: 20px;
 
                         img {
                             width: 72px;
@@ -382,13 +386,21 @@
                     }
 
                     .center {
+                        flex: 1;
                         /*max-width: 100px;*/
                         /*overflow: hidden;*/
                         /*text-overflow: ellipsis;*/
                         /*white-space: nowrap;*/
-                        font-size: 30px;
-                        font-weight: 600;
-                        color: #AB91EF;
+                        span {
+                            display: block;
+                            font-size: 25px;
+                            font-weight: 600;
+                            color: #AB91EF;
+                            &:last-child {
+                                font-size: 22px;
+                                color: rgba(255, 255, 255, .6);
+                            }
+                        }
                     }
 
                     .right {
