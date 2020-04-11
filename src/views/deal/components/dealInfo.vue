@@ -67,7 +67,7 @@
                             <span>出售：{{item.num}}</span>
                         </div>
                     </div>
-                    <div class="center">{{item.price}}</div>
+                    <div class="center">{{item.price}} USDT</div>
                     <button class="right" @click="buy(item.id)">立即交易</button>
                 </li>
             </ul>

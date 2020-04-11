@@ -30,7 +30,7 @@
                 <input v-model="num" placeholder="请输入数量"/>
             </div>
             <div class="content_row_last">
-                <span class="row_left">购买金额:</span>
+                <span class="row_left">总金额:</span>
                 <span>{{price * num}}</span>
                 <div class="button_class">
                     <van-button class="button" round color="linear-gradient(to right,#A73FE2,#7E2AF2,#611DE8)"
