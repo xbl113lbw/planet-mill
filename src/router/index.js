@@ -69,6 +69,11 @@ const routes = [
         path: '/tradRecord',
         name: 'tradRecord',
         component: () => import('../views/releaseOrder/tradRecord')
+    },
+    {
+        path: '/serve',
+        name: 'serve',
+        component: () => import('../views/index')
     }
 ];
 

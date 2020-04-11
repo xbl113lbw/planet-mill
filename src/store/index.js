@@ -144,6 +144,27 @@ const store = new Vuex.Store({
                 }
             })
         },
+        getExchangeData({state}) {
+            /*判断MetaMask是否登录*/
+            if (!state.web3) {
+                store.dispatch('web3Init');
+                return
+            }
+            /*filter获取交易数据*/
+            state.web3.eth.getPastLogs({
+                fromBlock: 0,
+                toBlock: 'latest',
+                address: state.address
+            }).then(async (err, result) => {
+                console.log("getExchangeData", err, result);
+                /*await setTimeout(() => {
+                    ajax.post("index/set/set_info", arr).then(res => {
+                        flag = true;
+                        console.log(res);
+                    });
+                }, 1000);*/
+            })
+        }
     },
 });
 

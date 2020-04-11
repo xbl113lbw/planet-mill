@@ -44,14 +44,14 @@
                         <span>10 CAC</span>
                     </div>
                 </div>
-                <button @click="start" :class="btnFlag ? '' : 'disabledBtn'" :disabled="!btnFlag">参与碰撞</button>
+                <button @click="start" :class="btnFlag ? 'disabledBtn' : ''" :disabled="btnFlag">参与碰撞</button>
             </div>
             <div class="coinInfo_top_line">
                 <div class="coinInfo_top_line_textWrap">
                     <div>当前排队人数：<span>{{homeData.total_wait_num}}</span></div>
                     <div>排队中：<span>{{homeData.waiting_num}}</span></div>
                 </div>
-                <button @click="start" :class="btnFlag ? 'disabledBtn' : ''" :disabled="btnFlag">碰撞预排</button>
+                <button @click="start" :class="btnFlag ? '' : 'disabledBtn'" :disabled="!btnFlag">碰撞预排</button>
             </div>
             <div class="coinInfo_bottom">
                 <div class="coinInfo_bottom_left">
@@ -226,7 +226,7 @@
             // vuex state
             ...mapState(["myUsdt", "myFreezeUsdt", "cac", "myFreezeCac", "myAccount", "usdtContract", "userInfo", "web3"]),
             btnFlag() {
-                return this.homeData.waiting_num > 4;
+                return this.homeData.total_wait_num > 4;
             }
         },
         methods: {
@@ -273,17 +273,6 @@
             },
             recharge() {
                 this.rechargeShow = true;
-                /*Dialog.confirm({
-                    message: '确认充值么？'
-                }).then(() => {
-                    this.usdtContract.methods.transfer(this.userInfo.recharge_address, 100000000).send({
-                        from: this.myAccount
-                    }).then(res => {
-                        console.log(res);
-                        this.reload();
-                    });
-                }).catch(() => {
-                });*/
             },
             submit() {
                 this.usdtContract.methods.transfer(this.userInfo.recharge_address, this.rechargeValue * 1000000).send({
