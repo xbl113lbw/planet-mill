@@ -58,29 +58,29 @@
         </div>
 
         <!-- 矿机运行情况 -->
-        <div class="operationBox">
+        <div class="operationBox" v-for="(item,index) in machine" :key="index">
             <div class="leftBox">
                 <div class="itemImg">
-                    <img src="../../assets/img/property/水星.png" alt/>
+                    <img :src="require(`../../assets/img/property/${item.name}.png`)" alt/>
                 </div>
-                <div class="itemName">水星</div>
+                <div class="itemName">{{item.name}}</div>
             </div>
             <div class="rightBox">
                 <div class="operationText">矿机运行情况</div>
                 <div class="textRow">
                     <div>
                         <span class="opacityText">总产出：</span>
-                        <span class="_AB91EF">100</span>
+                        <span class="_AB91EF">{{item.all_num}}</span>
                     </div>
                     <div class="m_90">
                         <span class="opacityText">待产出：</span>
-                        <span class="_AB91EF">100</span>
+                        <span class="_AB91EF">{{item.pending_output_num}}</span>
                     </div>
                 </div>
                 <div class="textRow">
                     <div>
                         <span class="opacityText">已产出：</span>
-                        <span class="_AB91EF">100</span>
+                        <span class="_AB91EF">{{item.output_num}}</span>
                     </div>
                 </div>
             </div>
@@ -143,7 +143,8 @@
                     require("../../assets/img/property/土星.png"),
                     require("../../assets/img/property/木星.png")
                 ],
-                AssetObj: {}
+                AssetObj: {},
+                machine: []
             };
         },
         created() {
@@ -160,7 +161,9 @@
             getAsset() {
                 this.ajax.get("v1/user/asset").then(res => {
                     if (res.data.code === 200) {
+                        console.log(res);
                         this.AssetObj = res.data.data;
+                        this.machine = this.AssetObj.machine;
                     }
                 })
             },
