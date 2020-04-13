@@ -96,7 +96,7 @@
 
 <style lang="scss" scoped>
     .main_page {
-        height: 100vh;
+        min-height: 100vh;
         padding: 0 30px;
         background: url("../../assets/img/bg.png") no-repeat center;
         background-size: cover;

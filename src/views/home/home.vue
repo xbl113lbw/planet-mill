@@ -190,7 +190,7 @@
                     @confirm="submit"
                     class="recharge">
             <div class="rechargeBox">
-                <van-stepper v-model="rechargeValue" input-width="50%" button-size="32px" integer/>
+                <van-stepper v-model="rechargeValue" input-width="50%" button-size="32px"/>
             </div>
         </van-dialog>
         <!--底部-->
@@ -320,6 +320,7 @@
                     this.ajax.get("v1/user/collide", {}).then(res => {
                         if (res.data.code === 200) {
                             Toast("成功");
+                            this.reload();
                         }
                     });
                 }).catch(() => {
