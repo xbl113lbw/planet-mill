@@ -81,6 +81,7 @@
 
     export default {
         name: "planet",
+        inject: ["reload"],
         components: {
             NavCom,
             Tab
@@ -119,6 +120,7 @@
                     this.ajax.get(`v1/goods/${index}/buy`, {good_id: index}).then(res => {
                         if (res.data.code === 200) {
                             Toast("成功");
+                            this.reload();
                         }
                     });
                 }).catch(() => {
