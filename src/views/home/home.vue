@@ -317,7 +317,7 @@
                         Toast("USDT余额不足");
                         return
                     }
-                    this.ajax.grt("v1/user/collide", {}).then(res => {
+                    this.ajax.get("v1/user/collide", {}).then(res => {
                         if (res.data.code === 200) {
                             Toast("成功");
                         }
