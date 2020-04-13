@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="btnBox">
-                <div class="btnItem" @click="recharge">充值</div>
+                <!--<div class="btnItem" @click="recharge">充值</div>-->
                 <div class="btnItem" @click="userWithdrawal">提币</div>
                 <div class="btnItem" @click="$router.push({path:'/deal'})">交易</div>
             </div>
@@ -166,19 +166,6 @@
                         this.machine = this.AssetObj.machine;
                     }
                 })
-            },
-            recharge() {
-                Dialog.confirm({
-                    message: '确认充值么？'
-                }).then(() => {
-                    this.usdtContract.methods.transfer(this.userInfo.recharge_address, 100000000).send({
-                        from: this.myAccount
-                    }).then(res => {
-                        console.log(res);
-                        this.reload();
-                    });
-                }).catch(() => {
-                });
             },
             userWithdrawal() {
                 Dialog.confirm({

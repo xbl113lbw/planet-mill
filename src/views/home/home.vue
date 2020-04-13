@@ -55,22 +55,22 @@
                 <div class="coinInfo_bottom_left">
                     <div>
                         可用：
-                        <span>{{myUsdt}} USDT</span>
+                        <span>{{homeData.user.usdt_coin}} USDT</span>
                     </div>
                     <div>
                         冻结：
-                        <span>{{myFreezeUsdt}} USDT</span>
+                        <span>{{homeData.user.freeze_usdt_coin}} USDT</span>
                     </div>
                     <div>
                         可用：
-                        <span>{{cac}} CAC</span>
+                        <span>{{homeData.user.cac_coin}} CAC</span>
                     </div>
                     <div>
                         冻结：
-                        <span>{{myFreezeCac}} CAC</span>
+                        <span>{{homeData.user.freeze_cac_coin}} CAC</span>
                     </div>
                 </div>
-                <button @click="recharge">充币</button>
+                <button @click="recharge('usdt')">充币</button>
             </div>
         </div>
         <!--邀请链接-->
@@ -202,6 +202,7 @@
     import Tab from "../../components/tab";
     import {mapState, mapActions} from "vuex";
     import Clipboard from "clipboard";
+    import {Dialog, Toast} from "vant";
 
     export default {
         name: "home",
@@ -216,7 +217,9 @@
                 rechargeShow: false,
                 sellPrice: 50,
                 time: null,
-                homeData: {},
+                homeData: {
+                    user: {}
+                },
                 tableData: [],
                 finishFlag: true,
                 t: null,
@@ -228,22 +231,18 @@
             await this.getToken();
             await this.getHomeData();
             // 获取货币余额
-            await this.usdtBalanceOf();
-            await this.usdtFreezeBalanceOf();
-            await this.coinBalanceOf();
-            await this.coinFreezeBalanceOf();
             await this.getUserInfo();
             this.url = `${window.location.host}/?aid=${this.myAccount}`;
         },
         computed: {
             // vuex state
-            ...mapState(["myUsdt", "myFreezeUsdt", "cac", "myFreezeCac", "myAccount", "usdtContract", "userInfo", "web3"]),
+            ...mapState(["myAccount", "usdtContract", "userInfo", "web3"]),
             btnFlag() {
                 return this.homeData.total_wait_num > 4;
             }
         },
         methods: {
-            ...mapActions(["start", "usdtBalanceOf", "usdtFreezeBalanceOf", "coinBalanceOf", "coinFreezeBalanceOf", "getUserInfo"]),
+            ...mapActions(["getUserInfo"]),
             // 获取 token
             async getToken() {
                 let token = sessionStorage.getItem("Token");
@@ -268,9 +267,7 @@
                     if (res.data.code === 200) {
                         this.homeData = res.data.data;
                         this.tableData = this.homeData.machines;
-                        console.log(res.data.data.time);
                         this.time = res.data.data.time * 1000;
-                        console.log(this.time);
                         this.t = setInterval(() => {
                             this.time -= 1000;
                             if (this.time <= 0) {
@@ -287,12 +284,16 @@
             recharge() {
                 this.rechargeShow = true;
             },
-            submit() {
+            submit(type) {
                 this.usdtContract.methods.transfer(this.userInfo.recharge_address, this.rechargeValue * 1000000).send({
                     from: this.myAccount
-                }).then(res => {
-                    console.log(res);
-                    this.reload();
+                }).then(() => {
+                    this.ajax.post("v1/user/recharge", {coin_type: type, amount: this.rechargeValue}).then(res => {
+                        console.log(res);
+                        if (res.data.code === 200) {
+                            this.reload();
+                        }
+                    });
                 });
             },
             /*复制功能*/
@@ -308,6 +309,22 @@
                     e.clearSelection();
                 });
             },
+            start() {
+                Dialog.confirm({
+                    message: '确认参与么？'
+                }).then(() => {
+                    if (this.homeData.user.usdt_coin < 100) {
+                        Toast("USDT余额不足");
+                        return
+                    }
+                    this.ajax.post("v1/user/collide", {}).then(res => {
+                        if (res.data.code === 200) {
+                            Toast("成功");
+                        }
+                    });
+                }).catch(() => {
+                });
+            }
         },
         beforeDestroy() {
             clearInterval(this.t);
@@ -751,10 +768,6 @@
             .rechargeBox {
                 margin: 30px;
                 text-align: center;
-            }
-
-            /deep/ button::before {
-                background: rgba(255, 255, 255, .8);
             }
         }
 

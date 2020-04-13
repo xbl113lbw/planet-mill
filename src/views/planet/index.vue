@@ -18,7 +18,7 @@
                     <span>冻结:</span> {{myFreezeUsdt}} USDT
                 </div>
             </div>
-            <div class="chargeBtn" @click="recharge">充币</div>
+            <!--<div class="chargeBtn" @click="recharge">充币</div>-->
         </div>
         <div v-for="(item,index) in listData" :key="index" class="itemBox">
             <div class="leftBox">
@@ -77,7 +77,7 @@
     import NavCom from "@/components/nav.vue"
     import Tab from "../../components/tab";
     import {mapActions, mapState} from "vuex";
-    import {Dialog} from "vant";
+    import {Dialog, Toast} from "vant";
 
     export default {
         name: "planet",
@@ -113,25 +113,17 @@
                 })
             },
             buy(index) {
-                this.MyContract.methods.buyMiner(index).send({
-                    from: this.myAccount
-                }).then(res => {
-                    console.log("当前的CAC价格", res);
-                });
-            },
-            recharge() {
                 Dialog.confirm({
-                    message: '确认充值么？'
+                    message: '确认购买么？'
                 }).then(() => {
-                    this.usdtContract.methods.transfer(this.userInfo.recharge_address, 100000000).send({
-                        from: this.myAccount
-                    }).then(res => {
-                        console.log(res);
-                        this.reload();
+                    this.ajax.get(`v1/goods/${index}/buy`, {good_id: index}).then(res => {
+                        if (res.data.code === 200) {
+                            Toast("成功");
+                        }
                     });
                 }).catch(() => {
                 });
-            }
+            },
         }
     }
 </script>
