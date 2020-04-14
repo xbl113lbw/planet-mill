@@ -69,7 +69,25 @@ const routes = [
         path: '/tradRecord',
         name: 'tradRecord',
         component: () => import('../views/releaseOrder/tradRecord')
-    }
+    },
+    // 登录
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('../views/login/login')
+    },
+    // 注册
+    {
+        path: '/register',
+        name: 'register',
+        component: () => import('../views/register/register')
+    },
+    // 忘记密码
+    {
+        path: '/forgetPwd',
+        name: 'forgetPwd',
+        component: () => import('../views/forgetPwd/forgetPwd')
+    },
 ];
 
 const router = new VueRouter({
