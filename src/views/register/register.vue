@@ -48,7 +48,7 @@
                     return;
                 }
                 if (!this.phone) {
-                    this.$toast("请输入手机号或邮箱");
+                    this.$toast("请输入手机号");
                     return;
                 }
                 this.codeFlag = false;
@@ -76,6 +76,9 @@
                         this.codeFlag = true;
                         this.btnText = "获取验证码";
                     }
+                }).catch(() => {
+                    this.codeFlag = true;
+                    this.btnText = "获取验证码";
                 })
             },
             register() {

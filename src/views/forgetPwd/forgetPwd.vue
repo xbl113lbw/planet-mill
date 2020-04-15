@@ -68,6 +68,9 @@
                         this.codeFlag = true;
                         this.btnText = "获取验证码";
                     }
+                }).catch(() => {
+                    this.codeFlag = true;
+                    this.btnText = "获取验证码";
                 })
             },
             submit() {

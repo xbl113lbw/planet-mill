@@ -12,10 +12,10 @@
         <div class="top">
             <div class="textBox">
                 <div>
-                    <span>可用:</span> {{myUsdt}} USDT
+                    <span>可用:</span> {{usdt_coin}} USDT
                 </div>
                 <div>
-                    <span>冻结:</span> {{myFreezeUsdt}} USDT
+                    <span>冻结:</span> {{freeze_usdt_coin}} USDT
                 </div>
             </div>
             <!--<div class="chargeBtn" @click="recharge">充币</div>-->
@@ -88,7 +88,9 @@
         },
         data() {
             return {
-                listData: []
+                listData: [],
+                usdt_coin: "",
+                freeze_usdt_coin: "",
             };
         },
         created() {
@@ -109,7 +111,9 @@
             getListData() {
                 this.ajax.get("v1/goods").then(res => {
                     if (res.data.code === 200) {
-                        this.listData = res.data.data;
+                        this.listData = res.data.data.miners;
+                        this.usdt_coin = parseFloat(res.data.data.usdt_coin);
+                        this.freeze_usdt_coin = parseFloat(res.data.data.freeze_usdt_coin);
                     }
                 })
             },
