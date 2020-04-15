@@ -301,7 +301,9 @@
                     this.ajax.get("v1/user/collide", {}).then(res => {
                         if (res.data.code === 200) {
                             Toast("成功");
-                            this.reload();
+                            setTimeout(() => {
+                                this.reload();
+                            }, 1000);
                         }
                     });
                 }).catch(() => {
