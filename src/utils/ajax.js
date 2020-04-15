@@ -8,7 +8,8 @@ let instance = axios.create({
     timeout: 0,
     baseURL: "http://test.baas.yingbei365.com/api/",
     headers: {
-        "X-Requested-With": "XMLHttpRequest"
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "application/json"
     }
 });
 
