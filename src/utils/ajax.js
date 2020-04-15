@@ -7,10 +7,7 @@ import {Toast} from "vant"
 let instance = axios.create({
     timeout: 0,
     baseURL: "http://test.baas.yingbei365.com/api/",
-    headers: {
-        "X-Requested-With": "XMLHttpRequest",
-        "Content-Type": "application/json"
-    }
+    headers: {}
 });
 
 // 添加请求拦截器
@@ -31,7 +28,11 @@ instance.interceptors.request.use(function (config) {
 
 // 添加响应拦截器
 instance.interceptors.response.use(function (response) {
-    Toast.clear();
+    if (response.data.code !== 200) {
+        Toast(response.data.message);
+    } else {
+        Toast.clear();
+    }
     // 对响应数据做点什么
     return response;
 }, function (error) {
