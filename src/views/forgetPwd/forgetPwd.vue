@@ -92,6 +92,7 @@
                 };
                 this.ajax.post("v1/reset", obj).then((res) => {
                     if (res.data.code === 200) {
+                        this.$toast(res.data.message);
                         this.$router.push({path: "/login"});
                     }
                 })
