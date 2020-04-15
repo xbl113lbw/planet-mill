@@ -3,13 +3,13 @@
         <div class="title">欢迎来到 cosmicplanet</div>
         <div class="form">
             <label>
-                <input type="text" placeholder="请输入手机号码">
+                <input type="text" placeholder="请输入手机号码" v-model="phone">
             </label>
             <label>
-                <input type="password" placeholder="请输入密码">
+                <input type="password" placeholder="请输入密码" v-model="password">
             </label>
         </div>
-        <button class="submit">登录</button>
+        <button class="submit" @click="login">登录</button>
         <div class="btnBox">
             <router-link to="/forgetPwd">忘记密码</router-link>
             <router-link to="/register">立即注册</router-link>
@@ -19,7 +19,36 @@
 
 <script>
     export default {
-        name: "login"
+        name: "login",
+        data() {
+            return {
+                phone: "",
+                password: "",
+            }
+        },
+        methods: {
+            login() {
+                if (!this.phone) {
+                    this.$toast("请输入手机号");
+                    return;
+                }
+                if (!this.password) {
+                    this.$toast("请输入密码");
+                    return;
+                }
+                let obj = {
+                    phone: this.phone,
+                    password: this.password,
+                };
+                this.ajax.post("v1/login", obj).then((res) => {
+                    if (res.data.code === 200) {
+                        let token = res.data.data.token;
+                        sessionStorage.setItem("Token", token);
+                        this.$router.push({path: "/"});
+                    }
+                })
+            }
+        }
     }
 </script>
 

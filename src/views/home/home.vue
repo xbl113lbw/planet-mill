@@ -55,19 +55,19 @@
                 <div class="coinInfo_bottom_left">
                     <div>
                         可用：
-                        <span>{{homeData.user.usdt_coin}} USDT</span>
+                        <span>{{parseFloat(homeData.user.usdt_coin)}} USDT</span>
                     </div>
                     <div>
                         冻结：
-                        <span>{{homeData.user.freeze_usdt_coin}} USDT</span>
+                        <span>{{parseFloat(homeData.user.freeze_usdt_coin)}} USDT</span>
                     </div>
                     <div>
                         可用：
-                        <span>{{homeData.user.cac_coin}} CAC</span>
+                        <span>{{parseFloat(homeData.user.cac_coin)}} CAC</span>
                     </div>
                     <div>
                         冻结：
-                        <span>{{homeData.user.freeze_cac_coin}} CAC</span>
+                        <span>{{parseFloat(homeData.user.freeze_cac_coin)}} CAC</span>
                     </div>
                 </div>
                 <button @click="recharge('usdt')">充币</button>
@@ -228,7 +228,6 @@
             }
         },
         async mounted() {
-            await this.getToken();
             await this.getHomeData();
             // 获取货币余额
             await this.getUserInfo();
@@ -243,24 +242,6 @@
         },
         methods: {
             ...mapActions(["getUserInfo"]),
-            // 获取 token
-            async getToken() {
-                let token = sessionStorage.getItem("Token");
-                if (token) {
-                    return
-                }
-                let address = this.myAccount;
-                let obj = {
-                    address: address,
-                    invite_address: "",
-                };
-                await this.ajax.post("v1/users", obj).then(res => {
-                    if (res.data.code === 200) {
-                        let token = res.data.data.token;
-                        sessionStorage.setItem("Token", token);
-                    }
-                })
-            },
             // 获取首页数据
             async getHomeData() {
                 await this.ajax.get("v1/index").then(res => {

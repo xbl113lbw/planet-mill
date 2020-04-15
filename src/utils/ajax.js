@@ -40,11 +40,7 @@ instance.interceptors.response.use(function (response) {
     if (code === 422) {
         Toast("登陆过期");
         sessionStorage.removeItem("Token");
-        if (router.currentRoute.path !== "/") {
-            router.push({path: "/"});
-        } else {
-            window.location.reload();
-        }
+        router.push({path: "/login"});
     } else {
         Toast(error.response.data.message);
     }
