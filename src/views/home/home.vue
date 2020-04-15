@@ -501,7 +501,7 @@
                     div {
                         width: 50%;
                         margin-bottom: 12px;
-                        font-size: 26px;
+                        font-size: 20px;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
