@@ -184,7 +184,7 @@
                 withdrawAlertShow: false,
                 rechargeValue: null,
                 withdrawValue: null,
-                type: null
+                coinType: null
             };
         },
         created() {
@@ -193,10 +193,10 @@
         },
         computed: {
             // vuex state
-            ...mapState(["userInfo"]),
+            ...mapState(["userInfo", "usdtContract", "MyContract", "myAccount"]),
         },
         methods: {
-            ...mapActions(["getUserInfo",]),
+            ...mapActions(["getUserInfo"]),
             getAsset() {
                 this.ajax.get("v1/user/asset").then(res => {
                     if (res.data.code === 200) {
@@ -206,18 +206,40 @@
                 })
             },
             showWithdrawAlert(type) {
-                this.type = type;
+                this.coinType = type;
                 this.withdrawAlertShow = true;
             },
             showRechargeAlert(type) {
-                this.type = type;
+                this.coinType = type;
                 this.rechargeAlertShow = true;
             },
+            // 充币提交
             rechargeSubmit() {
-
+                // 根据类型 切换合约
+                let Contract, rechargeValue;
+                if (this.coinType === "usdt") {
+                    Contract = this.usdtContract;
+                    rechargeValue = this.rechargeValue * 1000000;
+                } else {
+                    Contract = this.MyContract;
+                    rechargeValue = this.rechargeValue;
+                }
+                Contract.methods.transfer(this.userInfo.recharge_address, rechargeValue).send({
+                    from: this.myAccount
+                }).then(() => {
+                    this.ajax.post("v1/user/recharge", {
+                        coin_type: this.coinType,
+                        amount: this.rechargeValue
+                    }).then(res => {
+                        if (res.data.code === 200) {
+                            this.reload();
+                        }
+                    });
+                });
             },
+            // 提现提交
             withdrawSubmit() {
-
+                
             }
         }
     };

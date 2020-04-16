@@ -84,7 +84,7 @@ const store = new Vuex.Store({
                     let cac = res.data.data.cac;
                     console.log("address", usdt, cac);
                     /*对接合约*/
-                    state.MyContract = new state.web3.eth.Contract(state.abi, state.address);
+                    state.MyContract = new state.web3.eth.Contract(state.usdtAbi, state.address);
                     state.usdtContract = new state.web3.eth.Contract(state.usdtAbi, state.usdtAddress);
                     /*异步获取账户地址*/
                     state.web3.eth.getAccounts().then((res) => {

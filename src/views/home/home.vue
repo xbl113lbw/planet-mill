@@ -239,7 +239,7 @@
         },
         computed: {
             // vuex state
-            ...mapState(["myAccount", "usdtContract", "userInfo", "web3"]),
+            ...mapState(["myAccount", "usdtContract", "MyContract", "userInfo", "web3"]),
             btnFlag() {
                 return this.homeData.progress === "100%";
             }
@@ -271,14 +271,22 @@
                 this.coinType = type;
             },
             submit() {
-                this.usdtContract.methods.transfer(this.userInfo.recharge_address, this.rechargeValue * 1000000).send({
+                // 根据类型 切换合约
+                let Contract, rechargeValue;
+                if (this.coinType === "usdt") {
+                    Contract = this.usdtContract;
+                    rechargeValue = this.rechargeValue * 1000000;
+                } else {
+                    Contract = this.MyContract;
+                    rechargeValue = this.rechargeValue;
+                }
+                Contract.methods.transfer(this.userInfo.recharge_address, rechargeValue).send({
                     from: this.myAccount
                 }).then(() => {
                     this.ajax.post("v1/user/recharge", {
                         coin_type: this.coinType,
                         amount: this.rechargeValue
                     }).then(res => {
-                        console.log(res);
                         if (res.data.code === 200) {
                             this.reload();
                         }
