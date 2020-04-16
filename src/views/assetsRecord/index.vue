@@ -18,11 +18,13 @@
                         @load="onLoad">
                     <div v-for="(item,index) in listData" :key="index" class="data_detail">
                         <div class="data_detail_row">
-                            <span class="rate" :class="item.amount>0?'red':'green'">{{ item.amount }}</span>
+                            <span class="rate" :class="item.pm > 0 ? 'green':'red'">
+                                {{ item.pm > 0 ? `+${item.amount}` : `-${item.amount}`}}
+                            </span>
                             <span>{{item.title}}</span>
                         </div>
                         <div class="data_detail_row">
-                            <span>余额：{{ item.balance }}</span>
+                            <span>{{item.coin.toLocaleUpperCase()}}余额：{{ item.balance }}</span>
                             <span>{{ item.created_at }}</span>
                         </div>
                     </div>

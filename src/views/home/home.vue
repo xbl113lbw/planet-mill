@@ -93,10 +93,10 @@
             <div class="table_tr table_tr_title">
                 <span>矿机类型</span>
                 <span>矿机数量</span>
-                <span>分红奖池</span>
-                <span>矿池</span>
-                <span>矿机奖励</span>
-                <span>分红</span>
+                <span>分红奖池(USDT)</span>
+                <span>矿池(USDT)</span>
+                <span>矿机奖励(USDT)</span>
+                <span>分红(USDT)</span>
             </div>
             <div class="table_tr" v-for="(item,index) in tableData" :key="index">
                 <span>
@@ -573,6 +573,7 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    text-align: center;
                     flex-wrap: wrap;
                     height: 100%;
                     font-size: 24px;

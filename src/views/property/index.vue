@@ -32,6 +32,58 @@
             </div>
         </div>
 
+        <!-- 参与游戏 -->
+        <div>
+            <div class="itemBox">
+                <div class="topArea">
+                    <div class="topAreaLeft">
+                        <div class="iconBox">
+                            <img src="../../assets/img/home/usdt.png" alt=""/>
+                        </div>
+                        <div class="nameBox">USDT</div>
+                    </div>
+                    <div class="arrowRightBox">
+                        <img src="./../../assets/img/property/arrow_right.png" alt/>
+                    </div>
+                </div>
+                <div class="line"></div>
+                <div class="bottomArea">
+                    <div>
+                        <div class="opacityText">可用：</div>
+                        <div>{{parseFloat(userInfo.usdt_coin)}} USDT</div>
+                    </div>
+                    <div>
+                        <div class="opacityText">冻结：</div>
+                        <div>{{parseFloat(userInfo.freeze_usdt_coin)}} USDT</div>
+                    </div>
+                </div>
+            </div>
+            <div class="itemBox">
+                <div class="topArea">
+                    <div class="topAreaLeft">
+                        <div class="iconBox">
+                            <img src="../../assets/img/deal/coin.png" alt=""/>
+                        </div>
+                        <div class="nameBox">CAC</div>
+                    </div>
+                    <div class="arrowRightBox">
+                        <img src="./../../assets/img/property/arrow_right.png" alt/>
+                    </div>
+                </div>
+                <div class="line"></div>
+                <div class="bottomArea">
+                    <div>
+                        <div class="opacityText">可用：</div>
+                        <div>{{parseFloat(userInfo.cac_coin)}} CAC</div>
+                    </div>
+                    <div>
+                        <div class="opacityText">冻结：</div>
+                        <div>{{parseFloat(userInfo.freeze_cac_coin)}} CAC</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 正在参与的游戏 -->
         <div class="gamesBox">
             <div class="gamesItemBox">
@@ -85,39 +137,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- 参与游戏 -->
-        <div v-if="false">
-            <div class="itemBox" v-for="(item,index) in [1,2]" :key="index">
-                <div class="topArea">
-                    <div class="topAreaLeft">
-                        <div class="iconBox"></div>
-                        <div class="nameBox">ABCJC</div>
-                    </div>
-                    <div class="arrowRightBox">
-                        <img src="./../../assets/img/property/arrow_right.png" alt/>
-                    </div>
-                </div>
-
-                <div class="line"></div>
-
-                <div class="bottomArea">
-                    <div>
-                        <div class="opacityText">可用：</div>
-                        <div>100 USDT</div>
-                    </div>
-                    <div>
-                        <div class="opacityText">冻结：</div>
-                        <div>100 USDT</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 未参与游戏 -->
-        <!--<div class="imgItem">
-            <img v-for="(item,index) in imgItem" :src="item" :key="index" alt/>
-        </div>-->
         <!--充币弹框-->
         <van-dialog v-model="rechargeShow"
                     title="请输入充值数量"
@@ -146,13 +165,6 @@
         inject: ["reload"],
         data() {
             return {
-                imgItem: [
-                    require("../../assets/img/property/水星.png"),
-                    require("../../assets/img/property/火星.png"),
-                    require("../../assets/img/property/金星.png"),
-                    require("../../assets/img/property/土星.png"),
-                    require("../../assets/img/property/木星.png")
-                ],
                 AssetObj: {},
                 machine: [],
                 rechargeShow: false,
@@ -404,7 +416,7 @@
             background: #2c244a;
             border-radius: 8px;
             padding: 36px 40px 35px 40px;
-            margin-top: 30px;
+            margin-bottom: 30px;
 
             .topArea {
                 width: 100%;
@@ -415,12 +427,18 @@
 
                 .topAreaLeft {
                     display: flex;
+                    align-items: center;
 
                     .iconBox {
                         width: 56px;
                         height: 56px;
-                        border: 1px solid red;
+                        border-radius: 50%;
                         margin-right: 20px;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
                     }
 
                     .nameBox {

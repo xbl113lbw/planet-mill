@@ -12,10 +12,10 @@
         <div class="top">
             <div class="textBox">
                 <div>
-                    <span>可用:</span> {{usdt_coin}} USDT
+                    <span>可用:</span> {{parseFloat(userInfo.cac_coin)}} CAC
                 </div>
                 <div>
-                    <span>冻结:</span> {{freeze_usdt_coin}} USDT
+                    <span>冻结:</span> {{parseFloat(userInfo.freeze_cac_coin)}} CAC
                 </div>
             </div>
             <!--<div class="chargeBtn" @click="recharge">充币</div>-->
@@ -82,7 +82,7 @@
 <script>
     import NavCom from "@/components/nav.vue"
     import Tab from "../../components/tab";
-    import {mapState} from "vuex";
+    import {mapActions, mapState} from "vuex";
     import {Dialog, Toast} from "vant";
 
     export default {
@@ -95,24 +95,22 @@
         data() {
             return {
                 listData: [],
-                usdt_coin: "",
-                freeze_usdt_coin: "",
             };
         },
         created() {
             this.getListData();
+            this.getUserInfo();
         },
         computed: {
             // vuex state
             ...mapState(["MyContract", "myAccount", "userInfo",])
         },
         methods: {
+            ...mapActions(["getUserInfo"]),
             getListData() {
                 this.ajax.get("v1/goods").then(res => {
                     if (res.data.code === 200) {
                         this.listData = res.data.data.miners;
-                        this.usdt_coin = parseFloat(res.data.data.usdt_coin);
-                        this.freeze_usdt_coin = parseFloat(res.data.data.freeze_usdt_coin);
                     }
                 })
             },
