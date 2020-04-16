@@ -27,7 +27,7 @@
             </div>
             <div class="btnBox">
                 <!--<div class="btnItem" @click="recharge">充值</div>-->
-                <div class="btnItem" @click="userWithdrawal">提币</div>
+                <div class="btnItem" @click="rechargeShow=true">提币</div>
                 <div class="btnItem" @click="$router.push({path:'/deal'})">交易</div>
             </div>
         </div>
@@ -70,17 +70,17 @@
                 <div class="textRow">
                     <div>
                         <span class="opacityText">总产出：</span>
-                        <span class="_AB91EF">{{item.all_num}}</span>
+                        <span class="_AB91EF">{{parseFloat(item.all_num)}}</span>
                     </div>
-                    <div class="m_90">
+                    <div>
                         <span class="opacityText">待产出：</span>
-                        <span class="_AB91EF">{{item.pending_output_num}}</span>
+                        <span class="_AB91EF">{{parseFloat(item.pending_output_num)}}</span>
                     </div>
                 </div>
                 <div class="textRow">
                     <div>
                         <span class="opacityText">已产出：</span>
-                        <span class="_AB91EF">{{item.output_num}}</span>
+                        <span class="_AB91EF">{{parseFloat(item.output_num)}}</span>
                     </div>
                 </div>
             </div>
@@ -118,7 +118,17 @@
         <!--<div class="imgItem">
             <img v-for="(item,index) in imgItem" :src="item" :key="index" alt/>
         </div>-->
-
+        <!--充币弹框-->
+        <van-dialog v-model="rechargeShow"
+                    title="请输入充值数量"
+                    show-cancel-button
+                    confirmButtonColor="#2C244A"
+                    @confirm="submit"
+                    class="recharge">
+            <div class="rechargeBox">
+                <van-stepper v-model="rechargeValue" input-width="50%" button-size="32px"/>
+            </div>
+        </van-dialog>
         <Tab tabIndex="资产"/>
     </div>
 </template>
@@ -144,42 +154,37 @@
                     require("../../assets/img/property/木星.png")
                 ],
                 AssetObj: {},
-                machine: []
+                machine: [],
+                rechargeShow: false,
+                rechargeValue: null,
             };
         },
         created() {
             this.getAsset();
             this.getUserInfo();
-            this.usdtBalanceOf();
         },
         computed: {
             // vuex state
-            ...mapState(["userInfo", "usdtContract", "MyContract", "myAccount", "web3", "myUsdt"]),
+            ...mapState(["userInfo", "usdtContract", "MyContract", "myAccount", "web3",]),
         },
         methods: {
-            ...mapActions(["getUserInfo", "usdtBalanceOf"]),
+            ...mapActions(["getUserInfo",]),
             getAsset() {
                 this.ajax.get("v1/user/asset").then(res => {
                     if (res.data.code === 200) {
-                        console.log(res);
                         this.AssetObj = res.data.data;
                         this.machine = this.AssetObj.machine;
                     }
                 })
             },
-            userWithdrawal() {
+            submit() {
                 Dialog.confirm({
                     message: '确认提现么？'
                 }).then(() => {
-                    this.MyContract.methods.userWithdrawal(this.userInfo.recharge_address, this.web3.utils.toWei(this.myUsdt)).send({
-                        from: this.myAccount
-                    }).then(res => {
-                        console.log(res);
-                        this.reload();
-                    });
+                    console.log(1);
                 }).catch(() => {
                 });
-            }
+            },
         }
     };
 </script>
@@ -368,6 +373,8 @@
             }
 
             .rightBox {
+                flex: 1;
+
                 margin-left: 30px;
 
                 .operationText {
@@ -377,15 +384,12 @@
                 }
 
                 .textRow {
+                    display: flex;
+                    justify-content: space-between;
                     font-size: 26px;
                     margin-bottom: 2px;
-                    display: flex;
                     color: white;
                     margin-top: 10px;
-
-                    .m_90 {
-                        margin-left: 90px;
-                    }
 
                     ._AB91EF {
                         color: #ab91ef;
@@ -471,6 +475,13 @@
                 width: 100px;
                 height: 100px;
                 display: block;
+            }
+        }
+
+        /deep/ .recharge {
+            .rechargeBox {
+                margin: 30px;
+                text-align: center;
             }
         }
     }

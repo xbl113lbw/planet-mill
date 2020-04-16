@@ -25,7 +25,7 @@
                     @load="onLoad">
                 <div v-for="(item,index) in listData" :key="index">
                     <div class="tItem">
-                        <div class="left">{{item.address}}</div>
+                        <div class="left">{{item.phone}}</div>
                         <div class="center">{{item.created_at}}</div>
                         <div class="right">{{item.performance}}</div>
                     </div>
@@ -119,6 +119,7 @@
         position: relative;
         padding: 40px 30px 55px 30px;
         margin: 0 auto;
+
         .bgimg {
             width: 100%;
             background-image: url("./../../assets/img/bg.png");
@@ -131,12 +132,14 @@
             right: 0;
             z-index: -1;
         }
+
         .content {
             width: 690px;
             background: #2c244a;
             border-radius: 8px;
             padding: 20px;
             position: relative;
+
             .verticalLine {
                 position: absolute;
                 width: 1px;
@@ -145,12 +148,15 @@
                 background: #ffffff;
                 opacity: 0.1;
             }
+
             .left_194 {
                 left: 194px;
             }
+
             .right_194 {
                 right: 194px;
             }
+
             .thead {
                 display: flex;
                 justify-content: space-between;
@@ -159,6 +165,7 @@
                 font-weight: 600;
                 padding: 10px 0 24px 0;
             }
+
             .tItem {
                 display: flex;
                 justify-content: space-between;
@@ -168,20 +175,24 @@
                 opacity: 0.6;
                 padding: 23.5px 0 20px 0;
             }
+
             .line {
                 width: 650px;
                 height: 1px;
                 background: #ffffff;
                 opacity: 0.1;
             }
+
             .left {
                 width: 174px;
                 text-align: center;
             }
+
             .center {
                 flex: 1;
                 text-align: center;
             }
+
             .right {
                 width: 174px;
                 text-align: center;

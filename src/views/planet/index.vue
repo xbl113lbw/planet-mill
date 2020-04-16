@@ -82,7 +82,7 @@
 <script>
     import NavCom from "@/components/nav.vue"
     import Tab from "../../components/tab";
-    import {mapActions, mapState} from "vuex";
+    import {mapState} from "vuex";
     import {Dialog, Toast} from "vant";
 
     export default {
@@ -101,19 +101,12 @@
         },
         created() {
             this.getListData();
-            this.usdtBalanceOf();
-            this.usdtFreezeBalanceOf();
         },
         computed: {
             // vuex state
-            ...mapState(["myUsdt", "myFreezeUsdt", "MyContract", "myAccount", "userInfo", "usdtContract"])
+            ...mapState(["MyContract", "myAccount", "userInfo",])
         },
         methods: {
-            // vuex action
-            ...mapActions({
-                usdtBalanceOf: "usdtBalanceOf",
-                usdtFreezeBalanceOf: "usdtFreezeBalanceOf",
-            }),
             getListData() {
                 this.ajax.get("v1/goods").then(res => {
                     if (res.data.code === 200) {

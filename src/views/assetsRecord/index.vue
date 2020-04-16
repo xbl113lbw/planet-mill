@@ -3,10 +3,10 @@
     <div class="main_page">
         <NavCom title="资产记录"/>
         <div class="data_list">
-            <div class="data_list_row">CAC总量：<span>10000</span></div>
-            <div class="data_list_row">产出总量：<span>10000</span></div>
-            <div class="data_list_row">黑洞销毁：<span>10000</span></div>
-            <div class="data_list_row">流通数量：<span>10000</span></div>
+            <div class="data_list_row">CAC总量：<span>{{cacObj.total_num}}</span></div>
+            <div class="data_list_row">产出总量：<span>{{cacObj.output_num}}</span></div>
+            <div class="data_list_row">黑洞销毁：<span>{{cacObj.destory_num}}</span></div>
+            <div class="data_list_row">流通数量：<span>{{cacObj.circulate_num}}</span></div>
         </div>
         <van-tabs v-model="active" class="vanTabs">
             <van-tab v-for="(val,i) in tabData" :title="val.name" :key='i'>
@@ -51,6 +51,7 @@
                 loading: false,
                 finished: false,
                 listData: [],
+                cacObj: {}
             };
         },
         watch: {
@@ -70,8 +71,8 @@
                 };
                 this.ajax.get(`v1/user/asset_log/type/${this.active}/page/${this.page}/size/10`, parmes).then(res => {
                     if (res.data.code === 200) {
-                        console.log(res.data);
-                        let arrData = res.data.data;
+                        let arrData = res.data.data.records;
+                        this.cacObj = res.data.data.cac;
                         if (arrData) {
                             this.finished = true;
                         }

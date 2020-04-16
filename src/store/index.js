@@ -76,45 +76,25 @@ const store = new Vuex.Store({
                 Toast('未安装MetaMask，请先安装！');
             }
             state.web3 = new Web3(web3Provider);
-            /*对接合约*/
-            state.MyContract = new state.web3.eth.Contract(state.abi, state.address);
-            state.usdtContract = new state.web3.eth.Contract(state.usdtAbi, state.usdtAddress);
 
-            /*异步获取账户地址*/
-            state.web3.eth.getAccounts().then((res) => {
-                state.myAccount = res[0];
-                /*promise 回调*/
-                if (resolve) {
-                    resolve();
+            ajax.get("v1/address").then((res) => {
+                if (res.data.code === 200) {
+                    console.log("address", res.data.data);
+                    let usdt = res.data.data.usdt;
+                    let cac = res.data.data.cac;
+                    console.log("address", usdt, cac);
+                    /*对接合约*/
+                    state.MyContract = new state.web3.eth.Contract(state.abi, state.address);
+                    state.usdtContract = new state.web3.eth.Contract(state.usdtAbi, state.usdtAddress);
+                    /*异步获取账户地址*/
+                    state.web3.eth.getAccounts().then((res) => {
+                        state.myAccount = res[0];
+                        /*promise 回调*/
+                        if (resolve) {
+                            resolve();
+                        }
+                    });
                 }
-            });
-        },
-        // 当前用户的USDT余额
-        usdtBalanceOf({state}) {
-            state.MyContract.methods.usdtBalanceOf(state.myAccount).call().then(res => {
-                console.log("USDT余额", res);
-                state.myUsdt = state.web3.utils.fromWei(res);
-            })
-        },
-        // 用户冻结当中的USDT
-        usdtFreezeBalanceOf({state}) {
-            state.MyContract.methods.usdtFreezeBalanceOf(state.myAccount).call().then(res => {
-                console.log("冻结USDT", res);
-                state.myFreezeUsdt = state.web3.utils.fromWei(res);
-            });
-        },
-        // 用户的CAC数量
-        coinBalanceOf({state}) {
-            state.MyContract.methods.coinBalanceOf(state.myAccount).call().then(res => {
-                console.log("CAC数量", res);
-                state.cac = state.web3.utils.fromWei(res);
-            });
-        },
-        // 用户的冻结的CAC数量
-        coinFreezeBalanceOf({state}) {
-            state.MyContract.methods.coinFreezeBalanceOf(state.myAccount).call().then(res => {
-                console.log("冻结的CAC", res);
-                state.myFreezeCac = state.web3.utils.fromWei(res);
             });
         },
         //获取发布订单当前价格（当前的CAC价格）

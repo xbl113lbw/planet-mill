@@ -235,13 +235,13 @@
             await this.getHomeData();
             // 获取货币余额
             await this.getUserInfo();
-            this.url = `${window.location.host}/?aid=${this.userInfo.invite_code}`;
+            this.url = `${window.location.host}/#/register?aid=${this.userInfo.invite_code}`;
         },
         computed: {
             // vuex state
             ...mapState(["myAccount", "usdtContract", "userInfo", "web3"]),
             btnFlag() {
-                return this.homeData.total_wait_num > 4;
+                return this.homeData.progress === "100%";
             }
         },
         methods: {
