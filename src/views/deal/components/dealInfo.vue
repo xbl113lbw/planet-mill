@@ -4,20 +4,20 @@
         <div class="coinBox">
             <div class="coinBox_top">
                 <img src="../../../assets/img/deal/coin.png" alt=""/>
-                <span>CAC ≈ 0.2738 USDT</span>
+                <span>CAC ≈ {{market_value.cac_rate}} USDT</span>
             </div>
             <div class="coinBox_bottom">
                 <div>
                     <span>当前价格：</span>
-                    <span>100 USDT</span>
+                    <span>{{market_value.current_price}} USDT</span>
                 </div>
                 <div>
                     <span>高<img src="../../../assets/img/deal/high.png" alt=""/></span>
-                    <span style="color: #FB4D6E">100 USDT</span>
+                    <span style="color: #FB4D6E">{{market_value.high_price}} USDT</span>
                 </div>
                 <div>
                     <span>低<img src="../../../assets/img/deal/low.png" alt=""/></span>
-                    <span style="color: #0DD393">100 USDT</span>
+                    <span style="color: #0DD393">{{market_value.low_price}} USDT</span>
                 </div>
             </div>
         </div>
@@ -59,20 +59,27 @@
                 <button :class="orderIndex ? 'active' : ''" @click="orderIndex = 1">我要出售</button>
             </div>-->
             <ul class="orderBox_list">
-                <li v-for="(item,index) in listData" :key="index">
-                    <div class="left">
-                        <img src="../../../assets/img/deal/coin.png" alt=""/>
-                        <div>
-                            <span>{{item.adAddress}}</span>
-                            <span>出售：{{item.num}}</span>
+                <van-list
+                        v-model="loading"
+                        :finished="finished"
+                        :offset="10"
+                        finished-text="没有更多了"
+                        @load="onLoad">
+                    <li v-for="(item,index) in listData" :key="index">
+                        <div class="left">
+                            <img src="../../../assets/img/deal/coin.png" alt=""/>
+                            <div>
+                                <span>{{item.name}}</span>
+                                <span>出售：{{parseFloat(item.number)}}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="center">
-                        <span>{{item.price}} USDT</span>
-                        <span>总价：{{item.num * item.price}}</span>
-                    </div>
-                    <button class="right" @click="buy(item.id)">立即交易</button>
-                </li>
+                        <div class="center">
+                            <span>{{parseFloat(item.price)}} USDT</span>
+                            <span>总价：{{parseFloat(item.number) * parseFloat(item.price)}}</span>
+                        </div>
+                        <button class="right" @click="buy(item.id)">立即交易</button>
+                    </li>
+                </van-list>
             </ul>
         </div>
     </div>
@@ -81,18 +88,23 @@
 <script>
     // import {createChart} from 'lightweight-charts';
     import {mapState} from "vuex";
+    import {Dialog, Toast} from "vant";
 
     export default {
         name: "dealInfo",
+        inject: ["reload"],
         data() {
             return {
                 chartsIndex: 0,
                 orderIndex: 0,
                 chartData: [],
                 candlestickSeries: null,
+                market_value: {},
                 // 交易列表
                 listData: [],
-                listId: 1
+                page: 0,
+                loading: false,
+                finished: false,
             }
         },
         computed: {
@@ -129,34 +141,47 @@
                 {time: "2018-12-31", open: 109.87, high: 114.69, low: 85.66, close: 111.26},
             ];
             this.candlestickSeries.setData(this.chartData);*/
-            this.exchangeList();
         },
         methods: {
             // 用户的所有的挂的单的价格（数组，从1开始到结束）
-            exchangeList() {
-                this.MyContract.methods.exchangeList(this.listId).call().then(res => {
-                    if (res.status > 0) {
-                        console.log(res);
-                        let item = {};
-                        item.adAddress = res.adAddress;
-                        item.exAddress = res.exAddress;
-                        item.price = res.price;
-                        item.num = this.web3.utils.fromWei(res.num);
-                        item.allNum = res.allNum;
-                        item.status = res.status;
-                        item.id = res.id;
-                        this.listId++;
-                        this.listData.push(item);
-                        this.exchangeList();
+            getListData() {
+                this.page++;
+                this.ajax.get(`v1/deals/page/${this.page}/size/10`).then(res => {
+                    if (res.data.code === 200) {
+                        let arrData = res.data.data.deals;
+                        this.market_value = res.data.data.market_value;
+                        if (arrData) {
+                            this.finished = true;
+                        }
+                        this.listData.push(...arrData);
+                        // 加载状态结束
+                        this.loading = false;
+                        // 数据全部加载完成
+                        if (arrData.length || arrData.length < 10) {
+                            this.finished = true;
+                        }
                     }
-                }).catch(error => console.log(error));
+                })
+            },
+            onLoad() {
+                setTimeout(() => {
+                    this.getListData();
+                }, 500);
             },
             buy(id) {
-                this.MyContract.methods.buy(id).send({
-                    from: this.myAccount
-                }).then(res => {
-                    console.log(res);
-                })
+                Dialog.confirm({
+                    message: '确认交易么？'
+                }).then(() => {
+                    this.ajax.put(`v1/deals/${id}`).then(res => {
+                        if (res.data.code === 200) {
+                            Toast("交易成功");
+                            setTimeout(() => {
+                                this.reload();
+                            }, 1000);
+                        }
+                    });
+                }).catch(() => {
+                });
             }
         }
     }
@@ -396,6 +421,7 @@
                             font-size: 25px;
                             font-weight: 600;
                             color: #AB91EF;
+
                             &:last-child {
                                 font-size: 22px;
                                 color: rgba(255, 255, 255, .6);

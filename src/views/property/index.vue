@@ -193,7 +193,7 @@
         },
         computed: {
             // vuex state
-            ...mapState(["userInfo", "usdtContract", "MyContract", "myAccount"]),
+            ...mapState(["userInfo", "usdtContract", "MyContract", "myAccount", "web3"]),
         },
         methods: {
             ...mapActions(["getUserInfo"]),
@@ -219,10 +219,10 @@
                 let Contract, rechargeValue;
                 if (this.coinType === "usdt") {
                     Contract = this.usdtContract;
-                    rechargeValue = this.rechargeValue * 1000000;
+                    rechargeValue = this.rechargeValue;
                 } else {
                     Contract = this.MyContract;
-                    rechargeValue = this.rechargeValue;
+                    rechargeValue = this.web3.utils.toWei(String(this.rechargeValue), "ether");
                 }
                 Contract.methods.transfer(this.userInfo.recharge_address, rechargeValue).send({
                     from: this.myAccount
@@ -239,7 +239,7 @@
             },
             // 提现提交
             withdrawSubmit() {
-                
+
             }
         }
     };

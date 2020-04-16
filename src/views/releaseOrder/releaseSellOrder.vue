@@ -6,10 +6,10 @@
             <span class="number">{{parseFloat(userInfo.cac_coin)}}</span>
         </div>
         <div class="content">
-            <div class="content_row">
+            <!--<div class="content_row">
                 <span class="row_left">当前价格:</span>
                 <span class="price_now">{{cacPrice}}</span>
-            </div>
+            </div>-->
             <div class="content_row">
                 <span class="row_left">出售价格:</span>
                 <input v-model="price" placeholder="请输入出售价格"/>
@@ -46,6 +46,7 @@
 
     export default {
         name: "releaseSellOrder",
+        inject: ["reload"],
         components: {
             NavCom
         },
@@ -54,32 +55,36 @@
                 num: null,
                 price: null,
                 name: null,
-                form: {
-                    sellPrice: 50,
-                }
+                cacPrice: null,
             }
         },
         created() {
             this.getUserInfo();
-            this.coinPrice();
         },
         computed: {
             // vuex state
-            ...mapState(["cacPrice", "MyContract", "web3", "myAccount", "userInfo"])
+            ...mapState(["MyContract", "web3", "myAccount", "userInfo"])
         },
         methods: {
-            ...mapActions(["coinPrice", "getUserInfo"]),
+            ...mapActions(["getUserInfo"]),
             // 卖出CAC（发布订单）
             sell() {
                 Dialog.confirm({
                     message: '确认发布订单么'
                 }).then(() => {
-                    this.MyContract.methods.sell(this.num, this.price).send({
-                        from: this.myAccount
-                    }).then(res => {
-                        console.log("卖出CAC", res);
-                        this.$toast("成功");
-                    });
+                    let data = {
+                        number: this.num,
+                        price: this.price,
+                        name: this.name,
+                    };
+                    this.ajax.post("v1/deals", data).then(res => {
+                        if (res.data.code === 200) {
+                            this.$toast("发布成功");
+                            setTimeout(() => {
+                                this.reload();
+                            }, 1000);
+                        }
+                    })
                 }).catch(() => {
                 });
             }

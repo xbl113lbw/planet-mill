@@ -59,6 +59,14 @@ const get = (url, params, config) => {
     return instance.get(url, {params: params, ...config})
 };
 
+const put = (url, params, config) => {
+    return instance.put(url, {params: params, ...config})
+};
+
+const cancel = (url, params, config) => {
+    return instance.delete(url, {params: params, ...config})
+};
+
 const post = (url, data, config) => {
     // 上传图片配置
     if (config && config.headers['Content-Type'] === 'multipart/form-data') {
@@ -70,4 +78,6 @@ const post = (url, data, config) => {
 export default {
     get,
     post,
+    put,
+    cancel,
 }

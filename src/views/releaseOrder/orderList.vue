@@ -2,17 +2,24 @@
     <div class="main_page">
         <NavCom title="订单列表"/>
         <van-tabs v-model="active" class="vanTabs">
-            <van-tab v-for="(item,index) in tabNav" :key="index" :title="item.title" :name="item.name">
-                <div v-for="(v,i) in listData" :key="i" class="data_detail">
-                    <div class="data_detail_row">
-                        <span class="rate red">数量：{{v.num}}</span>
-                        <button v-if="active !== 'ready'">取消</button>
+            <van-tab v-for="(item,index) in tabNav" :key="index" :title="item.title" :name="index">
+                <van-list
+                        v-model="loading"
+                        :finished="finished"
+                        :offset="10"
+                        finished-text="没有更多了"
+                        @load="onLoad">
+                    <div v-for="(v,i) in listData" :key="i" class="data_detail">
+                        <div class="data_detail_row">
+                            <span class="rate red">数量：{{parseFloat(v.number)}}</span>
+                            <button v-if="active === 0" @click="cancel(v.id)">取消</button>
+                        </div>
+                        <div class="data_detail_row">
+                            <span>价格：{{v.price}}</span>
+                            <span>{{statusText(v.status)}}</span>
+                        </div>
                     </div>
-                    <div class="data_detail_row">
-                        <span>价格：{{v.price}}</span>
-                        <span>{{statusText(v.status)}}</span>
-                    </div>
-                </div>
+                </van-list>
             </van-tab>
         </van-tabs>
     </div>
@@ -20,75 +27,83 @@
 
 <script>
     import NavCom from "@/components/nav.vue"
-    import {mapState} from "vuex";
+    import {Dialog} from "vant";
 
     export default {
         components: {
             NavCom
         },
+        inject: ["reload"],
         data() {
             return {
-                active: "push",
+                active: 0,
                 tabNav: [
-                    {title: "未完成", name: "push"},
-                    {title: "已完成", name: "ready"},
+                    {title: "未完成"},
+                    {title: "已完成"},
                 ],
-                listId: 1,
-                listData: []
+                listData: [],
+                page: 0,
+                loading: false,
+                finished: false,
             }
-        },
-        computed: {
-            // vuex state
-            ...mapState(["MyContract", "web3", "myAccount"]),
         },
         watch: {
             active() {
+                this.page = 0;
                 this.listData = [];
-                this.exchangeList();
+                this.getListData();
             }
         },
-        created() {
-            this.exchangeList()
-        },
         methods: {
-            // 用户的所有的挂的单的价格（数组，从1开始到结束）
-            exchangeList() {
-                this.MyContract.methods.exchangeList(this.listId).call().then(res => {
-                    let flag;
-                    switch (this.active) {
-                        case "push":
-                            flag = res.status === "1" && this.myAccount === res.adAddress;
-                            break;
-                        case "ready":
-                            flag = res.status >= 2 && this.myAccount === res.adAddress;
-                            break;
+            // 获取列表
+            getListData() {
+                this.page++;
+                this.ajax.get(`v1/deals/type/${this.active}/page/${this.page}/size/10`).then(res => {
+                    if (res.data.code === 200) {
+                        let arrData = res.data.data;
+                        if (arrData) {
+                            this.finished = true;
+                        }
+                        this.listData.push(...arrData);
+                        // 加载状态结束
+                        this.loading = false;
+                        // 数据全部加载完成
+                        if (arrData.length || arrData.length < 10) {
+                            this.finished = true;
+                        }
                     }
-                    console.log(flag);
-                    console.log(this.active);
-                    if (flag) {
-                        console.log(res);
-                        let item = {};
-                        item.adAddress = res.adAddress;
-                        item.exAddress = res.exAddress;
-                        item.price = res.price;
-                        item.num = this.web3.utils.fromWei(res.num);
-                        item.allNum = res.allNum;
-                        item.status = res.status;
-                        this.listId++;
-                        this.listData.push(item);
-                        this.exchangeList();
-                    }
-                }).catch(error => console.log(error));
+                })
             },
+            // 状态格式化
             statusText(status) {
                 switch (status) {
-                    case 1:
-                        return "发布中";
-                    case 2:
+                    case "0":
+                        return "未完成";
+                    case "1":
                         return "已完成";
-                    case 3:
-                        return "已取消";
                 }
+            },
+            // 下拉刷新初始化
+            onLoad() {
+                setTimeout(() => {
+                    this.getListData();
+                }, 500);
+            },
+            // 取消事件
+            cancel(id) {
+                Dialog.confirm({
+                    message: '确认取消么？'
+                }).then(() => {
+                    this.ajax.cancel(`v1/deals/${id}`).then(res => {
+                        if (res.data.code === 200) {
+                            this.$toast("取消成功");
+                            setTimeout(() => {
+                                this.reload();
+                            }, 1000);
+                        }
+                    })
+                }).catch(() => {
+                });
             }
         }
     }

@@ -96,7 +96,6 @@
                 <span>分红奖池(USDT)</span>
                 <span>矿池(USDT)</span>
                 <span>矿机奖励(USDT)</span>
-                <span>分红(USDT)</span>
             </div>
             <div class="table_tr" v-for="(item,index) in tableData" :key="index">
                 <span>
@@ -106,8 +105,7 @@
                 <span>{{item.number}}</span>
                 <span>{{item.bonus_pool}}</span>
                 <span>{{item.miner_pool}}</span>
-                <span>{{item.miner_reward}}</span>
-                <span>{{item.bonus_reward}}</span>
+                <span>{{(parseFloat(item.miner_reward) + parseFloat(item.bonus_reward)).toFixed(4)}}</span>
             </div>
         </div>
         <!--购买弹框-->
@@ -275,10 +273,10 @@
                 let Contract, rechargeValue;
                 if (this.coinType === "usdt") {
                     Contract = this.usdtContract;
-                    rechargeValue = this.rechargeValue * 1000000;
+                    rechargeValue = this.rechargeValue;
                 } else {
                     Contract = this.MyContract;
-                    rechargeValue = this.rechargeValue;
+                    rechargeValue = this.web3.utils.toWei(String(this.rechargeValue), "ether");
                 }
                 Contract.methods.transfer(this.userInfo.recharge_address, rechargeValue).send({
                     from: this.myAccount
