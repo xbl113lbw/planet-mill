@@ -63,8 +63,14 @@
                     </div>
                 </div>
                 <div class="btnBox">
-                    <div class="btnItem" @click="buy(index+1)">购买</div>
-                    <div class="btnItem" @click="buy(index+1)">参与排队</div>
+                    <button class="btnItem" :class="item.running_num > 21 ? 'disabledBtn' : ''" @click="buy(index+1)"
+                            :disabled="item.running_num >= 21">
+                        购买
+                    </button>
+                    <button class="btnItem" :class="item.running_num > 21 ? '' : 'disabledBtn'" @click="buy(index+1)"
+                            :disabled="item.running_num < 21">
+                        参与排队
+                    </button>
                 </div>
             </div>
         </div>
@@ -310,6 +316,10 @@
                         color: #ffffff;
                         line-height: 56px;
                         text-align: center;
+                    }
+
+                    .disabledBtn {
+                        background: gray;
                     }
                 }
             }

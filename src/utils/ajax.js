@@ -28,10 +28,9 @@ instance.interceptors.request.use(function (config) {
 
 // 添加响应拦截器
 instance.interceptors.response.use(function (response) {
+    Toast.clear();
     if (response.data.code !== 200) {
         Toast(response.data.message);
-    } else {
-        Toast.clear();
     }
     // 对响应数据做点什么
     return response;
@@ -39,7 +38,8 @@ instance.interceptors.response.use(function (response) {
     Toast.clear();
     // 422 token 过期
     let code = error.response.data.code;
-    if (code === 422) {
+    let status = error.response.status;
+    if (code === 422 || status === 401) {
         Toast("登陆过期");
         sessionStorage.removeItem("Token");
         router.push({path: "/login"});

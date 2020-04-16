@@ -70,7 +70,10 @@
                         <span>{{parseFloat(homeData.user.freeze_cac_coin)}} CAC</span>
                     </div>
                 </div>
-                <button @click="recharge('usdt')">充币</button>
+                <div class="coinInfo_bottom_right">
+                    <button @click="recharge('usdt')">充币</button>
+                    <button @click="recharge('cac')">充币</button>
+                </div>
             </div>
         </div>
         <!--邀请链接-->
@@ -517,16 +520,23 @@
                     }
                 }
 
-                button {
-                    min-width: 100px;
-                    height: 44px;
-                    font-size: 24px;
-                    font-weight: 600;
-                    line-height: 33px;
-                    border-radius: 32px;
-                    color: rgba(192, 81, 255, 1);
-                    border: 2px solid rgba(192, 81, 255, 1);
-                    background: transparent;
+                .coinInfo_bottom_right {
+                    button {
+                        min-width: 100px;
+                        height: 44px;
+                        margin-bottom: 10px;
+                        font-size: 24px;
+                        font-weight: 600;
+                        line-height: 33px;
+                        border-radius: 32px;
+                        color: rgba(192, 81, 255, 1);
+                        border: 2px solid rgba(192, 81, 255, 1);
+                        background: transparent;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
                 }
             }
         }
