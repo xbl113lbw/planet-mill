@@ -19,7 +19,7 @@
                     <div v-for="(item,index) in listData" :key="index" class="data_detail">
                         <div class="data_detail_row">
                             <span class="rate" :class="item.pm > 0 ? 'green':'red'">
-                                {{ item.pm > 0 ? `+${item.amount}` : `-${item.amount}`}}
+                                {{ item.pm > 0 ? `+${item.amount}` : `-${item.amount} ${item.coin.toLocaleUpperCase()}`}}
                             </span>
                             <span>{{item.title}}</span>
                         </div>

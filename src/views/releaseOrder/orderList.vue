@@ -11,12 +11,12 @@
                         @load="onLoad">
                     <div v-for="(v,i) in listData" :key="i" class="data_detail">
                         <div class="data_detail_row">
-                            <span class="rate red">数量：{{parseFloat(v.number)}}</span>
+                            <span class="rate red">数量：{{parseFloat(v.number) }} CAC</span>
                             <button v-if="active === 0" @click="cancel(v.id)">取消</button>
                         </div>
                         <div class="data_detail_row">
-                            <span>价格：{{v.price}}</span>
-                            <span>{{statusText(v.status)}}</span>
+                            <span>价格：{{parseFloat(v.price)}} USDT</span>
+                            <!--<span>{{statusText(v.status)}}</span>-->
                         </div>
                     </div>
                 </van-list>
