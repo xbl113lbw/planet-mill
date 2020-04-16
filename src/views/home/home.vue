@@ -227,14 +227,15 @@
                 finishFlag: true,
                 t: null,
                 rechargeValue: null,
-                url: ""
+                url: "",
+                coinType: ""
             }
         },
         async mounted() {
             await this.getHomeData();
             // 获取货币余额
             await this.getUserInfo();
-            this.url = `${window.location.host}/?aid=${this.myAccount}`;
+            this.url = `${window.location.host}/?aid=${this.userInfo.invite_code}`;
         },
         computed: {
             // vuex state
@@ -265,14 +266,18 @@
                     }
                 })
             },
-            recharge() {
+            recharge(type) {
                 this.rechargeShow = true;
+                this.coinType = type;
             },
-            submit(type) {
+            submit() {
                 this.usdtContract.methods.transfer(this.userInfo.recharge_address, this.rechargeValue * 1000000).send({
                     from: this.myAccount
                 }).then(() => {
-                    this.ajax.post("v1/user/recharge", {coin_type: type, amount: this.rechargeValue}).then(res => {
+                    this.ajax.post("v1/user/recharge", {
+                        coin_type: this.coinType,
+                        amount: this.rechargeValue
+                    }).then(res => {
                         console.log(res);
                         if (res.data.code === 200) {
                             this.reload();

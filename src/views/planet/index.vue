@@ -63,11 +63,11 @@
                     </div>
                 </div>
                 <div class="btnBox">
-                    <button class="btnItem" :class="item.running_num > 21 ? 'disabledBtn' : ''" @click="buy(index+1)"
+                    <button class="btnItem" :class="item.running_num >= 21 ? 'disabledBtn' : ''" @click="buy(index+1)"
                             :disabled="item.running_num >= 21">
                         购买
                     </button>
-                    <button class="btnItem" :class="item.running_num > 21 ? '' : 'disabledBtn'" @click="buy(index+1)"
+                    <button class="btnItem" :class="item.running_num >= 21 ? '' : 'disabledBtn'" @click="buy(index+1)"
                             :disabled="item.running_num < 21">
                         参与排队
                     </button>
