@@ -43,8 +43,9 @@
             return {
                 active: 0,
                 tabData: [
-                    {name: "充值记录"},
+                    {name: "充提记录"},
                     {name: "碰撞记录"},
+                    {name: "团队奖励"},
                     {name: "挖矿记录"},
                 ],
                 page: 0,

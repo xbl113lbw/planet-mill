@@ -12,7 +12,7 @@
             <div class="verticalLine left_194"></div>
             <div class="verticalLine right_194"></div>
             <div class="thead">
-                <div class="left">地址</div>
+                <div class="left">手机号</div>
                 <div class="center">注册时间</div>
                 <div class="right">参与业绩</div>
             </div>

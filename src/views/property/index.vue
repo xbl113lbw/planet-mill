@@ -165,7 +165,7 @@
         },
         computed: {
             // vuex state
-            ...mapState(["userInfo", "usdtContract", "MyContract", "myAccount", "web3",]),
+            ...mapState(["userInfo"]),
         },
         methods: {
             ...mapActions(["getUserInfo",]),
