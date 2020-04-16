@@ -3,7 +3,7 @@
         <NavCom title="发布出售订单"/>
         <div class="top_page">
             <span>可用CAC</span>
-            <span class="number">{{cac}}</span>
+            <span class="number">{{parseFloat(userInfo.cac_coin)}}</span>
         </div>
         <div class="content">
             <div class="content_row">
@@ -13,21 +13,14 @@
             <div class="content_row">
                 <span class="row_left">出售价格:</span>
                 <input v-model="price" placeholder="请输入出售价格"/>
-                <!--<span class="percentage">{{form.sellPrice}}%</span>
-                <div class="price_slider">
-                    <van-slider v-model="form.sellPrice" bar-height="4px" active-color="#AB91EF"
-                                inactive-color="#000000">
-                        <template slot="button">
-                            <div class="custom_button">
-                                <img src="../../assets/img/releaseOrder/slider.png" alt=""/>
-                            </div>
-                        </template>
-                    </van-slider>
-                </div>-->
             </div>
             <div class="content_row">
                 <span class="row_left">出售数量:</span>
                 <input v-model="num" placeholder="请输入数量"/>
+            </div>
+            <div class="content_row">
+                <span class="row_left">发布昵称:</span>
+                <input v-model="name" placeholder="请输入昵称"/>
             </div>
             <div class="content_row_last">
                 <span class="row_left">总金额:</span>
@@ -60,21 +53,22 @@
             return {
                 num: null,
                 price: null,
+                name: null,
                 form: {
                     sellPrice: 50,
                 }
             }
         },
         created() {
+            this.getUserInfo();
             this.coinPrice();
-            this.coinBalanceOf();
         },
         computed: {
             // vuex state
-            ...mapState(["cac", "cacPrice", "MyContract", "web3", "myAccount"])
+            ...mapState(["cacPrice", "MyContract", "web3", "myAccount", "userInfo"])
         },
         methods: {
-            ...mapActions(["coinPrice", "coinBalanceOf"]),
+            ...mapActions(["coinPrice", "getUserInfo"]),
             // 卖出CAC（发布订单）
             sell() {
                 Dialog.confirm({
@@ -122,7 +116,6 @@
 
         .content {
             width: 690px;
-            height: 476px;
             background: rgba(44, 36, 74, 1);
             border-radius: 8px;
             margin-top: 30px;

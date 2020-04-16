@@ -25,11 +25,6 @@
                     <div class="whiteText">0.0000</div>
                 </div>
             </div>
-            <div class="btnBox">
-                <!--<div class="btnItem" @click="recharge">充值</div>-->
-                <div class="btnItem" @click="rechargeShow=true">提币</div>
-                <div class="btnItem" @click="$router.push({path:'/deal'})">交易</div>
-            </div>
         </div>
 
         <!-- 参与游戏 -->
@@ -41,6 +36,10 @@
                             <img src="../../assets/img/home/usdt.png" alt=""/>
                         </div>
                         <div class="nameBox">USDT</div>
+                    </div>
+                    <div class="btnBox">
+                        <div class="btnItem" @click="showRechargeAlert('usdt')">充币</div>
+                        <div class="btnItem" @click="showWithdrawAlert('usdt')">提币</div>
                     </div>
                     <div class="arrowRightBox">
                         <img src="./../../assets/img/property/arrow_right.png" alt/>
@@ -65,6 +64,10 @@
                             <img src="../../assets/img/deal/coin.png" alt=""/>
                         </div>
                         <div class="nameBox">CAC</div>
+                    </div>
+                    <div class="btnBox">
+                        <div class="btnItem" @click="showRechargeAlert('cac')">充币</div>
+                        <div class="btnItem" @click="showWithdrawAlert('cac')">提币</div>
                     </div>
                     <div class="arrowRightBox">
                         <img src="./../../assets/img/property/arrow_right.png" alt/>
@@ -138,14 +141,25 @@
             </div>
         </div>
         <!--充币弹框-->
-        <van-dialog v-model="rechargeShow"
+        <van-dialog v-model="rechargeAlertShow"
                     title="请输入充值数量"
                     show-cancel-button
                     confirmButtonColor="#2C244A"
-                    @confirm="submit"
+                    @confirm="rechargeSubmit"
                     class="recharge">
             <div class="rechargeBox">
                 <van-stepper v-model="rechargeValue" input-width="50%" button-size="32px"/>
+            </div>
+        </van-dialog>
+        <!--提币弹框-->
+        <van-dialog v-model="withdrawAlertShow"
+                    title="请输入提币数量"
+                    show-cancel-button
+                    confirmButtonColor="#2C244A"
+                    @confirm="withdrawSubmit"
+                    class="recharge">
+            <div class="rechargeBox">
+                <van-stepper v-model="withdrawValue" input-width="50%" button-size="32px"/>
             </div>
         </van-dialog>
         <Tab tabIndex="资产"/>
@@ -155,7 +169,6 @@
 <script>
     import Tab from "../../components/tab";
     import {mapActions, mapState} from "vuex";
-    import {Dialog} from 'vant';
 
     export default {
         name: "planet",
@@ -167,8 +180,11 @@
             return {
                 AssetObj: {},
                 machine: [],
-                rechargeShow: false,
+                rechargeAlertShow: false,
+                withdrawAlertShow: false,
                 rechargeValue: null,
+                withdrawValue: null,
+                type: null
             };
         },
         created() {
@@ -189,14 +205,20 @@
                     }
                 })
             },
-            submit() {
-                Dialog.confirm({
-                    message: '确认提现么？'
-                }).then(() => {
-                    console.log(1);
-                }).catch(() => {
-                });
+            showWithdrawAlert(type) {
+                this.type = type;
+                this.withdrawAlertShow = true;
             },
+            showRechargeAlert(type) {
+                this.type = type;
+                this.rechargeAlertShow = true;
+            },
+            rechargeSubmit() {
+
+            },
+            withdrawSubmit() {
+
+            }
         }
     };
 </script>
@@ -246,7 +268,6 @@
 
         .top {
             width: 690px;
-            height: 272px;
             padding: 40px;
             font-size: 26px;
             color: white;
@@ -261,23 +282,6 @@
                 .whiteText {
                     font-size: 44px;
                     font-weight: 600;
-                }
-            }
-
-            .btnBox {
-                padding: 0 10px;
-                display: flex;
-                justify-content: space-between;
-                margin-top: 30px;
-
-                .btnItem {
-                    width: 160px;
-                    height: 56px;
-                    border-radius: 28px;
-                    text-align: center;
-                    line-height: 56px;
-                    border: 2px solid #c051ff;
-                    font-size: 26px;
                 }
             }
         }
@@ -425,9 +429,28 @@
                 align-items: center;
                 justify-content: space-between;
 
+                .btnBox {
+                    padding: 0 10px;
+                    display: flex;
+                    justify-content: space-between;
+
+                    .btnItem {
+                        width: 120px;
+                        height: 50px;
+                        line-height: 50px;
+                        margin-right: 20px;
+                        border-radius: 28px;
+                        text-align: center;
+                        border: 2px solid #c051ff;
+                        font-size: 26px;
+                        color: #fff;
+                    }
+                }
+
                 .topAreaLeft {
                     display: flex;
                     align-items: center;
+                    width: 180px;
 
                     .iconBox {
                         width: 56px;
