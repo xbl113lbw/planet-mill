@@ -42,6 +42,7 @@
                     {title: "已完成"},
                 ],
                 listData: [],
+                total: null,
                 page: 0,
                 loading: false,
                 finished: false,
@@ -51,7 +52,7 @@
             active() {
                 this.page = 0;
                 this.listData = [];
-                this.getListData();
+                this.finished = false;
             }
         },
         methods: {
@@ -60,15 +61,13 @@
                 this.page++;
                 this.ajax.get(`v1/deals/type/${this.active}/page/${this.page}/size/10`).then(res => {
                     if (res.data.code === 200) {
-                        let arrData = res.data.data;
-                        if (arrData) {
-                            this.finished = true;
-                        }
+                        let arrData = res.data.data.deals;
+                        this.total = res.data.data.total;
                         this.listData.push(...arrData);
                         // 加载状态结束
                         this.loading = false;
                         // 数据全部加载完成
-                        if (arrData.length && arrData.length < 10) {
+                        if (this.listData.length >= this.total) {
                             this.finished = true;
                         }
                     }

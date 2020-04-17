@@ -1,7 +1,7 @@
 <template>
     <div class="dealInfo">
         <!--货币信息-->
-        <div class="coinBox">
+        <div class="coinBox" v-if="market_value">
             <div class="coinBox_top">
                 <img src="../../../assets/img/deal/coin.png" alt=""/>
                 <span>CAC ≈ {{market_value.cac_rate}} USDT</span>
@@ -99,9 +99,10 @@
                 orderIndex: 0,
                 chartData: [],
                 candlestickSeries: null,
-                market_value: {},
+                market_value: null,
                 // 交易列表
                 listData: [],
+                total: null,
                 page: 0,
                 loading: false,
                 finished: false,
@@ -148,16 +149,16 @@
                 this.page++;
                 this.ajax.get(`v1/deals/page/${this.page}/size/10`).then(res => {
                     if (res.data.code === 200) {
-                        let arrData = res.data.data.deals;
-                        this.market_value = res.data.data.market_value;
-                        if (arrData) {
-                            this.finished = true;
+                        if (!this.market_value) {
+                            this.market_value = res.data.data.market_value;
                         }
-                        this.listData.push(...arrData);
+                        let size = res.data.data.deals.length;
+                        this.total = res.data.data.total;
+                        this.listData.push(...res.data.data.deals);
                         // 加载状态结束
                         this.loading = false;
                         // 数据全部加载完成
-                        if (arrData.length && arrData.length < 10) {
+                        if (size < 10) {
                             this.finished = true;
                         }
                     }

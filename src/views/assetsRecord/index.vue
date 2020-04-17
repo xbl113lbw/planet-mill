@@ -2,7 +2,7 @@
     <!-- 资产记录页面 -->
     <div class="main_page">
         <NavCom title="资产记录"/>
-        <div class="data_list">
+        <div class="data_list" v-if="cacObj">
             <div class="data_list_row">CAC总量：<span>{{cacObj.total_num}}</span></div>
             <div class="data_list_row">产出总量：<span>{{cacObj.output_num}}</span></div>
             <div class="data_list_row">黑洞销毁：<span>{{cacObj.destory_num}}</span></div>
@@ -54,14 +54,15 @@
                 loading: false,
                 finished: false,
                 listData: [],
-                cacObj: {}
+                cacObj: null,
+                total: null
             };
         },
         watch: {
             active() {
                 this.page = 0;
                 this.listData = [];
-                this.getListsData();
+                this.finished = false;
             }
         },
         methods: {
@@ -74,16 +75,15 @@
                 };
                 this.ajax.get(`v1/user/asset_log/type/${this.active}/page/${this.page}/size/10`, parmes).then(res => {
                     if (res.data.code === 200) {
-                        let arrData = res.data.data.records;
-                        this.cacObj = res.data.data.cac;
-                        if (arrData) {
-                            this.finished = true;
+                        if (!this.cacObj) {
+                            this.cacObj = res.data.data.cac;
                         }
-                        this.listData.push(...arrData);
+                        this.total = res.data.data.total;
+                        this.listData.push(...res.data.data.records);
                         // 加载状态结束
                         this.loading = false;
                         // 数据全部加载完成
-                        if (arrData.length && arrData.length < 10) {
+                        if (this.listData.length >= this.total) {
                             this.finished = true;
                         }
                     }

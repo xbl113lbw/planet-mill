@@ -53,6 +53,7 @@
                 loading: false,
                 finished: false,
                 listData: [],
+                total: null
             };
         },
         methods: {
@@ -62,7 +63,7 @@
                     size: 10,
                     page: this.page,
                 };
-                const type = this.$route.query.type; // 0：直推 1：间推
+                const type = Number(this.$route.query.type); // 0：直推 1：间推
                 let url;
                 switch (type) {
                     case 0:
@@ -76,15 +77,13 @@
                 }
                 this.ajax.get(url, parmes).then(res => {
                     if (res.data.code === 200) {
-                        let arrData = res.data.data;
-                        if (arrData) {
-                            this.finished = true;
-                        }
+                        let arrData = res.data.data.users;
+                        this.total = res.data.data.total;
                         this.listData.push(...arrData);
                         // 加载状态结束
                         this.loading = false;
                         // 数据全部加载完成
-                        if (arrData.length && arrData.length < 10) {
+                        if (this.listData.length >= this.total) {
                             this.finished = true;
                         }
                     }
