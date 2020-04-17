@@ -3,7 +3,8 @@
     <div class="main_page">
         <NavCom title="资产记录"/>
         <div class="data_list" v-if="cacObj">
-            <div class="data_list_row">CAC总量：<span>{{cacObj.total_num}}</span></div>
+            <div class="data_list_row">CAC原始总量：<span>{{cacObj.total_num}}</span></div>
+            <div class="data_list_row">现有总量：<span>{{Number(cacObj.current_num).toFixed(8)}}</span></div>
             <div class="data_list_row">产出总量：<span>{{Number(cacObj.output_num).toFixed(8)}}</span></div>
             <div class="data_list_row">黑洞销毁：<span>{{Number(cacObj.destroy_num).toFixed(8)}}</span></div>
             <div class="data_list_row">流通数量：<span>{{Number(cacObj.circulate_num).toFixed(8)}}</span></div>
