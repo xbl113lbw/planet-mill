@@ -137,6 +137,10 @@
                         <span class="opacityText">已产出：</span>
                         <span class="_AB91EF">{{parseFloat(item.output_num)}}</span>
                     </div>
+                    <div v-if="item.wait_num > 0">
+                        <span class="opacityText">排队中：</span>
+                        <span class="_AB91EF">{{item.wait_num}}</span>
+                    </div>
                 </div>
             </div>
         </div>
