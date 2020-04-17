@@ -5,7 +5,7 @@
         <div class="data_list" v-if="cacObj">
             <div class="data_list_row">CAC总量：<span>{{cacObj.total_num}}</span></div>
             <div class="data_list_row">产出总量：<span>{{cacObj.output_num}}</span></div>
-            <div class="data_list_row">黑洞销毁：<span>{{cacObj.destory_num}}</span></div>
+            <div class="data_list_row">黑洞销毁：<span>{{cacObj.destroy_num}}</span></div>
             <div class="data_list_row">流通数量：<span>{{cacObj.circulate_num}}</span></div>
         </div>
         <van-tabs v-model="active" class="vanTabs">
