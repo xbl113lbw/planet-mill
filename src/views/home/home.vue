@@ -84,11 +84,11 @@
             <div class="invite">
                 <div class="invite_url">
                     <span>邀请链接：</span>
-                    <span id="target">{{url}}</span>
+                    <span>{{url}}</span>
                 </div>
+                <input id="target" v-model="url" style="opacity: 0;position: absolute">
                 <button class="tagRead"
                         @click="copyEvent"
-                        data-clipboard-action="copy"
                         data-clipboard-target="#target">复制邀请链接
                 </button>
             </div>
@@ -810,7 +810,6 @@
                         font-size: 26px;
                         color: rgba(255, 255, 255, .6);
                     }
-
                     &:last-child {
                         font-size: 26px;
                         word-break: break-all;
