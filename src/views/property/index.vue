@@ -41,7 +41,7 @@
                         <div class="btnItem" @click="showRechargeAlert('usdt')">充币</div>
                         <div class="btnItem" @click="showWithdrawAlert('usdt')">提币</div>
                     </div>
-                    <div class="arrowRightBox">
+                    <div class="arrowRightBox" @click="$router.push({path:'/assetsRecord'})">
                         <img src="./../../assets/img/property/arrow_right.png" alt/>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                         <div class="btnItem" @click="showRechargeAlert('cac')">充币</div>
                         <div class="btnItem" @click="showWithdrawAlert('cac')">提币</div>
                     </div>
-                    <div class="arrowRightBox">
+                    <div class="arrowRightBox" @click="$router.push({path:'/assetsRecord'})">
                         <img src="./../../assets/img/property/arrow_right.png" alt/>
                     </div>
                 </div>
