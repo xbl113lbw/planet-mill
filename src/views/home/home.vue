@@ -1,199 +1,204 @@
 <template>
     <div id="home">
-        <!--头部-->
-        <div class="header">
-            <div class="logo"><img src="../../assets/img/首页LOGO.png"/></div>
-            <img src="../../assets/img/home/problemIcon.png" class="problemIcon" alt=""
-                 @click="$router.push({path:'/rule'})"/>
-        </div>
-        <!--顶部信息展示-->
-        <div class="topInfo">
-            <div class="topInfo_height">
-                区块高度：
-                <span>{{homeData.block_num}}</span>
+        <van-pull-refresh
+                v-model="isLoading"
+                success-text="刷新成功"
+                @refresh="onRefresh">
+            <!--头部-->
+            <div class="header">
+                <div class="logo"><img src="../../assets/img/首页LOGO.png"/></div>
+                <img src="../../assets/img/home/problemIcon.png" class="problemIcon" alt=""
+                     @click="$router.push({path:'/rule'})"/>
             </div>
-            <div class="topInfo_time">
-                <van-count-down :time="time" ref="countDown">
-                    <template v-slot="timeData">
+            <!--顶部信息展示-->
+            <div class="topInfo">
+                <div class="topInfo_height">
+                    区块高度：
+                    <span>{{homeData.block_num}}</span>
+                </div>
+                <div class="topInfo_time">
+                    <van-count-down :time="time" ref="countDown">
+                        <template v-slot="timeData">
                         <span class="item">
                             {{timeData.minutes}}
                             <span class="topInfo_time_text">Minutes</span>
                         </span>
-                        <span class="item" style="margin: 0 20px;">:</span>
-                        <span class="item">
+                            <span class="item" style="margin: 0 20px;">:</span>
+                            <span class="item">
                             {{ timeData.seconds }}
                              <span class="topInfo_time_text">Seconds</span>
                         </span>
-                    </template>
-                </van-count-down>
-            </div>
-            <div class="topInfo_plan">
-                <span>目前进度 {{homeData.progress}}</span>
-                <div class="topInfo_plan_line">
-                    <img src="../../assets/img/home/plan_A.png" alt="" :style="{width:homeData.progress}"/>
+                        </template>
+                    </van-count-down>
                 </div>
-            </div>
-        </div>
-        <!--货币信息-->
-        <div class="coinInfo">
-            <div class="coinInfo_top_line">
-                <div class="coinInfo_top_line_imgWrap">
-                    <img src="../../assets/img/home/usdt.png" alt=""/>
-                    <span>100 USDT</span>
-                    <span>10 CAC</span>
-                </div>
-                <button @click="start" :class="btnFlag ? 'disabledBtn' : ''" :disabled="btnFlag">参与碰撞</button>
-            </div>
-            <div class="coinInfo_top_line">
-                <div class="coinInfo_top_line_textWrap">
-                    <div>当前排队人数：<span>{{homeData.total_wait_num}}</span></div>
-                    <div>排队中：<span>{{homeData.waiting_num}}</span></div>
-                </div>
-                <button @click="start" :class="btnFlag ? '' : 'disabledBtn'" :disabled="!btnFlag">碰撞预排</button>
-            </div>
-            <div class="coinInfo_bottom">
-                <div class="coinInfo_bottom_left">
-                    <div>
-                        可用：
-                        <span>{{parseFloat(homeData.user.usdt_coin)}} USDT</span>
-                    </div>
-                    <div>
-                        冻结：
-                        <span>{{parseFloat(homeData.user.freeze_usdt_coin)}} USDT</span>
-                    </div>
-                    <div>
-                        可用：
-                        <span>{{parseFloat(homeData.user.cac_coin)}} CAC</span>
-                    </div>
-                    <div>
-                        冻结：
-                        <span>{{parseFloat(homeData.user.freeze_cac_coin)}} CAC</span>
+                <div class="topInfo_plan">
+                    <span>目前进度 {{homeData.progress}}</span>
+                    <div class="topInfo_plan_line">
+                        <img src="../../assets/img/home/plan_A.png" alt="" :style="{width:homeData.progress}"/>
                     </div>
                 </div>
-                <div class="coinInfo_bottom_right">
-                    <button @click="recharge('usdt')">充币</button>
-                    <button @click="recharge('cac')">充币</button>
+            </div>
+            <!--货币信息-->
+            <div class="coinInfo">
+                <div class="coinInfo_top_line">
+                    <div class="coinInfo_top_line_imgWrap">
+                        <img src="../../assets/img/home/usdt.png" alt=""/>
+                        <span>100 USDT</span>
+                        <span>10 CAC</span>
+                    </div>
+                    <button @click="start" :class="btnFlag ? 'disabledBtn' : ''" :disabled="btnFlag">参与碰撞</button>
+                </div>
+                <div class="coinInfo_top_line">
+                    <div class="coinInfo_top_line_textWrap">
+                        <div>当前排队人数：<span>{{homeData.total_wait_num}}</span></div>
+                        <div>排队中：<span>{{homeData.waiting_num}}</span></div>
+                    </div>
+                    <button @click="start" :class="btnFlag ? '' : 'disabledBtn'" :disabled="!btnFlag">碰撞预排</button>
+                </div>
+                <div class="coinInfo_bottom">
+                    <div class="coinInfo_bottom_left">
+                        <div>
+                            可用：
+                            <span>{{parseFloat(homeData.user.usdt_coin)}} USDT</span>
+                        </div>
+                        <div>
+                            冻结：
+                            <span>{{parseFloat(homeData.user.freeze_usdt_coin)}} USDT</span>
+                        </div>
+                        <div>
+                            可用：
+                            <span>{{parseFloat(homeData.user.cac_coin)}} CAC</span>
+                        </div>
+                        <div>
+                            冻结：
+                            <span>{{parseFloat(homeData.user.freeze_cac_coin)}} CAC</span>
+                        </div>
+                    </div>
+                    <div class="coinInfo_bottom_right">
+                        <button @click="recharge('usdt')">充币</button>
+                        <button @click="recharge('cac')">充币</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--邀请链接-->
-        <div class="invite">
-            <div class="invite_url">
-                <span>邀请链接：</span>
-                <span id="target">{{url}}</span>
+            <!--邀请链接-->
+            <div class="invite">
+                <div class="invite_url">
+                    <span>邀请链接：</span>
+                    <span id="target">{{url}}</span>
+                </div>
+                <button class="tagRead"
+                        @click="copyEvent"
+                        data-clipboard-action="copy"
+                        data-clipboard-target="#target">复制邀请链接
+                </button>
             </div>
-            <button class="tagRead"
-                    @click="copyEvent"
-                    data-clipboard-action="copy"
-                    data-clipboard-target="#target">复制邀请链接
-            </button>
-        </div>
-        <!--表格-->
-        <div class="table" v-if="tableData.length">
-            <div class="table_tr table_tr_title">
-                <span>矿机类型</span>
-                <span>矿机数量</span>
-                <span>分红奖池(USDT)</span>
-                <span>矿池(USDT)</span>
-                <span>矿机奖励(USDT)</span>
-            </div>
-            <div class="table_tr" v-for="(item,index) in tableData" :key="index">
+            <!--表格-->
+            <div class="table" v-if="tableData.length">
+                <div class="table_tr table_tr_title">
+                    <span>矿机类型</span>
+                    <span>矿机数量</span>
+                    <span>分红奖池(USDT)</span>
+                    <span>矿池(USDT)</span>
+                    <span>矿机奖励(USDT)</span>
+                </div>
+                <div class="table_tr" v-for="(item,index) in tableData" :key="index">
                 <span>
                     <img :src="require(`../../assets/img/property/${item.name}.png`)" alt=""/>
                     {{item.name}}
                 </span>
-                <span>{{item.number}}</span>
-                <span>{{item.bonus_pool}}</span>
-                <span>{{item.miner_pool}}</span>
-                <span>{{(parseFloat(item.miner_reward) + parseFloat(item.bonus_reward)).toFixed(4)}}</span>
-            </div>
-        </div>
-        <!--购买弹框-->
-        <van-popup v-model="showBuy">
-            <div class="alertBox">
-                <img src="../../assets/img/close.png" alt="" class="closeBtn" @click="showBuy=false"/>
-                <div class="title">向[XXX]购买CAC</div>
-                <div class="formWrap">
-                    <label for="quota" class="labelBox">
-                        <span class="labelTitle">限额：</span>
-                        <input type="text" id="quota" placeholder="请输入限额">
-                        <span class="rightText">CAC</span>
-                    </label>
-                    <label for="price" class="labelBox">
-                        <span class="labelTitle">价格：</span>
-                        <input type="text" id="price" placeholder="请输入价格">
-                    </label>
-                    <label for="num" class="labelBox">
-                        <span class="labelTitle">CAC数量：</span>
-                        <input type="text" id="num" placeholder="请输入数量">
-                        <button>全额</button>
-                    </label>
-                    <label for="money" class="labelBox">
-                        <span class="labelTitle">金额：</span>
-                        <input type="text" id="money" placeholder="">
-                    </label>
+                    <span>{{item.number}}</span>
+                    <span>{{item.bonus_pool}}</span>
+                    <span>{{item.miner_pool}}</span>
+                    <span>{{(parseFloat(item.miner_reward) + parseFloat(item.bonus_reward)).toFixed(4)}}</span>
                 </div>
-                <p class="hint">
-                    <span>请输入支付密码</span>
-                    <span>提示：匹配后6个小时未打款，自动取消！</span>
-                </p>
-                <!--密码输入框-->
-                <ul class="pwdInput">
-                    <li v-for="item in [1,2,3,4,5,6]" :key="item">*</li>
-                </ul>
             </div>
-        </van-popup>
-        <!--发布弹框-->
-        <van-popup v-model="showPush">
-            <div class="alertBox">
-                <img src="../../assets/img/close.png" alt="" class="closeBtn" @click="showPush=false"/>
-                <div class="title">向[XXX]购买CAC</div>
-                <div class="formWrap">
-                    <label for="nowPrice" class="labelBox">
-                        <span class="labelTitle">当前价格：</span>
-                        <input type="text" id="nowPrice" placeholder="请输入当前价格">
-                    </label>
-                    <label for="sellPrice" class="labelBox">
-                        <span class="labelTitle">出售价格：</span>
-                        <input type="text" id="sellPrice" placeholder=""
-                               style="max-width: 70px;" value="0.062">
-                        <div class="price_slider">
-                            <span class="price_slider_val">{{sellPrice}}%</span>
-                            <van-slider v-model="sellPrice" bar-height="4px" active-color="#AB91EF"
-                                        inactive-color="#AB91EF">
-                                <div slot="button" class="custom-button">
-                                    <img src="../../assets/img/releaseOrder/slider.png"/>
-                                </div>
-                            </van-slider>
-                        </div>
-                    </label>
-                    <label for="pushNum" class="labelBox">
-                        <span class="labelTitle">出售数量：</span>
-                        <input type="text" id="pushNum" placeholder="请输入数量">
-                    </label>
-                    <label for="pushMoney" class="labelBox">
-                        <span class="labelTitle">购买金额：</span>
-                        <input type="text" id="pushMoney" placeholder="">
-                    </label>
+            <!--购买弹框-->
+            <van-popup v-model="showBuy">
+                <div class="alertBox">
+                    <img src="../../assets/img/close.png" alt="" class="closeBtn" @click="showBuy=false"/>
+                    <div class="title">向[XXX]购买CAC</div>
+                    <div class="formWrap">
+                        <label for="quota" class="labelBox">
+                            <span class="labelTitle">限额：</span>
+                            <input type="text" id="quota" placeholder="请输入限额">
+                            <span class="rightText">CAC</span>
+                        </label>
+                        <label for="price" class="labelBox">
+                            <span class="labelTitle">价格：</span>
+                            <input type="text" id="price" placeholder="请输入价格">
+                        </label>
+                        <label for="num" class="labelBox">
+                            <span class="labelTitle">CAC数量：</span>
+                            <input type="text" id="num" placeholder="请输入数量">
+                            <button>全额</button>
+                        </label>
+                        <label for="money" class="labelBox">
+                            <span class="labelTitle">金额：</span>
+                            <input type="text" id="money" placeholder="">
+                        </label>
+                    </div>
+                    <p class="hint">
+                        <span>请输入支付密码</span>
+                        <span>提示：匹配后6个小时未打款，自动取消！</span>
+                    </p>
+                    <!--密码输入框-->
+                    <ul class="pwdInput">
+                        <li v-for="item in [1,2,3,4,5,6]" :key="item">*</li>
+                    </ul>
                 </div>
-                <button class="pushBtn">发布</button>
-                <p class="hint" style="color: rgba(0,0,0,.4)">
-                    <span>快速出售小技巧：</span>
-                    <span>在交易页面点击“我要出售”直接和求购玩家直接匹配</span>
-                </p>
-            </div>
-        </van-popup>
-        <!--充币弹框-->
-        <van-dialog v-model="rechargeShow"
-                    title="请输入充值数量"
-                    show-cancel-button
-                    confirmButtonColor="#2C244A"
-                    @confirm="submit"
-                    class="recharge">
-            <div class="rechargeBox">
-                <van-stepper v-model="rechargeValue" input-width="50%" button-size="32px"/>
-            </div>
-        </van-dialog>
+            </van-popup>
+            <!--发布弹框-->
+            <van-popup v-model="showPush">
+                <div class="alertBox">
+                    <img src="../../assets/img/close.png" alt="" class="closeBtn" @click="showPush=false"/>
+                    <div class="title">向[XXX]购买CAC</div>
+                    <div class="formWrap">
+                        <label for="nowPrice" class="labelBox">
+                            <span class="labelTitle">当前价格：</span>
+                            <input type="text" id="nowPrice" placeholder="请输入当前价格">
+                        </label>
+                        <label for="sellPrice" class="labelBox">
+                            <span class="labelTitle">出售价格：</span>
+                            <input type="text" id="sellPrice" placeholder=""
+                                   style="max-width: 70px;" value="0.062">
+                            <div class="price_slider">
+                                <span class="price_slider_val">{{sellPrice}}%</span>
+                                <van-slider v-model="sellPrice" bar-height="4px" active-color="#AB91EF"
+                                            inactive-color="#AB91EF">
+                                    <div slot="button" class="custom-button">
+                                        <img src="../../assets/img/releaseOrder/slider.png"/>
+                                    </div>
+                                </van-slider>
+                            </div>
+                        </label>
+                        <label for="pushNum" class="labelBox">
+                            <span class="labelTitle">出售数量：</span>
+                            <input type="text" id="pushNum" placeholder="请输入数量">
+                        </label>
+                        <label for="pushMoney" class="labelBox">
+                            <span class="labelTitle">购买金额：</span>
+                            <input type="text" id="pushMoney" placeholder="">
+                        </label>
+                    </div>
+                    <button class="pushBtn">发布</button>
+                    <p class="hint" style="color: rgba(0,0,0,.4)">
+                        <span>快速出售小技巧：</span>
+                        <span>在交易页面点击“我要出售”直接和求购玩家直接匹配</span>
+                    </p>
+                </div>
+            </van-popup>
+            <!--充币弹框-->
+            <van-dialog v-model="rechargeShow"
+                        title="请输入充值数量"
+                        show-cancel-button
+                        confirmButtonColor="#2C244A"
+                        @confirm="submit"
+                        class="recharge">
+                <div class="rechargeBox">
+                    <van-stepper v-model="rechargeValue" input-width="50%" button-size="32px"/>
+                </div>
+            </van-dialog>
+        </van-pull-refresh>
         <!--底部-->
         <Tab tabIndex="首页"/>
     </div>
@@ -226,7 +231,8 @@
                 t: null,
                 rechargeValue: null,
                 url: "",
-                coinType: ""
+                coinType: "",
+                isLoading: false
             }
         },
         async mounted() {
@@ -322,6 +328,12 @@
                     });
                 }).catch(() => {
                 });
+            },
+            onRefresh() {
+                setTimeout(() => {
+                    this.isLoading = false;
+                    this.reload();
+                }, 1000);
             }
         },
         beforeDestroy() {

@@ -15,7 +15,9 @@ import {Grid, GridItem} from 'vant';
 import {List} from 'vant';
 import {Dialog} from 'vant';
 import {Stepper} from 'vant';
+import {PullRefresh} from 'vant';
 
+Vue.use(PullRefresh);
 Vue.use(Stepper);
 Vue.use(Dialog);
 Vue.use(List);
