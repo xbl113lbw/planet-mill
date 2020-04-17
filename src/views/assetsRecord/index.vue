@@ -147,7 +147,6 @@
         padding: 40px;
         margin-top: 40px;
         width: 690px;
-        height: 262px;
         border-radius: 8px;
 
         .data_list_row {
