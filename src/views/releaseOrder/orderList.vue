@@ -16,7 +16,6 @@
                         </div>
                         <div class="data_detail_row">
                             <span>价格：{{parseFloat(v.price)}} USDT</span>
-                            <!--<span>{{statusText(v.status)}}</span>-->
                         </div>
                     </div>
                 </van-list>
@@ -73,15 +72,6 @@
                     }
                 })
             },
-            // 状态格式化
-            statusText(status) {
-                switch (status) {
-                    case "0":
-                        return "未完成";
-                    case "1":
-                        return "已完成";
-                }
-            },
             // 下拉刷新初始化
             onLoad() {
                 setTimeout(() => {
@@ -110,7 +100,7 @@
 
 <style scoped lang="scss">
     .main_page {
-        height: 100vh;
+        min-height: 100vh;
         padding: 0 30px;
         background: url("../../assets/img/bg.png") no-repeat center;
         background-size: cover;

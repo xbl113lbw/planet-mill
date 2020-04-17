@@ -13,7 +13,7 @@
                 <van-list
                         v-model="loading"
                         :finished="finished"
-                        :offset="10"
+                        :offset="0"
                         finished-text="没有更多了"
                         @load="onLoad">
                     <div v-for="(item,index) in listData" :key="index" class="data_detail">
@@ -62,7 +62,11 @@
             active() {
                 this.page = 0;
                 this.listData = [];
+                this.loading = true;
                 this.finished = false;
+                if (this.loading) {
+                    this.onLoad();
+                }
             }
         },
         methods: {
@@ -90,9 +94,8 @@
                 })
             },
             onLoad() {
-                setTimeout(() => {
-                    this.getListsData();
-                }, 500);
+                console.log("onLoad");
+                this.getListsData();
             },
         }
     };

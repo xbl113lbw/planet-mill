@@ -7,7 +7,7 @@ import {Toast} from "vant"
 let instance = axios.create({
     timeout: 0,
     baseURL: "http://test.baas.yingbei365.com/api/",
-    /*baseURL: "https://api.cosmicplanet.me/api/",*/
+    // baseURL: "https://api.cosmicplanet.me/api/",
     headers: {}
 });
 
