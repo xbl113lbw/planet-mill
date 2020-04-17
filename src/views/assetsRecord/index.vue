@@ -3,7 +3,14 @@
     <div class="main_page">
         <NavCom title="资产记录"/>
         <div class="data_list" v-if="cacObj">
-            <div class="data_list_row">CAC原始总量：<span>{{cacObj.total_num}}</span></div>
+            <!--头部-->
+            <div class="header">
+                <div class="logo">
+                    <img src="../../assets/img/首页LOGO.png" alt=""/>
+                    <span>CAC区块浏览</span>
+                </div>
+            </div>
+            <div class="data_list_row">原始总量：<span>{{cacObj.total_num}}</span></div>
             <div class="data_list_row">现有总量：<span>{{Number(cacObj.current_num).toFixed(8)}}</span></div>
             <div class="data_list_row">产出总量：<span>{{Number(cacObj.output_num).toFixed(8)}}</span></div>
             <div class="data_list_row">黑洞销毁：<span>{{Number(cacObj.destroy_num).toFixed(8)}}</span></div>
@@ -108,6 +115,28 @@
         padding: 0 30px;
         background: url("../../assets/img/bg.png") no-repeat center;
         background-size: cover;
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+
+            .logo {
+                display: flex;
+                align-items: center;
+
+                img {
+                    width: 340px;
+                    height: 85px;
+                }
+
+                span {
+                    font-size: 35px;
+                    color: #fff;
+                }
+            }
+        }
 
         /deep/ .vanTabs {
             .van-tabs__nav {
