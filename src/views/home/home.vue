@@ -230,7 +230,6 @@
                 finishFlag: true,
                 t: null,
                 rechargeValue: null,
-                url: "",
                 coinType: "",
                 isLoading: false
             }
@@ -239,13 +238,15 @@
             await this.getHomeData();
             // 获取货币余额
             await this.getUserInfo();
-            this.url = `${window.location.host}/#/register?aid=${this.userInfo.invite_code}`;
         },
         computed: {
             // vuex state
             ...mapState(["myAccount", "usdtContract", "MyContract", "userInfo", "web3"]),
             btnFlag() {
                 return this.homeData.progress === "100%";
+            },
+            url() {
+                return `${window.location.host}/#/register?aid=${this.userInfo.invite_code}`;
             }
         },
         methods: {

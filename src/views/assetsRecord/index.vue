@@ -19,7 +19,7 @@
                     <div v-for="(item,index) in listData" :key="index" class="data_detail">
                         <div class="data_detail_row">
                             <span class="rate" :class="item.pm > 0 ? 'green':'red'">
-                                {{ item.pm > 0 ? `+${item.amount}` : `-${item.amount} ${item.coin.toLocaleUpperCase()}`}}
+                                {{ item.pm > 0 ? `+${item.amount}` : `-${item.amount} `}} {{item.coin.toLocaleUpperCase()}}
                             </span>
                             <span>{{item.title}}</span>
                         </div>
@@ -83,7 +83,7 @@
                         // 加载状态结束
                         this.loading = false;
                         // 数据全部加载完成
-                        if (arrData.length || arrData.length < 10) {
+                        if (arrData.length && arrData.length < 10) {
                             this.finished = true;
                         }
                     }
