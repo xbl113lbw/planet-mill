@@ -88,7 +88,7 @@
         </div>
 
         <!-- 正在参与的游戏 -->
-        <div class="gamesBox">
+        <!--<div class="gamesBox">
             <div class="gamesItemBox">
                 <div class="gLeft">
                     <div class="gName">碰撞游戏</div>
@@ -97,7 +97,7 @@
                         <span>{{AssetObj.collide_waiting_num}}</span>
                     </div>
                 </div>
-                <!--<div class="gRight">取消</div>-->
+                &lt;!&ndash;<div class="gRight">取消</div>&ndash;&gt;
             </div>
             <div class="line"></div>
             <div class="gamesItemBox">
@@ -108,9 +108,9 @@
                         <span>{{AssetObj.mining_waiting_num}}</span>
                     </div>
                 </div>
-                <!--<div class="gRight">取消</div>-->
+                &lt;!&ndash;<div class="gRight">取消</div>&ndash;&gt;
             </div>
-        </div>
+        </div>-->
 
         <!-- 矿机运行情况 -->
         <div class="operationBox" v-for="(item,index) in machine" :key="index">
