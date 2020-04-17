@@ -6,7 +6,7 @@
             <div class="data_list_row">CAC总量：<span>{{cacObj.total_num}}</span></div>
             <div class="data_list_row">产出总量：<span>{{Number(cacObj.output_num).toFixed(8)}}</span></div>
             <div class="data_list_row">黑洞销毁：<span>{{Number(cacObj.destroy_num).toFixed(8)}}</span></div>
-            <div class="data_list_row">流通数量：<span>{{cacObj.circulate_num}}</span></div>
+            <div class="data_list_row">流通数量：<span>{{Number(cacObj.circulate_num).toFixed(8)}}</span></div>
         </div>
         <van-tabs v-model="active" class="vanTabs">
             <van-tab v-for="(val,i) in tabData" :title="val.name" :key='i'>
