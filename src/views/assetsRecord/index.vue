@@ -57,6 +57,7 @@
                     {name: "碰撞记录"},
                     {name: "团队奖励"},
                     {name: "挖矿记录"},
+                    {name: "交易记录"},
                 ],
                 page: 0,
                 loading: false,

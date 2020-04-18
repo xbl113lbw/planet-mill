@@ -1,9 +1,9 @@
 <template>
     <div class="main_page">
-        <NavCom title="发布出售订单"/>
+        <NavCom title="发布购买订单"/>
         <div class="top_page">
-            <span>可用CAC</span>
-            <span class="number">{{parseFloat(userInfo.cac_coin)}}</span>
+            <span>可用USDT</span>
+            <span class="number">{{parseFloat(userInfo.usdt_coin)}}</span>
         </div>
         <div class="content">
             <!--<div class="content_row">
@@ -11,11 +11,11 @@
                 <span class="price_now">{{cacPrice}}</span>
             </div>-->
             <div class="content_row">
-                <span class="row_left">出售价格:</span>
+                <span class="row_left">购买价格(USDT):</span>
                 <input v-model="price" placeholder="请输入出售价格"/>
             </div>
             <div class="content_row">
-                <span class="row_left">出售数量:</span>
+                <span class="row_left">购买数量(CAC):</span>
                 <input v-model="num" placeholder="请输入数量"/>
             </div>
             <div class="content_row">
@@ -23,7 +23,7 @@
                 <input v-model="name" placeholder="请输入昵称"/>
             </div>
             <div class="content_row_last">
-                <span class="row_left">总金额:</span>
+                <span class="row_left">总金额(USDT):</span>
                 <span>{{price * num}}</span>
                 <div class="button_class">
                     <van-button class="button" round color="linear-gradient(to right,#A73FE2,#7E2AF2,#611DE8)"
@@ -137,8 +137,8 @@
                 line-height: 97px;
 
                 .row_left {
-                    width: 130px;
-                    height: 37px;
+                    display: inline-block;
+                    width: 240px;
                     padding-right: 20px;
                     color: rgba(255, 255, 255, .6);
                 }
@@ -183,8 +183,7 @@
                 height: 166px;
 
                 .row_left {
-                    width: 140px;
-                    height: 37px;
+                    width: 240px;
                     padding-right: 20px;
                     color: rgba(255, 255, 255, .6);
                     display: inline-block;

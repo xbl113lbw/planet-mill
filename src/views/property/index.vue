@@ -9,10 +9,11 @@
         <div class="bgimg"></div>
         <div class="titleBox">
             <span>资产</span>
-            <img src="./../../assets/img/property/record.png" alt="" class="right"
-                 @click="$router.push({path:'/assetsRecord'})">
+            <div class="right">
+                <img src="./../../assets/img/property/record.png" alt="" @click="$router.push({path:'/assetsRecord'})">
+                <span>明细记录</span>
+            </div>
         </div>
-
         <!-- 资产 -->
         <div class="top">
             <div class="totalBox">
@@ -262,20 +263,26 @@
         margin: 0 auto;
 
         .titleBox {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             font-size: 32px;
             font-weight: 600;
             color: #ffffff;
             width: 100%;
-            text-align: center;
-            position: relative;
             margin-bottom: 40px;
 
             .right {
-                position: absolute;
-                width: 44px;
-                height: 44px;
-                top: 0;
-                right: 0;
+                display: flex;
+                align-items: center;
+                img {
+                    width: 44px;
+                    height: 44px;
+                    margin-right: 10px;
+                }
+                span {
+                    font-size: 24px;
+                }
             }
         }
 
