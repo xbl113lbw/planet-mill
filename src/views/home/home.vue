@@ -86,7 +86,7 @@
                     <span>邀请链接：</span>
                     <span>{{url}}</span>
                 </div>
-                <input id="target" v-model="url" style="opacity: 0;position: absolute">
+                <input id="target" v-model="url" style="opacity: 0;position: absolute;z-index: -1" readonly>
                 <button class="tagRead"
                         @click="copyEvent"
                         data-clipboard-target="#target">复制邀请链接
