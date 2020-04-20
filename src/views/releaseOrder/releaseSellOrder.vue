@@ -24,7 +24,7 @@
             </div>
             <div class="content_row_last">
                 <span class="row_left">总金额(USDT):</span>
-                <span>{{price * num}}</span>
+                <span>{{(price * num).toFixed(4)}}</span>
                 <div class="button_class">
                     <van-button class="button" round color="linear-gradient(to right,#A73FE2,#7E2AF2,#611DE8)"
                                 @click="sell">
