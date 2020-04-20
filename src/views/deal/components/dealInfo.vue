@@ -70,12 +70,12 @@
                             <img src="../../../assets/img/deal/coin.png" alt=""/>
                             <div>
                                 <span>{{item.name}}</span>
-                                <span>出售：{{parseFloat(item.number)}}CAC</span>
+                                <span>购买：{{parseFloat(item.number)}}CAC</span>
                             </div>
                         </div>
                         <div class="center">
                             <span>{{parseFloat(item.price)}} USDT</span>
-                            <span>总价：{{parseFloat(item.number) * parseFloat(item.price)}}USDT</span>
+                            <span>总价：{{(parseFloat(item.number) * parseFloat(item.price)).toFixed(4)}}USDT</span>
                         </div>
                         <button class="right" @click="buy(item.id)">立即出售</button>
                     </li>
@@ -413,15 +413,16 @@
 
                     .center {
                         flex: 1;
-                        /*max-width: 100px;*/
-                        /*overflow: hidden;*/
-                        /*text-overflow: ellipsis;*/
-                        /*white-space: nowrap;*/
+
                         span {
                             display: block;
                             font-size: 25px;
                             font-weight: 600;
                             color: #AB91EF;
+                            max-width: 200px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
 
                             &:last-child {
                                 font-size: 22px;

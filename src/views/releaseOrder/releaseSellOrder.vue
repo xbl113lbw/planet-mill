@@ -33,10 +33,10 @@
                 </div>
             </div>
         </div>
-        <div class="tips">
+        <!--<div class="tips">
             <div>快速出售小技巧：</div>
             <div>在交易页面点击“我要出售”直接和求购玩家直接匹配</div>
-        </div>
+        </div>-->
     </div>
 </template>
 <script>
