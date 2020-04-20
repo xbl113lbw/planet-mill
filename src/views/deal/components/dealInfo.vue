@@ -69,13 +69,13 @@
                         <div class="left">
                             <img src="../../../assets/img/deal/coin.png" alt=""/>
                             <div>
-                                <span>{{item.name}}</span>
-                                <span>购买:{{parseFloat(item.number)}}CAC</span>
+                                <p>
+                                    <span style="color: #fff">{{item.name}}</span>
+                                    <span style="color: #AB91EF">价格：{{parseFloat(item.price)}} USDT</span>
+                                </p>
+                                <p><span>购买：{{parseFloat(item.number)}}CAC</span></p>
+                                <p><span>总价：{{parseFloat(item.total_amount)}}USDT</span></p>
                             </div>
-                        </div>
-                        <div class="center">
-                            <span>{{parseFloat(item.price)}} USDT</span>
-                            <span>总价:{{parseFloat(item.total_amount)}}USDT</span>
                         </div>
                         <button class="right" @click="buy(item.id)">出售</button>
                     </li>
@@ -378,6 +378,7 @@
                     }
 
                     .left {
+                        flex: 1;
                         display: flex;
                         align-items: center;
                         margin-right: 20px;
@@ -390,43 +391,18 @@
                         }
 
                         div {
-                            span {
-                                display: block;
-                                max-width: 180px;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
+                            width: 100%;
 
-                                &:first-child {
-                                    margin-bottom: 4px;
+                            p {
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+
+                                span {
+                                    display: block;
                                     font-size: 24px;
-                                    color: rgba(255, 255, 255, 1);
-                                }
-
-                                &:last-child {
-                                    font-size: 22px;
                                     color: rgba(255, 255, 255, .6);
                                 }
-                            }
-                        }
-                    }
-
-                    .center {
-                        flex: 1;
-
-                        span {
-                            display: block;
-                            font-size: 25px;
-                            font-weight: 600;
-                            color: #AB91EF;
-                            max-width: 200px;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            white-space: nowrap;
-
-                            &:last-child {
-                                font-size: 22px;
-                                color: rgba(255, 255, 255, .6);
                             }
                         }
                     }

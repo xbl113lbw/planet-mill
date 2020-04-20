@@ -538,6 +538,10 @@
                             margin-bottom: 0;
                         }
 
+                        &:nth-child(2), &:nth-child(4) {
+                            width: 40%;
+                        }
+
                         span {
                             color: #FFFFFF;
                         }
@@ -810,6 +814,7 @@
                         font-size: 26px;
                         color: rgba(255, 255, 255, .6);
                     }
+
                     &:last-child {
                         font-size: 26px;
                         word-break: break-all;
