@@ -75,9 +75,9 @@
                         </div>
                         <div class="center">
                             <span>{{parseFloat(item.price)}} USDT</span>
-                            <span>总价：{{(parseFloat(item.number) * parseFloat(item.price)).toFixed(4)}}USDT</span>
+                            <span>总价：{{(parseFloat(item.number) * parseFloat(item.price)).toFixed(0)}}USDT</span>
                         </div>
-                        <button class="right" @click="buy(item.id)">立即出售</button>
+                        <button class="right" @click="buy(item.id)">出售</button>
                     </li>
                 </van-list>
             </ul>
@@ -392,7 +392,7 @@
                         div {
                             span {
                                 display: block;
-                                max-width: 140px;
+                                max-width: 180px;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                                 white-space: nowrap;
@@ -432,7 +432,7 @@
                     }
 
                     .right {
-                        width: 160px;
+                        padding: 0 20px;
                         height: 56px;
                         font-size: 26px;
                         background: linear-gradient(90deg, rgba(167, 63, 226, 1) 0%, rgba(126, 42, 242, 1) 56%, rgba(97, 29, 232, 1) 100%);
