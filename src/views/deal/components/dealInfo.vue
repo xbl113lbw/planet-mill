@@ -70,12 +70,12 @@
                             <img src="../../../assets/img/deal/coin.png" alt=""/>
                             <div>
                                 <span>{{item.name}}</span>
-                                <span>购买：{{parseFloat(item.number)}}CAC</span>
+                                <span>购买:{{parseFloat(item.number)}}CAC</span>
                             </div>
                         </div>
                         <div class="center">
                             <span>{{parseFloat(item.price)}} USDT</span>
-                            <span>总价：{{(parseFloat(item.number) * parseFloat(item.price)).toFixed(0)}}USDT</span>
+                            <span>总价:{{parseFloat(item.total_amount)}}USDT</span>
                         </div>
                         <button class="right" @click="buy(item.id)">出售</button>
                     </li>
