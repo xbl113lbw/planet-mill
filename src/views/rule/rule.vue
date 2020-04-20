@@ -78,9 +78,9 @@
                     <p>
                         分配方案
                         <span class="percentage">共识联盟执行委员会<span class="line"></span><span class="num">1%</span></span>
-                        <span class="percentage">宇宙矿工奖励<span class="line"></span><span class="num">93%</span></span>
+                        <span class="percentage">宇宙矿工奖励<span class="line"></span><span class="num">98%</span></span>
                         <span class="percentage">共识联盟推广<span class="line"></span><span class="num">1%</span></span>
-                        <span class="percentage">共识生态奖励<span class="line"></span><span class="num">5%</span></span>
+                        <!--<span class="percentage">共识生态奖励<span class="line"></span><span class="num">5%</span></span>-->
                         宇宙黑洞：回收整个生态剩下3000万枚的时候，黑洞停止工作。
                     </p>
                 </div>
