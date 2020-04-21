@@ -12,7 +12,7 @@
             </div>-->
             <div class="content_row">
                 <span class="row_left">购买价格(USDT):</span>
-                <input v-model="price" placeholder="请输入出售价格"/>
+                <input v-model="price" placeholder="请输入购买价格"/>
             </div>
             <div class="content_row">
                 <span class="row_left">购买数量(CAC):</span>

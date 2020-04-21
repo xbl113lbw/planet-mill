@@ -367,15 +367,18 @@
             .orderBox_list {
                 margin-top: 20px;
 
+                & > li:last-child {
+                    margin-bottom: 0;
+                }
+
                 li {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
+                    padding-bottom: 20px;
+                    border-bottom: 1px solid #eee;
                     margin-bottom: 60px;
 
-                    &:last-child {
-                        margin-bottom: 0;
-                    }
 
                     .left {
                         flex: 1;

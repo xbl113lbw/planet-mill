@@ -81,7 +81,7 @@
                 </div>
             </div>
             <!--邀请链接-->
-            <div class="invite">
+            <div class="invite" v-if="homeData.user.first_game>0">
                 <div class="invite_url">
                     <span>邀请链接：</span>
                     <span>{{url}}</span>
