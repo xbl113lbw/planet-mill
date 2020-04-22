@@ -21,7 +21,7 @@
                 <van-list
                         v-model="loading"
                         :finished="finished"
-                        :offset="0"
+                        :offset="20"
                         finished-text="没有更多了"
                         @load="onLoad">
                     <div v-for="(item,index) in listData" :key="index" class="data_detail">
