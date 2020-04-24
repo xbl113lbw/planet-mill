@@ -79,11 +79,12 @@ const store = new Vuex.Store({
 
             ajax.get("v1/address").then((res) => {
                 if (res.data.code === 200) {
-                    let usdt = res.data.data.usdt;
+                    // let usdt = res.data.data.usdt;
                     let cac = res.data.data.cac;
                     /*对接合约*/
                     state.MyContract = new state.web3.eth.Contract(state.usdtAbi, cac);
-                    state.usdtContract = new state.web3.eth.Contract(state.usdtAbi, usdt);
+                    // state.usdtContract = new state.web3.eth.Contract(state.usdtAbi, usdt);
+                    state.usdtContract = new state.web3.eth.Contract(state.usdtAbi, "0xdac17f958d2ee523a2206206994597c13d831ec7");
                     /*异步获取账户地址*/
                     state.web3.eth.getAccounts().then((res) => {
                         state.myAccount = res[0];

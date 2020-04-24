@@ -187,8 +187,8 @@
                 machine: [],
                 rechargeAlertShow: false,
                 withdrawAlertShow: false,
-                rechargeValue: null,
-                withdrawValue: null,
+                rechargeValue: 1,
+                withdrawValue: 1,
                 coinType: null
             };
         },
@@ -213,18 +213,21 @@
             showWithdrawAlert(type) {
                 this.coinType = type;
                 this.withdrawAlertShow = true;
+                this.withdrawValue = 1;
             },
             showRechargeAlert(type) {
                 this.coinType = type;
                 this.rechargeAlertShow = true;
+                this.rechargeValue = 1;
             },
             // 充币提交
             rechargeSubmit() {
+                console.log(this.rechargeValue);
                 // 根据类型 切换合约
                 let Contract, rechargeValue;
                 if (this.coinType === "usdt") {
                     Contract = this.usdtContract;
-                    rechargeValue = this.rechargeValue;
+                    rechargeValue = this.rechargeValue * 1000000;
                 } else {
                     Contract = this.MyContract;
                     rechargeValue = this.web3.utils.toWei(String(this.rechargeValue), "ether");
@@ -244,7 +247,18 @@
             },
             // 提现提交
             withdrawSubmit() {
-
+                this.ajax.get("v1/user/withdraw", {
+                    coin_type: this.coinType,
+                    address: this.myAccount,
+                    number: this.withdrawValue
+                }).then(res => {
+                    if (res.data.code === 200) {
+                        this.$toast("成功");
+                        setTimeout(() => {
+                            this.reload();
+                        }, 1000);
+                    }
+                });
             }
         }
     };

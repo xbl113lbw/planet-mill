@@ -229,7 +229,7 @@
                 tableData: [],
                 finishFlag: true,
                 t: null,
-                rechargeValue: null,
+                rechargeValue: 1,
                 coinType: "",
                 isLoading: false
             }
@@ -274,13 +274,14 @@
             recharge(type) {
                 this.rechargeShow = true;
                 this.coinType = type;
+                this.rechargeValue = 1;
             },
             submit() {
                 // 根据类型 切换合约
                 let Contract, rechargeValue;
                 if (this.coinType === "usdt") {
                     Contract = this.usdtContract;
-                    rechargeValue = this.rechargeValue;
+                    rechargeValue = this.rechargeValue * 1000000;
                 } else {
                     Contract = this.MyContract;
                     rechargeValue = this.web3.utils.toWei(String(this.rechargeValue), "ether");
