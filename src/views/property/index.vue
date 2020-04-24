@@ -247,7 +247,7 @@
             },
             // 提现提交
             withdrawSubmit() {
-                this.ajax.get("v1/user/withdraw", {
+                this.ajax.post("v1/user/withdraw", {
                     coin_type: this.coinType,
                     address: this.myAccount,
                     number: this.withdrawValue
