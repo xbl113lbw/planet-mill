@@ -289,14 +289,6 @@
                 Contract.methods.transfer(this.userInfo.recharge_address, rechargeValue).send({
                     from: this.myAccount
                 }).then(() => {
-                    this.ajax.post("v1/user/recharge", {
-                        coin_type: this.coinType,
-                        amount: this.rechargeValue
-                    }).then(res => {
-                        if (res.data.code === 200) {
-                            this.reload();
-                        }
-                    });
                 });
             },
             /*复制功能*/
