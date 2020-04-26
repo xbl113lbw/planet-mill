@@ -120,12 +120,12 @@
                     <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
                     <p>
                         每组的100枚USDT分配
-                        <span class="percentage">技术维护<span class="line"></span><span class="num">3%</span></span>
+                        <span class="percentage">技术维护<span class="line"></span><span class="num">1%</span></span>
                         <span class="percentage">参与奖励<span class="line"></span><span class="num">30%</span></span>
                         <span class="percentage">动态奖励<span class="line"></span><span class="num">20%</span></span>
                         <!--<span class="percentage">共识联盟生态（二级市场）<span class="line"></span><span
                                 class="num">5%</span></span>-->
-                        <span class="percentage">星球矿主<span class="line"></span><span class="num">47%</span></span>
+                        <span class="percentage">星球矿主<span class="line"></span><span class="num">49%</span></span>
 
                         <span class="small_percentage">- 矿主产出<span class="line"></span><span
                                 class="num">10.5%</span></span>
