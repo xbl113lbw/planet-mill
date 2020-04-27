@@ -19,11 +19,11 @@
             <div class="totalBox">
                 <div>
                     <div class="opacityText">总资产估值 (USDT)：</div>
-                    <div class="whiteText">0.0000</div>
+                    <div class="whiteText">{{total_price}}</div>
                 </div>
                 <div>
                     <div class="opacityText">当前价格 (CAC)：</div>
-                    <div class="whiteText">0.0000</div>
+                    <div class="whiteText">{{cac_price}}</div>
                 </div>
             </div>
         </div>
@@ -189,7 +189,9 @@
                 withdrawAlertShow: false,
                 rechargeValue: 1,
                 withdrawValue: 1,
-                coinType: null
+                coinType: null,
+                total_price: null,
+                cac_price: null,
             };
         },
         created() {
@@ -207,6 +209,9 @@
                     if (res.data.code === 200) {
                         this.AssetObj = res.data.data;
                         this.machine = this.AssetObj.machine;
+                        // 获取价格
+                        this.total_price = parseFloat(res.data.data.total_price.toFixed(4));
+                        this.cac_price = parseFloat(res.data.data.cac_price.toFixed(4));
                     }
                 })
             },
@@ -251,7 +256,7 @@
                         }, 1000);
                     }
                 });
-            }
+            },
         }
     };
 </script>
@@ -281,11 +286,13 @@
             .right {
                 display: flex;
                 align-items: center;
+
                 img {
                     width: 44px;
                     height: 44px;
                     margin-right: 10px;
                 }
+
                 span {
                     font-size: 24px;
                 }
