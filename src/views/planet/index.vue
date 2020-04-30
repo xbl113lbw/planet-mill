@@ -63,12 +63,14 @@
                     </div>
                 </div>
                 <div class="btnBox">
-                    <button class="btnItem" :class="item.running_num >= 21 ? 'disabledBtn' : ''" @click="buy(index+1)"
-                            :disabled="item.running_num >= 21">
+                    <button class="btnItem" :class="item.running_num >= item.machine_num ? 'disabledBtn' : ''"
+                            @click="buy(index+1)"
+                            :disabled="item.running_num >= item.machine_num">
                         购买
                     </button>
-                    <button class="btnItem" :class="item.running_num >= 21 ? '' : 'disabledBtn'" @click="buy(index+1)"
-                            :disabled="item.running_num < 21">
+                    <button class="btnItem" :class="item.running_num >= item.machine_num ? '' : 'disabledBtn'"
+                            @click="buy(index+1)"
+                            :disabled="item.running_num < item.machine_num">
                         参与排队
                     </button>
                 </div>
@@ -146,7 +148,7 @@
     }
 
     .rightNumber {
-        width: 53px;
+        width: 70px;
         display: inline-block;
     }
 

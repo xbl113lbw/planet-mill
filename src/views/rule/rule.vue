@@ -129,28 +129,28 @@
                         <span class="small_percentage">- 矿主产出<span class="line"></span><span
                                 class="num">10.5%</span></span>
                         <span class="smaller_percentage">- 水星矿机<span class="line"></span><span
-                                class="num">1.18%</span></span>
+                                class="num">12%</span></span>
                         <span class="smaller_percentage">- 火星矿机<span class="line"></span><span
-                                class="num">3.53%</span></span>
+                                class="num">12%</span></span>
                         <span class="smaller_percentage">- 金星矿机<span class="line"></span><span
-                                class="num">10.59%</span></span>
+                                class="num">12%</span></span>
                         <span class="smaller_percentage">- 土星矿机<span class="line"></span><span
-                                class="num">31.76%</span></span>
+                                class="num">12%</span></span>
                         <span class="smaller_percentage">- 木星矿机<span class="line"></span><span
-                                class="num">52.94%</span></span>
+                                class="num">12%</span></span>
 
                         <span class="small_percentage">- 分红产出<span class="line"></span><span
                                 class="num">10.5%</span></span>
                         <span class="smaller_percentage">- 水星矿机<span class="line"></span><span
-                                class="num">1%</span></span>
+                                class="num">8%</span></span>
                         <span class="smaller_percentage">- 火星矿机<span class="line"></span><span
-                                class="num">3%</span></span>
+                                class="num">8%</span></span>
                         <span class="smaller_percentage">- 金星矿机<span class="line"></span><span
-                                class="num">11%</span></span>
+                                class="num">8%</span></span>
                         <span class="smaller_percentage">- 土星矿机<span class="line"></span><span
-                                class="num">32%</span></span>
+                                class="num">8%</span></span>
                         <span class="smaller_percentage">- 木星矿机<span class="line"></span><span
-                                class="num">53%</span></span>
+                                class="num">8%</span></span>
                     </p>
                 </div>
             </div>
@@ -184,13 +184,13 @@
                 <div class="line">
                     <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
                     <p>
-                        每个矿场设置21个矿主，额满后启用排队方式，出局后由最近的补上。
+                        每个矿机设置最高数量限制，额满后采用排队方式，出局后由最近排队顶上。
                     </p>
                 </div>
                 <div class="line">
                     <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
                     <p>
-                        每天结算一次，24:00-1：00之间结算。
+                        每1440区块结算一次。
                     </p>
                 </div>
             </div>
@@ -217,15 +217,15 @@
                         </div>
                         <div>
                             <span>每天算力总产出：</span>
-                            <span>每出一个区块有100枚USDT*10.5%*1.18%*1440 (为变量)</span>
+                            <span>12%</span>
                         </div>
                         <div>
                             <span>分红比例：</span>
-                            <span>每出一个区块有100枚USDT*10.5%*1%*1440 (为变量)</span>
+                            <span>8%</span>
                         </div>
                     </div>
                 </div>
-                <div class="bottom">【产出量和分红的量总有几个矿机几个矿机均分，最高21一个。】</div>
+                <div class="bottom">【日产出量+分红均分给运行中的矿机，最高390台】</div>
             </li>
             <li>
                 <div class="top">
@@ -247,15 +247,15 @@
                         </div>
                         <div>
                             <span>每天算力总产出：</span>
-                            <span>每出一个区块有100枚USDT*10.5%*3.53%*1440 (为变量)</span>
+                            <span>12%</span>
                         </div>
                         <div>
                             <span>分红比例：</span>
-                            <span>每出一个区块有100枚USDT*10.5%*3%*1440  (为变量)</span>
+                            <span>8%</span>
                         </div>
                     </div>
                 </div>
-                <div class="bottom">【产出量和分红的量总有几个矿机几个矿机均分，最高21一个。】</div>
+                <div class="bottom">【日产出量+分红均分给运行中的矿机，最高129台】</div>
             </li>
             <li>
                 <div class="top">
@@ -277,15 +277,15 @@
                         </div>
                         <div>
                             <span>每天算力总产出：</span>
-                            <span>每出一个区块有100枚USDT*10.5%*10.59%*1440 (为变量)</span>
+                            <span>12%</span>
                         </div>
                         <div>
                             <span>分红比例：</span>
-                            <span>每出一个区块有100枚USDT*10.5%*11%*1440  (为变量)</span>
+                            <span>8%</span>
                         </div>
                     </div>
                 </div>
-                <div class="bottom">【产出量和分红的量总有几个矿机几个矿机均分，最高21一个。】</div>
+                <div class="bottom">【日产出量+分红均分给运行中的矿机，最高39台】</div>
             </li>
             <li>
                 <div class="top">
@@ -307,15 +307,15 @@
                         </div>
                         <div>
                             <span>每天算力总产出：</span>
-                            <span>每出一个区块有100枚USDT*10.5%*31.76%*1440 (为变量)</span>
+                            <span>12%</span>
                         </div>
                         <div>
                             <span>分红比例：</span>
-                            <span>每出一个区块有100枚USDT*10.5%*32%*1440  (为变量)</span>
+                            <span>8%</span>
                         </div>
                     </div>
                 </div>
-                <div class="bottom">【产出量和分红的量总有几个矿机几个矿机均分，最高21一个。】</div>
+                <div class="bottom">【日产出量+分红均分给运行中的矿机，最高13台】</div>
             </li>
             <li>
                 <div class="top">
@@ -337,15 +337,15 @@
                         </div>
                         <div>
                             <span>每天算力总产出：</span>
-                            <span>每出一个区块有100枚USDT*10.5%*52.94%*1440(为变量)</span>
+                            <span>12%</span>
                         </div>
                         <div>
                             <span>分红比例：</span>
-                            <span>每出一个区块有100枚USDT*10.5%*53%*1440  (为变量)</span>
+                            <span>8%</span>
                         </div>
                     </div>
                 </div>
-                <div class="bottom">【产出量和分红的量总有几个矿机几个矿机均分，最高21一个。】</div>
+                <div class="bottom">【日产出量+分红均分给运行中的矿机，最高8台】</div>
             </li>
         </ul>
     </div>
