@@ -148,7 +148,7 @@
     }
 
     .rightNumber {
-        width: 70px;
+        width: 65px;
         display: inline-block;
     }
 
@@ -279,6 +279,10 @@
                         display: flex;
                         justify-content: space-between;
                         margin-bottom: 12px;
+
+                        div {
+                            white-space: nowrap;
+                        }
                     }
 
                     & .rowBox:nth-child(2) {
