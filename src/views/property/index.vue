@@ -250,7 +250,7 @@
                     number: this.withdrawValue
                 }).then(res => {
                     if (res.data.code === 200) {
-                        this.$toast("成功");
+                        this.$toast("你提币已成功，等待区块打包和确认！");
                         setTimeout(() => {
                             this.reload();
                         }, 1000);

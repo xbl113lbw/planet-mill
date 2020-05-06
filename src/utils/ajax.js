@@ -31,7 +31,10 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use(function (response) {
     Toast.clear();
     if (response.data.code !== 200) {
-        Toast(response.data.message);
+        Toast({
+            message: response.data.message,
+            duration: 3000
+        });
     }
     // 对响应数据做点什么
     return response;

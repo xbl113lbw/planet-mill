@@ -51,7 +51,23 @@
                 <div class="coinInfo_top_line">
                     <div class="coinInfo_top_line_textWrap">
                         <div>当前排队人数：<span>{{homeData.total_wait_num}}</span></div>
-                        <div>排队中：<span>{{homeData.waiting_num}}</span></div>
+                        <div>
+                            排队中：
+                            <ul>
+                                <li>{{homeData.waiting_num}}</li>
+                                <li>{{homeData.waiting_num}}</li>
+                                <li>{{homeData.waiting_num}}</li>
+                                <li>{{homeData.waiting_num}}</li>
+                                <li>{{homeData.waiting_num}}</li>
+                                <li>{{homeData.waiting_num}}</li>
+                                <li>{{homeData.waiting_num}}</li>
+                                <li>{{homeData.waiting_num}}</li>
+                                <li>{{homeData.waiting_num}}</li>
+                                <li>{{homeData.waiting_num}}</li>
+                                <li>{{homeData.waiting_num}}</li>
+                                <li>{{homeData.waiting_num}}</li>
+                            </ul>
+                        </div>
                     </div>
                     <button @click="start" :class="btnFlag ? '' : 'disabledBtn'" :disabled="!btnFlag">碰撞预排</button>
                 </div>
@@ -484,9 +500,32 @@
 
                 .coinInfo_top_line_textWrap {
                     div {
-                        margin-bottom: 2px;
+                        display: flex;
+                        margin-bottom: 5px;
                         font-size: 28px;
                         color: rgba(255, 255, 255, .6);
+
+                        ul {
+                            max-width: 300px;
+                            overflow-x: auto;
+                            white-space: nowrap;
+
+                            &::-webkit-scrollbar {
+                                display: none;
+                            }
+
+                            li {
+                                display: inline-block;
+                                width: 40px;
+                                height: 40px;
+                                line-height: 40px;
+                                margin-right: 10px;
+                                border-radius: 50%;
+                                text-align: center;
+                                border: 1px solid #AB91EF;
+                                color: #AB91EF;
+                            }
+                        }
 
                         span {
                             color: #AB91EF;
