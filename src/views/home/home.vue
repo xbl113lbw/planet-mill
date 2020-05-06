@@ -53,20 +53,12 @@
                         <div>当前排队人数：<span>{{homeData.total_wait_num}}</span></div>
                         <div>
                             排队中：
-                            <ul>
-                                <li>{{homeData.waiting_num}}</li>
-                                <li>{{homeData.waiting_num}}</li>
-                                <li>{{homeData.waiting_num}}</li>
-                                <li>{{homeData.waiting_num}}</li>
-                                <li>{{homeData.waiting_num}}</li>
-                                <li>{{homeData.waiting_num}}</li>
-                                <li>{{homeData.waiting_num}}</li>
-                                <li>{{homeData.waiting_num}}</li>
-                                <li>{{homeData.waiting_num}}</li>
-                                <li>{{homeData.waiting_num}}</li>
-                                <li>{{homeData.waiting_num}}</li>
-                                <li>{{homeData.waiting_num}}</li>
+                            <ul v-if="homeData.waiting_nums.length">
+                                <li v-for="(item,index) in homeData.waiting_nums" :key="index">
+                                    {{item}}
+                                </li>
                             </ul>
+                            <span v-else>0</span>
                         </div>
                     </div>
                     <button @click="start" :class="btnFlag ? '' : 'disabledBtn'" :disabled="!btnFlag">碰撞预排</button>
@@ -240,7 +232,8 @@
                 sellPrice: 50,
                 time: null,
                 homeData: {
-                    user: {}
+                    user: {},
+                    waiting_nums: []
                 },
                 tableData: [],
                 finishFlag: true,
