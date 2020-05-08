@@ -16,7 +16,7 @@
                 <input type="password" placeholder="请再次输入密码" v-model="re_password">
             </label>
             <label>
-                <input type="text" placeholder="邀请码(非必填)" v-model="invite_code" :disabled="invite_code_flag">
+                <input type="text" placeholder="邀请码" v-model="invite_code" :disabled="invite_code_flag">
             </label>
         </div>
         <button class="submit" @click="register">注册</button>
