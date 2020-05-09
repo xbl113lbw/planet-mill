@@ -76,9 +76,8 @@
         bottom: 0;
         display: flex;
         justify-content: space-between;
-        padding: 10px 81px 18px 81px;
+        padding: 10px 81px 20px 81px;
         background: #000000;
-        height: 150px;
         align-items: flex-start;
     }
 

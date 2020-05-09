@@ -9,7 +9,11 @@
                 <div class="logo"><img src="../../assets/img/首页LOGO.png"/></div>
                 <img src="../../assets/img/home/problemIcon.png" class="problemIcon" alt=""
                      @click="$router.push({path:'/rule'})"/>
+                <span class="right">id：{{userInfo.id}}</span>
             </div>
+            <!--公告-->
+            <van-notice-bar :text="homeData.content" left-icon="volume-o"
+                            background="transparent" color="#fff" @click="showAll"/>
             <!--顶部信息展示-->
             <div class="topInfo">
                 <div class="topInfo_height">
@@ -337,6 +341,14 @@
                     this.isLoading = false;
                     this.reload();
                 }, 1000);
+            },
+            showAll() {
+                this.$dialog(
+                    {
+                        message: this.homeData.content,
+                        messageAlign: "left"
+                    }
+                );
             }
         },
         beforeDestroy() {
@@ -352,17 +364,16 @@
         background: url("../../assets/img/bg.png") no-repeat center/cover;
 
         .header {
+            position: relative;
             display: flex;
             align-items: center;
             padding: 40px 0 20px;
-            margin-bottom: 56px;
 
-            .left {
-                width: 40px;
-                height: 40px;
-                margin-right: 12px;
-                border-radius: 50%;
-                background: #611DE8;
+            .right {
+                position: absolute;
+                right: 0;
+                font-size: 24px;
+                color: #fff;
             }
 
             .logo {
@@ -382,6 +393,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            margin-top: 20px;
 
             .topInfo_height {
                 display: flex;

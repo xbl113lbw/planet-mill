@@ -16,7 +16,9 @@ import {List} from 'vant';
 import {Dialog} from 'vant';
 import {Stepper} from 'vant';
 import {PullRefresh} from 'vant';
+import {NoticeBar} from 'vant';
 
+Vue.use(NoticeBar);
 Vue.use(PullRefresh);
 Vue.use(Stepper);
 Vue.use(Dialog);
