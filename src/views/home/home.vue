@@ -9,7 +9,7 @@
                 <div class="logo"><img src="../../assets/img/首页LOGO.png"/></div>
                 <img src="../../assets/img/home/problemIcon.png" class="problemIcon" alt=""
                      @click="$router.push({path:'/rule'})"/>
-                <span class="right">id：{{userInfo.id}}</span>
+                <span class="right">id：{{userInfo.invite_code}}</span>
             </div>
             <!--公告-->
             <van-notice-bar :text="homeData.content" left-icon="volume-o"
