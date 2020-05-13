@@ -216,6 +216,10 @@
                             <span>800USDT出局</span>
                         </div>
                         <div>
+                            <span>算力：</span>
+                            <span>1GH/S</span>
+                        </div>
+                        <div>
                             <span>每天算力总产出：</span>
                             <span>12%</span>
                         </div>
@@ -244,6 +248,10 @@
                         <div>
                             <span>矿机产出总量：</span>
                             <span>3000USDT出局</span>
+                        </div>
+                        <div>
+                            <span>算力：</span>
+                            <span>3GH/S</span>
                         </div>
                         <div>
                             <span>每天算力总产出：</span>
@@ -276,6 +284,10 @@
                             <span>10080USDT出局</span>
                         </div>
                         <div>
+                            <span>算力：</span>
+                            <span>9GH/S</span>
+                        </div>
+                        <div>
                             <span>每天算力总产出：</span>
                             <span>12%</span>
                         </div>
@@ -304,6 +316,10 @@
                         <div>
                             <span>矿机产出总量：</span>
                             <span>32400USDT出局</span>
+                        </div>
+                        <div>
+                            <span>算力：</span>
+                            <span>27GH/S</span>
                         </div>
                         <div>
                             <span>每天算力总产出：</span>
@@ -336,6 +352,10 @@
                             <span>57600USDT出局</span>
                         </div>
                         <div>
+                            <span>算力：</span>
+                            <span>45GH/S</span>
+                        </div>
+                        <div>
                             <span>每天算力总产出：</span>
                             <span>12%</span>
                         </div>
@@ -348,6 +368,93 @@
                 <div class="bottom">【日产出量+分红均分给运行中的矿机，最高8台】</div>
             </li>
         </ul>
+        <div class="wrap">
+            <div class="title">星球荣耀</div>
+            <div class="content">
+                <div class="line">
+                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
+                    <p>
+                        伞下团队参与矿机算力及个人算力达到以下标准，可以均分每级奖励，算力为实时动态。每1440个区块结算一次。
+                    </p>
+                </div>
+                <div class="line">
+                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
+                    <p>
+                        例如：你是荣耀星，可以获得（达人星+帝王星+荣耀星）总和。
+                    </p>
+                </div>
+                <div class="line">
+                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
+                    <p>
+                        达人星 均分1.5%usdt<br/>
+                        - 个人算力：10GH/S<br/>
+                        - 团队算力：100GH/S<br/>
+                    </p>
+                </div>
+                <div class="line">
+                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
+                    <p>
+                        帝王星 均分1.5%usdt<br/>
+                        - 个人算力：20GH/s<br/>
+                        - 团队算力：200GH/s<br/>
+                    </p>
+                </div>
+                <div class="line">
+                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
+                    <p>
+                        荣耀星 均分1.5%usdt<br/>
+                        - 个人算力：30GH/S<br/>
+                        - 团队算力：300GH/S<br/>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="wrap">
+            <div class="title">幸运抽奖</div>
+            <div class="content">
+                <div class="line">
+                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
+                    <p>
+                        账号存量大于300CAC为可以参与幸运抽奖，每天抽取300名幸运用户，随机瓜分2%的USDT。每1440区块分一次。
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="wrap">
+            <div class="title">星球使者</div>
+            <div class="content">
+                <div class="line">
+                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
+                    <p>
+                        系统按照每个账户持有CAC数量进行排名（全网快照），对前十名进行奖励，每1440个区块结算一次。
+                    </p>
+                </div>
+                <div class="line">
+                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
+                    <p>
+                        第一名：0.5%
+                    </p>
+                </div>
+                <div class="line">
+                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
+                    <p>
+                        第二名：0.3%
+                    </p>
+                </div>
+                <div class="line">
+                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
+                    <p>
+                        第三名：0.2%
+                    </p>
+                </div>
+                <div class="line">
+                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
+                    <p>
+                        第四～十名：均分每轮1%
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -536,6 +643,7 @@
         }
 
         .lists {
+            margin-bottom: 70px;
             border-radius: 8px;
             background: #2C244A;
 
