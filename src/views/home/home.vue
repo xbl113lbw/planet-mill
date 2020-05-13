@@ -9,7 +9,7 @@
                 <div class="logo"><img src="../../assets/img/首页LOGO.png"/></div>
                 <img src="../../assets/img/home/problemIcon.png" class="problemIcon" alt=""
                      @click="$router.push({path:'/rule'})"/>
-                <span class="right">id：{{homeData.user.invite_code}}</span>
+                <span class="right">邀请码：{{userInfo.invite_code}}</span>
             </div>
             <!--公告-->
             <van-notice-bar :text="homeData.content" left-icon="volume-o"
@@ -122,6 +122,23 @@
                     <span>{{item.bonus_pool}}</span>
                     <span>{{item.miner_pool}}</span>
                     <span>{{(parseFloat(item.miner_reward) + parseFloat(item.bonus_reward)).toFixed(4)}}</span>
+                </div>
+            </div>
+            <div>
+                <p class="table_title">星球使者<span>奖池：{{homeData.rank_reward}}</span></p>
+                <div class="table">
+                    <div class="table_tr table_two_tr">
+                        <span>排名</span>
+                        <span>账户</span>
+                        <span>持仓量(CAC)</span>
+                        <span>奖励USDT</span>
+                    </div>
+                    <div class="table_tr table_two_tr" v-for="(item,index) in tableData1" :key="index">
+                        <span>{{index+1}}</span>
+                        <span>{{item.phone}}</span>
+                        <span>{{parseFloat(item.cac_coin).toFixed(2)}}</span>
+                        <span>{{item.reward}}</span>
+                    </div>
                 </div>
             </div>
             <!--购买弹框-->
@@ -240,6 +257,7 @@
                     waiting_nums: []
                 },
                 tableData: [],
+                tableData1: [],
                 finishFlag: true,
                 t: null,
                 rechargeValue: 1,
@@ -270,6 +288,7 @@
                     if (res.data.code === 200) {
                         this.homeData = res.data.data;
                         this.tableData = this.homeData.machines;
+                        this.tableData1 = this.homeData.rank_users;
                         this.time = res.data.data.time * 1000;
                         this.t = setInterval(() => {
                             this.time -= 1000;
@@ -868,6 +887,23 @@
                 border-radius: 32px;
                 background: linear-gradient(90deg, rgba(167, 63, 226, 1) 0%, rgba(126, 42, 242, 1) 56%, rgba(97, 29, 232, 1) 100%);
             }
+        }
+
+        .table_two_tr {
+            span {
+                &:nth-child(2) {
+                    max-width: 100% !important;
+                    text-align: center;
+                }
+            }
+        }
+
+        .table_title {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            color: #fff;
+            font-size: 30px;
         }
     }
 </style>
