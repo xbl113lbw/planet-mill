@@ -41,7 +41,7 @@
                     return;
                 }
                 if (!this.phone) {
-                    this.$toast("请输入手机号或邮箱");
+                    this.$toast("请输入手机号");
                     return;
                 }
                 this.codeFlag = false;
