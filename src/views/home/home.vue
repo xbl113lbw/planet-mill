@@ -124,7 +124,7 @@
                     <span>{{(parseFloat(item.miner_reward) + parseFloat(item.bonus_reward)).toFixed(4)}}</span>
                 </div>
             </div>
-            <div>
+            <!--<div>
                 <p class="table_title">星球使者<span>奖池：{{homeData.rank_reward}}</span></p>
                 <div class="table">
                     <div class="table_tr table_two_tr">
@@ -140,7 +140,7 @@
                         <span>{{item.reward}}</span>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <!--购买弹框-->
             <van-popup v-model="showBuy">
                 <div class="alertBox">
