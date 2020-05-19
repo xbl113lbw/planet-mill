@@ -17,7 +17,10 @@ import {Dialog} from 'vant';
 import {Stepper} from 'vant';
 import {PullRefresh} from 'vant';
 import {NoticeBar} from 'vant';
+import {RadioGroup, Radio} from 'vant';
 
+Vue.use(Radio);
+Vue.use(RadioGroup);
 Vue.use(NoticeBar);
 Vue.use(PullRefresh);
 Vue.use(Stepper);

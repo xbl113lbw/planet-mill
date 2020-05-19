@@ -114,44 +114,32 @@
                                 可用：
                                 <span>0 USDT</span>
                             </div>
-                            <div>
-                                冻结：
-                                <span>0 USDT</span>
-                            </div>
+                            <div></div>
                             <div>
                                 可用：
                                 <span>0 CAC</span>
                             </div>
-                            <div>
-                                冻结：
-                                <span>0 CAC</span>
-                            </div>
+                            <div></div>
                         </div>
                         <div class="coinInfo_bottom_right">
                             <button @click="hzEvent('usdt',3)">划转</button>
                         </div>
                     </div>
                 </div>
-                <div class="coinInfo_bottom_wrap" v-if="userInfo.is_miner_wallet > 0">
+                <div class="coinInfo_bottom_wrap" v-if="userInfo.is_miner_wallet">
                     <p style="color: rgba(255, 255, 255, 0.6);font-size: 15px;margin-bottom: 5px;">矿机钱包</p>
                     <div class="coinInfo_bottom">
                         <div class="coinInfo_bottom_left">
                             <div>
                                 可用：
-                                <span>0 USDT</span>
+                                <span>{{parseFloat(homeData.mimer_wallet.usdt_coin)}} USDT</span>
                             </div>
-                            <div>
-                                冻结：
-                                <span>0 USDT</span>
-                            </div>
+                            <div></div>
                             <div>
                                 可用：
-                                <span>0 CAC</span>
+                                <span>{{parseFloat(homeData.mimer_wallet.cac_coin)}} CAC</span>
                             </div>
-                            <div>
-                                冻结：
-                                <span>0 CAC</span>
-                            </div>
+                            <div></div>
                         </div>
                     </div>
                 </div>
@@ -206,46 +194,11 @@
                             {{item.name}}
                         </span>
                         <span>{{item.user_num}}</span>
-                        <span>{{item.amount}}</span>
                         <span>{{item.total_amount}}</span>
+                        <span>{{item.amount}}</span>
                     </div>
                 </div>
             </div>
-            <!--购买弹框-->
-            <van-popup v-model="showBuy">
-                <div class="alertBox">
-                    <img src="../../assets/img/close.png" alt="" class="closeBtn" @click="showBuy=false"/>
-                    <div class="title">向[XXX]购买CAC</div>
-                    <div class="formWrap">
-                        <label for="quota" class="labelBox">
-                            <span class="labelTitle">限额：</span>
-                            <input type="text" id="quota" placeholder="请输入限额">
-                            <span class="rightText">CAC</span>
-                        </label>
-                        <label for="price" class="labelBox">
-                            <span class="labelTitle">价格：</span>
-                            <input type="text" id="price" placeholder="请输入价格">
-                        </label>
-                        <label for="num" class="labelBox">
-                            <span class="labelTitle">CAC数量：</span>
-                            <input type="text" id="num" placeholder="请输入数量">
-                            <button>全额</button>
-                        </label>
-                        <label for="money" class="labelBox">
-                            <span class="labelTitle">金额：</span>
-                            <input type="text" id="money" placeholder="">
-                        </label>
-                    </div>
-                    <p class="hint">
-                        <span>请输入支付密码</span>
-                        <span>提示：匹配后6个小时未打款，自动取消！</span>
-                    </p>
-                    <!--密码输入框-->
-                    <ul class="pwdInput">
-                        <li v-for="item in [1,2,3,4,5,6]" :key="item">*</li>
-                    </ul>
-                </div>
-            </van-popup>
             <!--发布弹框-->
             <van-popup v-model="showPush">
                 <div class="alertBox">
@@ -299,13 +252,28 @@
             </van-dialog>
             <!--划转弹框-->
             <van-dialog v-model="hzShow"
-                        title="请输入划转数量"
+                        title="请输入划转至矿机钱包数量"
                         show-cancel-button
                         confirmButtonColor="#2C244A"
                         @confirm="hzSubmit"
                         class="recharge">
                 <div class="rechargeBox">
                     <van-stepper v-model="hzValue" input-width="50%" button-size="32px"/>
+                </div>
+            </van-dialog>
+            <!--参与弹框-->
+            <van-dialog v-model="joinShow"
+                        title="请选择参与的钱包"
+                        show-cancel-button
+                        confirmButtonColor="#2C244A"
+                        @confirm="joinEvent"
+                        class="recharge">
+                <div class="rechargeBox">
+                    <van-radio-group v-model="radio">
+                        <van-radio name="1" checked-color="#2C244A">我的钱包</van-radio>
+                        <!--<van-radio name="3" checked-color="#2C244A">碰撞钱包</van-radio>-->
+                        <van-radio name="2" checked-color="#2C244A">矿机钱包</van-radio>
+                    </van-radio-group>
                 </div>
             </van-dialog>
         </van-pull-refresh>
@@ -335,7 +303,8 @@
                 time: null,
                 homeData: {
                     user: {},
-                    waiting_nums: []
+                    waiting_nums: [],
+                    mimer_wallet: {}
                 },
                 tableData: [],
                 ranks: [],
@@ -348,6 +317,8 @@
                 hzValue: 1,
                 coin_type: null,
                 wallet_type: null,
+                joinShow: false,
+                radio: "1",
             }
         },
         async mounted() {
@@ -422,6 +393,10 @@
                 });
             },
             start() {
+                if (this.userInfo.is_miner_wallet) {
+                    this.joinShow = true;
+                    return
+                }
                 Dialog.confirm({
                     message: '确认参与么？'
                 }).then(() => {
@@ -456,7 +431,7 @@
             },
             // 划转功能
             hzEvent(coin_type, wallet_type) {
-                if (wallet_type === 3) {
+                if (wallet_type === 3 || !this.userInfo.is_miner_wallet) {
                     this.$toast({
                         message: "功能暂未开放",
                         duration: 3000
@@ -471,22 +446,38 @@
                 let data = {
                     number: this.hzValue,
                     coin_type: this.coin_type,
-                    wallet_type: this.wallet_type,
+                    // wallet_type: this.wallet_type,
+                    wallet_type: 2,
                 };
                 this.ajax.post("v1/transfer", data).then(res => {
+                    let that = this;
                     if (res.data.code === 200) {
                         console.log(res);
                         this.$toast({
                             message: res.data.message,
-                            duration: 3000,
+                            duration: 2500,
                             onClose() {
-                                this.reload();
+                                that.reload();
                             }
                         });
                     }
                     this.hzShow = false;
                     this.hzValue = 1;
                 })
+            },
+            joinEvent() {
+                this.ajax.get(`v1/user/collide/wallet_type/${this.radio}`).then(res => {
+                    let that = this;
+                    if (res.data.code === 200) {
+                        this.$toast({
+                            message: "碰撞成功",
+                            duration: 2500,
+                            onClose() {
+                                that.reload();
+                            }
+                        });
+                    }
+                });
             }
         },
         beforeDestroy() {
@@ -500,6 +491,10 @@
         min-height: 100vh;
         padding: 0 30px 80px;
         background: url("../../assets/img/bg.png") no-repeat center/cover;
+
+        .van-radio {
+            margin-bottom: 10px;
+        }
 
         .header {
             position: relative;
@@ -716,7 +711,7 @@
 
                     div {
                         min-width: 40%;
-                        max-width: 50%;
+                        /*max-width: 50%;*/
                         margin-bottom: 12px;
                         font-size: 20px;
                         overflow: hidden;
