@@ -1,6 +1,14 @@
 <template>
     <div class="myPerformance">
         <div class="teamNum">
+            <span>个人算力：</span>
+            <span>{{myPerformanceData.power}}</span>
+        </div>
+        <div class="teamNum">
+            <span>团队算力：</span>
+            <span>{{myPerformanceData.team_power}}</span>
+        </div>
+        <div class="teamNum">
             <span>团队总人数：</span>
             <span>{{myPerformanceData.team_num}}</span>
         </div>

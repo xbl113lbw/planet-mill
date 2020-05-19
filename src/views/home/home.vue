@@ -9,7 +9,11 @@
                 <div class="logo"><img src="../../assets/img/首页LOGO.png"/></div>
                 <img src="../../assets/img/home/problemIcon.png" class="problemIcon" alt=""
                      @click="$router.push({path:'/rule'})"/>
-                <span class="right">邀请码：{{userInfo.invite_code}}</span>
+                <span class="right">
+                    <img :src="require(`@/assets/img/rankIcon/icon${userInfo.rank}.png`)" alt=""
+                         v-if="userInfo.rank > 0">
+                    邀请码：{{userInfo.invite_code}}
+                </span>
             </div>
             <!--公告-->
             <van-notice-bar :text="homeData.content" left-icon="volume-o"
@@ -52,6 +56,7 @@
                     </div>
                     <button @click="start" :class="btnFlag ? 'disabledBtn' : ''" :disabled="btnFlag">参与碰撞</button>
                 </div>
+                <!--排队人数-->
                 <div class="coinInfo_top_line">
                     <div class="coinInfo_top_line_textWrap">
                         <div>当前排队人数：<span>{{homeData.total_wait_num}}</span></div>
@@ -67,28 +72,87 @@
                     </div>
                     <button @click="start" :class="btnFlag ? '' : 'disabledBtn'" :disabled="!btnFlag">碰撞预排</button>
                 </div>
-                <div class="coinInfo_bottom">
-                    <div class="coinInfo_bottom_left">
-                        <div>
-                            可用：
-                            <span>{{parseFloat(homeData.user.usdt_coin)}} USDT</span>
+                <!--钱包数据-->
+                <div class="coinInfo_bottom_wrap">
+                    <p style="color: rgba(255, 255, 255, 0.6);font-size: 15px;margin-bottom: 5px;">我的钱包</p>
+                    <div class="coinInfo_bottom">
+                        <div class="coinInfo_bottom_left">
+                            <div>
+                                可用：
+                                <span>{{parseFloat(homeData.user.usdt_coin)}} USDT</span>
+                            </div>
+                            <div>
+                                冻结：
+                                <span>{{parseFloat(homeData.user.freeze_usdt_coin)}} USDT</span>
+                            </div>
+                            <div>
+                                可用：
+                                <span>{{parseFloat(homeData.user.cac_coin)}} CAC</span>
+                            </div>
+                            <div>
+                                冻结：
+                                <span>{{parseFloat(homeData.user.freeze_cac_coin)}} CAC</span>
+                            </div>
                         </div>
-                        <div>
-                            冻结：
-                            <span>{{parseFloat(homeData.user.freeze_usdt_coin)}} USDT</span>
-                        </div>
-                        <div>
-                            可用：
-                            <span>{{parseFloat(homeData.user.cac_coin)}} CAC</span>
-                        </div>
-                        <div>
-                            冻结：
-                            <span>{{parseFloat(homeData.user.freeze_cac_coin)}} CAC</span>
+                        <div class="coinInfo_bottom_right">
+                            <div>
+                                <button @click="recharge('usdt')">充币</button>
+                                <button @click="hzEvent('usdt',1)">划转</button>
+                            </div>
+                            <div>
+                                <button @click="recharge('cac')">充币</button>
+                                <button @click="hzEvent('cac',1)">划转</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="coinInfo_bottom_right">
-                        <button @click="recharge('usdt')">充币</button>
-                        <button @click="recharge('cac')">充币</button>
+                </div>
+                <div class="coinInfo_bottom_wrap">
+                    <p style="color: rgba(255, 255, 255, 0.6);font-size: 15px;margin-bottom: 5px;">碰撞钱包</p>
+                    <div class="coinInfo_bottom">
+                        <div class="coinInfo_bottom_left">
+                            <div>
+                                可用：
+                                <span>0 USDT</span>
+                            </div>
+                            <div>
+                                冻结：
+                                <span>0 USDT</span>
+                            </div>
+                            <div>
+                                可用：
+                                <span>0 CAC</span>
+                            </div>
+                            <div>
+                                冻结：
+                                <span>0 CAC</span>
+                            </div>
+                        </div>
+                        <div class="coinInfo_bottom_right">
+                            <button @click="hzEvent('usdt',3)">划转</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="coinInfo_bottom_wrap">
+                    <p style="color: rgba(255, 255, 255, 0.6);font-size: 15px;margin-bottom: 5px;">矿机钱包</p>
+                    <div class="coinInfo_bottom">
+                        <div class="coinInfo_bottom_left">
+                            <div>
+                                可用：
+                                <span>0 USDT</span>
+                            </div>
+                            <div>
+                                冻结：
+                                <span>0 USDT</span>
+                            </div>
+                            <div>
+                                可用：
+                                <span>0 CAC</span>
+                            </div>
+                            <div>
+                                冻结：
+                                <span>0 CAC</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,42 +169,48 @@
                 </button>
             </div>
             <!--表格-->
-            <div class="table" v-if="tableData.length">
-                <div class="table_tr table_tr_title">
-                    <span>矿机类型</span>
-                    <span>矿机数量</span>
-                    <span>分红奖池(USDT)</span>
-                    <span>矿池(USDT)</span>
-                    <span>矿机奖励(USDT)</span>
-                </div>
-                <div class="table_tr" v-for="(item,index) in tableData" :key="index">
-                <span>
-                    <img :src="require(`../../assets/img/property/${item.name}.png`)" alt=""/>
-                    {{item.name}}
-                </span>
-                    <span>{{item.number}}</span>
-                    <span>{{item.bonus_pool}}</span>
-                    <span>{{item.miner_pool}}</span>
-                    <span>{{(parseFloat(item.miner_reward) + parseFloat(item.bonus_reward)).toFixed(4)}}</span>
+            <div>
+                <p class="table_title">矿机数据</p>
+                <div class="table" v-if="tableData.length">
+                    <div class="table_tr table_tr_title">
+                        <span>矿机类型</span>
+                        <span>矿机数量</span>
+                        <span>分红奖池(USDT)</span>
+                        <span>矿池(USDT)</span>
+                        <span>矿机奖励(USDT)</span>
+                    </div>
+                    <div class="table_tr" v-for="(item,index) in tableData" :key="index">
+                        <span>
+                            <img :src="require(`../../assets/img/property/${item.name}.png`)" alt=""/>
+                            {{item.name}}
+                        </span>
+                        <span>{{item.number}}</span>
+                        <span>{{item.bonus_pool}}</span>
+                        <span>{{item.miner_pool}}</span>
+                        <span>{{(parseFloat(item.miner_reward) + parseFloat(item.bonus_reward)).toFixed(4)}}</span>
+                    </div>
                 </div>
             </div>
-            <!--<div>
-                <p class="table_title">星球使者<span>奖池：{{homeData.rank_reward}}</span></p>
+            <div>
+                <p class="table_title">星球荣耀</p>
                 <div class="table">
                     <div class="table_tr table_two_tr">
-                        <span>排名</span>
-                        <span>账户</span>
-                        <span>持仓量(CAC)</span>
-                        <span>奖励USDT</span>
+                        <span>级别</span>
+                        <span>人数</span>
+                        <span>总分红（USDT）</span>
+                        <span>我的分红（USDT）</span>
                     </div>
-                    <div class="table_tr table_two_tr" v-for="(item,index) in tableData1" :key="index">
-                        <span>{{index+1}}</span>
-                        <span>{{item.phone}}</span>
-                        <span>{{parseFloat(item.cac_coin).toFixed(2)}}</span>
-                        <span>{{item.reward}}</span>
+                    <div class="table_tr table_two_tr" v-for="(item,index) in ranks" :key="index">
+                        <span>
+                            <img :src="require(`@/assets/img/rankIcon/icon${index+1}.png`)" alt="">
+                            {{item.name}}
+                        </span>
+                        <span>{{item.user_num}}</span>
+                        <span>{{item.amount}}</span>
+                        <span>{{item.total_amount}}</span>
                     </div>
                 </div>
-            </div>-->
+            </div>
             <!--购买弹框-->
             <van-popup v-model="showBuy">
                 <div class="alertBox">
@@ -227,6 +297,17 @@
                     <van-stepper v-model="rechargeValue" input-width="50%" button-size="32px"/>
                 </div>
             </van-dialog>
+            <!--划转弹框-->
+            <van-dialog v-model="hzShow"
+                        title="请输入划转数量"
+                        show-cancel-button
+                        confirmButtonColor="#2C244A"
+                        @confirm="hzSubmit"
+                        class="recharge">
+                <div class="rechargeBox">
+                    <van-stepper v-model="hzValue" input-width="50%" button-size="32px"/>
+                </div>
+            </van-dialog>
         </van-pull-refresh>
         <!--底部-->
         <Tab tabIndex="首页"/>
@@ -257,12 +338,16 @@
                     waiting_nums: []
                 },
                 tableData: [],
-                tableData1: [],
+                ranks: [],
                 finishFlag: true,
                 t: null,
                 rechargeValue: 1,
                 coinType: "",
-                isLoading: false
+                isLoading: false,
+                hzShow: false,
+                hzValue: 1,
+                coin_type: null,
+                wallet_type: null,
             }
         },
         async mounted() {
@@ -288,7 +373,7 @@
                     if (res.data.code === 200) {
                         this.homeData = res.data.data;
                         this.tableData = this.homeData.machines;
-                        this.tableData1 = this.homeData.rank_users;
+                        this.ranks = this.homeData.ranks;
                         this.time = res.data.data.time * 1000;
                         this.t = setInterval(() => {
                             this.time -= 1000;
@@ -368,6 +453,40 @@
                         messageAlign: "left"
                     }
                 );
+            },
+            // 划转功能
+            hzEvent(coin_type, wallet_type) {
+                if (wallet_type === 3) {
+                    this.$toast({
+                        message: "功能暂未开放",
+                        duration: 3000
+                    });
+                    return
+                }
+                this.coin_type = coin_type;
+                this.wallet_type = wallet_type; // 1我得钱包，2矿机钱包，3碰撞钱包
+                this.hzShow = true;
+            },
+            hzSubmit() {
+                let data = {
+                    number: this.hzValue,
+                    coin_type: this.coin_type,
+                    wallet_type: this.wallet_type,
+                };
+                this.ajax.post("v1/transfer", data).then(res => {
+                    if (res.data.code === 200) {
+                        console.log(res);
+                        this.$toast({
+                            message: res.data.message,
+                            duration: 3000,
+                            onClose() {
+                                this.reload();
+                            }
+                        });
+                    }
+                    this.hzShow = false;
+                    this.hzValue = 1;
+                })
             }
         },
         beforeDestroy() {
@@ -389,10 +508,18 @@
             padding: 40px 0 20px;
 
             .right {
+                display: flex;
+                align-items: center;
                 position: absolute;
                 right: 0;
                 font-size: 24px;
                 color: #fff;
+
+                img {
+                    width: 40px;
+                    height: 40px;
+                    margin-right: 10px;
+                }
             }
 
             .logo {
@@ -571,6 +698,12 @@
                 }
             }
 
+            .coinInfo_bottom_wrap {
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+                border-bottom: 1px solid #fff;
+            }
+
             .coinInfo_bottom {
                 display: flex;
                 align-items: center;
@@ -582,7 +715,8 @@
                     flex-wrap: wrap;
 
                     div {
-                        width: 50%;
+                        min-width: 40%;
+                        max-width: 50%;
                         margin-bottom: 12px;
                         font-size: 20px;
                         overflow: hidden;
@@ -594,10 +728,6 @@
                             margin-bottom: 0;
                         }
 
-                        &:nth-child(2), &:nth-child(4) {
-                            width: 40%;
-                        }
-
                         span {
                             color: #FFFFFF;
                         }
@@ -605,13 +735,17 @@
                 }
 
                 .coinInfo_bottom_right {
+                    div {
+                        display: flex;
+                    }
+
                     button {
                         min-width: 100px;
-                        height: 44px;
+                        height: 40px;
                         margin-bottom: 10px;
+                        margin-right: 10px;
                         font-size: 24px;
                         font-weight: 600;
-                        line-height: 33px;
                         border-radius: 32px;
                         color: rgba(192, 81, 255, 1);
                         border: 2px solid rgba(192, 81, 255, 1);
@@ -619,6 +753,7 @@
 
                         &:last-child {
                             margin-bottom: 0;
+                            margin-right: 0;
                         }
                     }
                 }

@@ -409,7 +409,7 @@
                 </div>
             </div>
         </div>
-        <div class="wrap">
+        <!--<div class="wrap">
             <div class="title">幸运抽奖</div>
             <div class="content">
                 <div class="line">
@@ -419,8 +419,8 @@
                     </p>
                 </div>
             </div>
-        </div>
-        <div class="wrap">
+        </div>-->
+        <!--<div class="wrap">
             <div class="title">星球使者</div>
             <div class="content">
                 <div class="line">
@@ -454,7 +454,7 @@
                     </p>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 </template>
 
