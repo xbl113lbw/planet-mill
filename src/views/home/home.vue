@@ -132,7 +132,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="coinInfo_bottom_wrap">
+                <div class="coinInfo_bottom_wrap" v-if="userInfo.is_miner_wallet > 0">
                     <p style="color: rgba(255, 255, 255, 0.6);font-size: 15px;margin-bottom: 5px;">矿机钱包</p>
                     <div class="coinInfo_bottom">
                         <div class="coinInfo_bottom_left">
