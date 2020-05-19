@@ -63,14 +63,16 @@
                     </div>
                 </div>
                 <div class="btnBox">
-                    <button class="btnItem" :class="item.running_num >= item.machine_num ? 'disabledBtn' : ''"
+                    <button class="btnItem"
+                            :class="parseInt(item.running_num) >= parseInt(item.machine_num) ? 'disabledBtn' : ''"
                             @click="buy(index+1)"
-                            :disabled="item.running_num >= item.machine_num">
+                            :disabled="parseInt(item.running_num) >= parseInt(item.machine_num)">
                         购买
                     </button>
-                    <button class="btnItem" :class="item.running_num >= item.machine_num ? '' : 'disabledBtn'"
+                    <button class="btnItem"
+                            :class="parseInt(item.running_num) >= parseInt(item.machine_num) ? '' : 'disabledBtn'"
                             @click="buy(index+1)"
-                            :disabled="item.running_num < item.machine_num">
+                            :disabled="parseInt(item.running_num) < parseInt(item.machine_num)">
                         参与排队
                     </button>
                 </div>
