@@ -15,7 +15,6 @@ let instance = axios.create({
 instance.interceptors.request.use(function (config) {
     Toast.loading({
         duration: 0,
-        message: '请稍后...',
     });
     // 设置 token
     let token = sessionStorage.getItem("Token") || "";
@@ -55,9 +54,9 @@ instance.interceptors.response.use(function (response) {
 });
 
 /**
- * url 请求地址
- * params/data 请求参数
- * config 请求配置（没有则不传）
+ * @url 请求地址
+ * @params/data 请求参数
+ * @config 请求配置（没有则不传）
  */
 const get = (url, params, config) => {
     return instance.get(url, {params: params, ...config})

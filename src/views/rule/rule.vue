@@ -409,52 +409,10 @@
                 </div>
             </div>
         </div>
-        <!--<div class="wrap">
-            <div class="title">幸运抽奖</div>
-            <div class="content">
-                <div class="line">
-                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
-                    <p>
-                        账号存量大于300CAC为可以参与幸运抽奖，每天抽取300名幸运用户，随机瓜分2%的USDT。每1440区块分一次。
-                    </p>
-                </div>
-            </div>
-        </div>-->
-        <!--<div class="wrap">
-            <div class="title">星球使者</div>
-            <div class="content">
-                <div class="line">
-                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
-                    <p>
-                        系统按照每个账户持有CAC数量进行排名（全网快照），对前十名进行奖励，每1440个区块结算一次。
-                    </p>
-                </div>
-                <div class="line">
-                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
-                    <p>
-                        第一名：0.5%
-                    </p>
-                </div>
-                <div class="line">
-                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
-                    <p>
-                        第二名：0.3%
-                    </p>
-                </div>
-                <div class="line">
-                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
-                    <p>
-                        第三名：0.2%
-                    </p>
-                </div>
-                <div class="line">
-                    <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
-                    <p>
-                        第四～十名：均分每轮1%
-                    </p>
-                </div>
-            </div>
-        </div>-->
+        <div class="ercodeBox">
+            <img src="../../assets/img/ercode.jpg" alt=""/>
+            <span>客服微信号：cosmicplanet001</span>
+        </div>
     </div>
 </template>
 
@@ -731,6 +689,24 @@
                     font-size: 22px;
                     color: rgba(255, 255, 255, .6);
                 }
+            }
+        }
+
+        .ercodeBox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: 300px;
+                height: 300px;
+                margin-bottom: 20px;
+            }
+
+            span {
+                font-size: 24px;
+                color: #fff;
             }
         }
     }
