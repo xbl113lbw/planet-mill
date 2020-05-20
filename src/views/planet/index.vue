@@ -84,6 +84,21 @@
                 </div>
             </div>
         </div>
+        <!--参与弹框-->
+        <van-dialog v-model="joinShow"
+                    title="请选择参与的钱包"
+                    show-cancel-button
+                    confirmButtonColor="#2C244A"
+                    @confirm="joinEvent"
+                    class="recharge">
+            <div class="rechargeBox">
+                <van-radio-group v-model="radio">
+                    <van-radio name="1" checked-color="#2C244A">我的钱包</van-radio>
+                    <!--<van-radio name="3" checked-color="#2C244A">碰撞钱包</van-radio>-->
+                    <van-radio name="2" checked-color="#2C244A" v-if="userInfo.is_miner_wallet">矿机钱包</van-radio>
+                </van-radio-group>
+            </div>
+        </van-dialog>
         <!--底部-->
         <Tab tabIndex="星球矿机"/>
     </div>
@@ -93,7 +108,6 @@
     import NavCom from "@/components/nav.vue"
     import Tab from "../../components/tab";
     import {mapActions, mapState} from "vuex";
-    import {Dialog, Toast} from "vant";
 
     export default {
         name: "planet",
@@ -105,6 +119,9 @@
         data() {
             return {
                 listData: [],
+                index: null,
+                joinShow: false,
+                radio: "1",
             };
         },
         created() {
@@ -125,17 +142,8 @@
                 })
             },
             buy(index) {
-                Dialog.confirm({
-                    message: '确认购买么？'
-                }).then(() => {
-                    this.ajax.get(`v1/goods/${index}/buy`, {good_id: index}).then(res => {
-                        if (res.data.code === 200) {
-                            Toast("成功");
-                            this.reload();
-                        }
-                    });
-                }).catch(() => {
-                });
+                this.joinShow = true;
+                this.index = index;
             },
             slVal(index) {
                 switch (index) {
@@ -150,12 +158,37 @@
                     case 4:
                         return "45";
                 }
+            },
+            joinEvent() {
+                let that = this;
+                this.ajax.get(`v1/goods/${this.index}/wallet_type/${this.radio}/buy`, {good_id: this.index}).then(res => {
+                    if (res.data.code === 200) {
+                        this.$toast({
+                            message: "成功",
+                            duration: 2500,
+                            onClose() {
+                                that.reload();
+                            }
+                        });
+                    }
+                });
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    /deep/ .recharge {
+        .rechargeBox {
+            margin: 30px;
+            text-align: center;
+        }
+    }
+
+    .van-radio {
+        margin-bottom: 10px;
+    }
+
     .opacityText {
         opacity: 0.6;
         display: inline-block;
