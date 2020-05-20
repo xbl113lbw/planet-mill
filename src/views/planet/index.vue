@@ -61,6 +61,12 @@
                             <span class="whiteText rightNumber">{{item.waiting_num}}人</span>
                         </div>
                     </div>
+                    <div class="rowBox">
+                        <div>
+                            <span class="opacityText">算力：</span>
+                            <span class="whiteText">{{slVal(index)}}GH/S</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="btnBox">
                     <button class="btnItem"
@@ -131,6 +137,20 @@
                 }).catch(() => {
                 });
             },
+            slVal(index) {
+                switch (index) {
+                    case 0:
+                        return "1";
+                    case 1:
+                        return "3";
+                    case 2:
+                        return "9";
+                    case 3:
+                        return "27";
+                    case 4:
+                        return "45";
+                }
+            }
         }
     }
 </script>
