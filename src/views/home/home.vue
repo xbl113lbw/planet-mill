@@ -404,7 +404,7 @@
                         Toast("USDT余额不足");
                         return
                     }
-                    this.ajax.get("v1/user/collide", {}).then(res => {
+                    this.ajax.get("v1/user/collide/wallet_type/1", {}).then(res => {
                         if (res.data.code === 200) {
                             Toast("成功");
                             setTimeout(() => {
