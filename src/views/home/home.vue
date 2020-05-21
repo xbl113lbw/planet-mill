@@ -97,49 +97,10 @@
                         <div class="coinInfo_bottom_right">
                             <div>
                                 <button @click="recharge('usdt')">充币</button>
-                                <button @click="hzEvent('usdt',1)">划转</button>
                             </div>
                             <div>
                                 <button @click="recharge('cac')">充币</button>
-                                <button @click="hzEvent('cac',1)">划转</button>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="coinInfo_bottom_wrap">
-                    <p style="color: rgba(255, 255, 255, 0.6);font-size: 15px;margin-bottom: 5px;">碰撞钱包</p>
-                    <div class="coinInfo_bottom">
-                        <div class="coinInfo_bottom_left">
-                            <div>
-                                可用：
-                                <span>0 USDT</span>
-                            </div>
-                            <div></div>
-                            <div>
-                                可用：
-                                <span>0 CAC</span>
-                            </div>
-                            <div></div>
-                        </div>
-                        <div class="coinInfo_bottom_right">
-                            <button @click="hzEvent('usdt',3)">划转</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="coinInfo_bottom_wrap" v-if="userInfo.is_miner_wallet">
-                    <p style="color: rgba(255, 255, 255, 0.6);font-size: 15px;margin-bottom: 5px;">矿机钱包</p>
-                    <div class="coinInfo_bottom">
-                        <div class="coinInfo_bottom_left">
-                            <div>
-                                可用：
-                                <span>{{parseFloat(homeData.mimer_wallet.usdt_coin)}} USDT</span>
-                            </div>
-                            <div></div>
-                            <div>
-                                可用：
-                                <span>{{parseFloat(homeData.mimer_wallet.cac_coin)}} CAC</span>
-                            </div>
-                            <div></div>
                         </div>
                     </div>
                 </div>
@@ -250,32 +211,6 @@
                     <van-stepper v-model="rechargeValue" input-width="50%" button-size="32px"/>
                 </div>
             </van-dialog>
-            <!--划转弹框-->
-            <van-dialog v-model="hzShow"
-                        title="请输入划转至矿机钱包数量"
-                        show-cancel-button
-                        confirmButtonColor="#2C244A"
-                        @confirm="hzSubmit"
-                        class="recharge">
-                <div class="rechargeBox">
-                    <van-stepper v-model="hzValue" input-width="50%" button-size="32px"/>
-                </div>
-            </van-dialog>
-            <!--参与弹框-->
-            <van-dialog v-model="joinShow"
-                        title="请选择参与的钱包"
-                        show-cancel-button
-                        confirmButtonColor="#2C244A"
-                        @confirm="joinEvent"
-                        class="recharge">
-                <div class="rechargeBox">
-                    <van-radio-group v-model="radio">
-                        <van-radio name="1" checked-color="#2C244A">我的钱包</van-radio>
-                        <!--<van-radio name="3" checked-color="#2C244A">碰撞钱包</van-radio>-->
-                        <van-radio name="2" checked-color="#2C244A">矿机钱包</van-radio>
-                    </van-radio-group>
-                </div>
-            </van-dialog>
         </van-pull-refresh>
         <!--底部-->
         <Tab tabIndex="首页"/>
@@ -313,12 +248,6 @@
                 rechargeValue: 1,
                 coinType: "",
                 isLoading: false,
-                hzShow: false,
-                hzValue: 1,
-                coin_type: null,
-                wallet_type: null,
-                joinShow: false,
-                radio: "1",
             }
         },
         async mounted() {
@@ -393,10 +322,6 @@
                 });
             },
             start() {
-                if (this.userInfo.is_miner_wallet) {
-                    this.joinShow = true;
-                    return
-                }
                 Dialog.confirm({
                     message: '确认参与么？'
                 }).then(() => {
@@ -404,7 +329,7 @@
                         Toast("USDT余额不足");
                         return
                     }
-                    this.ajax.get("v1/user/collide/wallet_type/1", {}).then(res => {
+                    this.ajax.get("v1/user/collide", {}).then(res => {
                         if (res.data.code === 200) {
                             Toast("成功");
                             setTimeout(() => {
@@ -429,56 +354,6 @@
                     }
                 );
             },
-            // 划转功能
-            hzEvent(coin_type, wallet_type) {
-                if (wallet_type === 3 || !this.userInfo.is_miner_wallet) {
-                    this.$toast({
-                        message: "功能暂未开放",
-                        duration: 3000
-                    });
-                    return
-                }
-                this.coin_type = coin_type;
-                this.wallet_type = wallet_type; // 1我得钱包，2矿机钱包，3碰撞钱包
-                this.hzShow = true;
-            },
-            hzSubmit() {
-                let data = {
-                    number: this.hzValue,
-                    coin_type: this.coin_type,
-                    // wallet_type: this.wallet_type,
-                    wallet_type: 2,
-                };
-                this.ajax.post("v1/transfer", data).then(res => {
-                    let that = this;
-                    if (res.data.code === 200) {
-                        console.log(res);
-                        this.$toast({
-                            message: res.data.message,
-                            duration: 2500,
-                            onClose() {
-                                that.reload();
-                            }
-                        });
-                    }
-                    this.hzShow = false;
-                    this.hzValue = 1;
-                })
-            },
-            joinEvent() {
-                this.ajax.get(`v1/user/collide/wallet_type/${this.radio}`).then(res => {
-                    let that = this;
-                    if (res.data.code === 200) {
-                        this.$toast({
-                            message: "碰撞成功",
-                            duration: 2500,
-                            onClose() {
-                                that.reload();
-                            }
-                        });
-                    }
-                });
-            }
         },
         beforeDestroy() {
             clearInterval(this.t);

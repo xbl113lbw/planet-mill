@@ -213,7 +213,7 @@
                         </div>
                         <div>
                             <span>矿机产出总量：</span>
-                            <span>800USDT出局</span>
+                            <span>600USDT出局</span>
                         </div>
                         <div>
                             <span>算力：</span>
@@ -247,7 +247,7 @@
                         </div>
                         <div>
                             <span>矿机产出总量：</span>
-                            <span>3000USDT出局</span>
+                            <span>1920USDT出局</span>
                         </div>
                         <div>
                             <span>算力：</span>
@@ -281,7 +281,7 @@
                         </div>
                         <div>
                             <span>矿机产出总量：</span>
-                            <span>10080USDT出局</span>
+                            <span>6120USDT出局</span>
                         </div>
                         <div>
                             <span>算力：</span>
@@ -315,7 +315,7 @@
                         </div>
                         <div>
                             <span>矿机产出总量：</span>
-                            <span>32400USDT出局</span>
+                            <span>19440USDT出局</span>
                         </div>
                         <div>
                             <span>算力：</span>
@@ -349,7 +349,7 @@
                         </div>
                         <div>
                             <span>矿机产出总量：</span>
-                            <span>57600USDT出局</span>
+                            <span>36000USDT出局</span>
                         </div>
                         <div>
                             <span>算力：</span>
@@ -387,7 +387,7 @@
                     <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
                     <p>
                         达人星 均分1.5%usdt<br/>
-                        - 个人算力：10GH/S<br/>
+                        - 个人算力：3GH/S<br/>
                         - 团队算力：100GH/S<br/>
                     </p>
                 </div>
@@ -395,7 +395,7 @@
                     <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
                     <p>
                         帝王星 均分1.5%usdt<br/>
-                        - 个人算力：20GH/s<br/>
+                        - 个人算力：9GH/s<br/>
                         - 团队算力：200GH/s<br/>
                     </p>
                 </div>
@@ -403,7 +403,7 @@
                     <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
                     <p>
                         荣耀星 均分1.5%usdt<br/>
-                        - 个人算力：30GH/S<br/>
+                        - 个人算力：27GH/S<br/>
                         - 团队算力：300GH/S<br/>
                     </p>
                 </div>
