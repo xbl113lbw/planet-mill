@@ -88,31 +88,6 @@
             </div>
         </div>
 
-        <!-- 正在参与的游戏 -->
-        <!--<div class="gamesBox">
-            <div class="gamesItemBox">
-                <div class="gLeft">
-                    <div class="gName">碰撞游戏</div>
-                    <div class="gRank">
-                        <span>排队中：</span>
-                        <span>{{AssetObj.collide_waiting_num}}</span>
-                    </div>
-                </div>
-                &lt;!&ndash;<div class="gRight">取消</div>&ndash;&gt;
-            </div>
-            <div class="line"></div>
-            <div class="gamesItemBox">
-                <div class="gLeft">
-                    <div class="gName">矿机</div>
-                    <div class="gRank">
-                        <span>排队中：</span>
-                        <span>{{AssetObj.mining_waiting_num}}</span>
-                    </div>
-                </div>
-                &lt;!&ndash;<div class="gRight">取消</div>&ndash;&gt;
-            </div>
-        </div>-->
-
         <!-- 矿机运行情况 -->
         <div class="operationBox" v-for="(item,index) in machine" :key="index">
             <div class="leftBox">
@@ -126,17 +101,17 @@
                 <div class="textRow">
                     <div>
                         <span class="opacityText">总产出：</span>
-                        <span class="_AB91EF">{{parseFloat(item.all_num)}}</span>
+                        <span class="_AB91EF">{{parseFloat(item.all_num)}}USDT</span>
                     </div>
                     <div>
                         <span class="opacityText">待产出：</span>
-                        <span class="_AB91EF">{{parseFloat(item.pending_output_num)}}</span>
+                        <span class="_AB91EF">{{parseFloat(item.pending_output_num)}}USDT</span>
                     </div>
                 </div>
                 <div class="textRow">
                     <div>
                         <span class="opacityText">已产出：</span>
-                        <span class="_AB91EF">{{parseFloat(item.output_num)}}</span>
+                        <span class="_AB91EF">{{parseFloat(item.output_num)}}USDT</span>
                     </div>
                     <div v-if="item.wait_num > 0">
                         <span class="opacityText">排队中：</span>
@@ -447,11 +422,16 @@
 
                 .textRow {
                     display: flex;
-                    justify-content: space-between;
+                    flex-direction: column;
+                    /*justify-content: space-between;*/
                     font-size: 26px;
                     margin-bottom: 2px;
                     color: white;
                     margin-top: 10px;
+
+                    div {
+                        margin-bottom: 20px;
+                    }
 
                     ._AB91EF {
                         color: #ab91ef;

@@ -122,12 +122,11 @@
                         <span class="percentage">技术维护<span class="line"></span><span class="num">1%</span></span>
                         <span class="percentage">参与奖励<span class="line"></span><span class="num">30%</span></span>
                         <span class="percentage">动态奖励<span class="line"></span><span class="num">20%</span></span>
-                        <!--<span class="percentage">共识联盟生态（二级市场）<span class="line"></span><span
-                                class="num">5%</span></span>-->
-                        <span class="percentage">星球矿主<span class="line"></span><span class="num">49%</span></span>
-
+                        <span class="percentage">星球荣耀<span class="line"></span><span class="num">4.5%</span></span>
+                        <span class="percentage">超级节点<span class="line"></span><span class="num">12%</span></span>
+                        <span class="percentage">星球矿主<span class="line"></span><span class="num">32.5%</span></span>
                         <span class="small_percentage">- 矿主产出<span class="line"></span><span
-                                class="num">10.5%</span></span>
+                                class="num">13.5%</span></span>
                         <span class="smaller_percentage">- 水星矿机<span class="line"></span><span
                                 class="num">12%</span></span>
                         <span class="smaller_percentage">- 火星矿机<span class="line"></span><span
@@ -140,17 +139,17 @@
                                 class="num">12%</span></span>
 
                         <span class="small_percentage">- 分红产出<span class="line"></span><span
-                                class="num">10.5%</span></span>
+                                class="num">13.5%</span></span>
                         <span class="smaller_percentage">- 水星矿机<span class="line"></span><span
-                                class="num">8%</span></span>
+                                class="num">18%</span></span>
                         <span class="smaller_percentage">- 火星矿机<span class="line"></span><span
                                 class="num">8%</span></span>
                         <span class="smaller_percentage">- 金星矿机<span class="line"></span><span
-                                class="num">8%</span></span>
+                                class="num">6%</span></span>
                         <span class="smaller_percentage">- 土星矿机<span class="line"></span><span
-                                class="num">8%</span></span>
+                                class="num">5%</span></span>
                         <span class="smaller_percentage">- 木星矿机<span class="line"></span><span
-                                class="num">8%</span></span>
+                                class="num">3%</span></span>
                     </p>
                 </div>
             </div>
@@ -387,7 +386,7 @@
                     <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
                     <p>
                         达人星 均分1.5%usdt<br/>
-                        - 个人算力：3GH/S<br/>
+                        - 个人算力：10GH/S<br/>
                         - 团队算力：100GH/S<br/>
                     </p>
                 </div>
@@ -395,7 +394,7 @@
                     <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
                     <p>
                         帝王星 均分1.5%usdt<br/>
-                        - 个人算力：9GH/s<br/>
+                        - 个人算力：20GH/s<br/>
                         - 团队算力：200GH/s<br/>
                     </p>
                 </div>
@@ -403,7 +402,7 @@
                     <img src="../../assets/img/deal/coin.png" class="left" alt=""/>
                     <p>
                         荣耀星 均分1.5%usdt<br/>
-                        - 个人算力：27GH/S<br/>
+                        - 个人算力：30GH/S<br/>
                         - 团队算力：300GH/S<br/>
                     </p>
                 </div>
