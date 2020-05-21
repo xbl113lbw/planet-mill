@@ -224,7 +224,7 @@
                         </div>
                         <div>
                             <span>分红比例：</span>
-                            <span>8%</span>
+                            <span>18%</span>
                         </div>
                     </div>
                 </div>
@@ -292,7 +292,7 @@
                         </div>
                         <div>
                             <span>分红比例：</span>
-                            <span>8%</span>
+                            <span>6%</span>
                         </div>
                     </div>
                 </div>
@@ -326,7 +326,7 @@
                         </div>
                         <div>
                             <span>分红比例：</span>
-                            <span>8%</span>
+                            <span>5%</span>
                         </div>
                     </div>
                 </div>
@@ -360,7 +360,7 @@
                         </div>
                         <div>
                             <span>分红比例：</span>
-                            <span>8%</span>
+                            <span>3%</span>
                         </div>
                     </div>
                 </div>
