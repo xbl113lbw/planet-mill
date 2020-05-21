@@ -370,7 +370,6 @@
 
         .operationBox {
             width: 690px;
-            height: 208px;
             background: #2c244a;
             border-radius: 8px;
             margin-top: 30px;
@@ -428,10 +427,6 @@
                     margin-bottom: 2px;
                     color: white;
                     margin-top: 10px;
-
-                    div {
-                        margin-bottom: 20px;
-                    }
 
                     ._AB91EF {
                         color: #ab91ef;
