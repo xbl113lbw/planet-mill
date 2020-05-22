@@ -319,6 +319,7 @@
 
             .line {
                 width: 1px;
+                min-width: 1px;
                 height: 180px;
                 background: rgba(255, 255, 255, 1);
                 opacity: 0.2;
