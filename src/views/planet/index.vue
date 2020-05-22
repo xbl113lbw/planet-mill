@@ -84,6 +84,26 @@
                 </div>
             </div>
         </div>
+        <div class="itemBox">
+            <div class="leftBox">
+                <div class="itemName" style="width: auto;border: none">{{super_node.name}}</div>
+                <div class="itemGold" style="width: auto">{{parseInt(super_node.price)}} CAC</div>
+            </div>
+            <div class="line"></div>
+            <div class="rightBox"
+                 style="display: flex;align-items: center;flex-direction: column;justify-content: center;margin-top: 10px;">
+                <div class="textBox">
+                    <div class="rowBox">
+                        <div>
+                            <span class="opacityText" style="display: block">{{super_node.desc}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="btnBox">
+                    <button class="btnItem" @click="joinEvent">确认参与</button>
+                </div>
+            </div>
+        </div>
         <!--底部-->
         <Tab tabIndex="星球矿机"/>
     </div>
@@ -105,6 +125,7 @@
         data() {
             return {
                 listData: [],
+                super_node: {},
             };
         },
         created() {
@@ -121,6 +142,7 @@
                 this.ajax.get("v1/goods").then(res => {
                     if (res.data.code === 200) {
                         this.listData = res.data.data.miners;
+                        this.super_node = res.data.data.super_node;
                     }
                 })
             },
@@ -151,6 +173,16 @@
                         return "45";
                 }
             },
+            joinEvent() {
+                this.ajax.get(`v1/super_node`, {}).then(res => {
+                    if (res.data.code === 200) {
+                        Toast("参与超级节点成功");
+                        setTimeout(() => {
+                            this.reload();
+                        }, 1000);
+                    }
+                });
+            }
         }
     }
 </script>
