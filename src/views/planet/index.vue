@@ -95,7 +95,7 @@
                 <div class="textBox">
                     <div class="rowBox">
                         <div>
-                            <span class="opacityText" style="display: block">{{super_node.desc}}</span>
+                            <span class="opacityText" style="display: block;width: auto">{{super_node.desc}}</span>
                         </div>
                     </div>
                 </div>
@@ -174,13 +174,18 @@
                 }
             },
             joinEvent() {
-                this.ajax.get(`v1/super_node`, {}).then(res => {
-                    if (res.data.code === 200) {
-                        Toast("参与超级节点成功");
-                        setTimeout(() => {
-                            this.reload();
-                        }, 1000);
-                    }
+                Dialog.confirm({
+                    message: '确认参与么？'
+                }).then(() => {
+                    this.ajax.get(`v1/super_node`, {}).then(res => {
+                        if (res.data.code === 200) {
+                            Toast("参与超级节点成功");
+                            setTimeout(() => {
+                                this.reload();
+                            }, 1000);
+                        }
+                    });
+                }).catch(() => {
                 });
             }
         }
