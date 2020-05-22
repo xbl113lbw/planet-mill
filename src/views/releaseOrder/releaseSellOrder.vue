@@ -18,10 +18,10 @@
                 <span class="row_left">购买数量(CAC):</span>
                 <input v-model="num" placeholder="请输入数量"/>
             </div>
-            <div class="content_row">
+            <!--<div class="content_row">
                 <span class="row_left">发布昵称:</span>
                 <input v-model="name" placeholder="请输入昵称"/>
-            </div>
+            </div>-->
             <div class="content_row_last">
                 <span class="row_left">总金额(USDT):</span>
                 <span>{{(price * num).toFixed(4)}}</span>
