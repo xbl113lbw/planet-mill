@@ -75,7 +75,6 @@
                     let data = {
                         number: this.num,
                         price: this.price,
-                        name: this.name,
                     };
                     this.ajax.post("v1/deals", data).then(res => {
                         if (res.data.code === 200) {
